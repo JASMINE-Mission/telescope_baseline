@@ -34,7 +34,7 @@ runs:
         mv src/htmlcov pages/test_report/$BRANCH/
         pushd pages/test_report
         echo "<html><head><title>JASMINE Testing Report</title></head><body><h1>JASMINE TESTING REPORT</h1><ul>" > index.html
-        find . -name pytest.html | xargs -Ixxx dirname xxx | awk '{print substr($0, 3)}' | xargs -Ixxx echo "<li><a href=\"https://github.com/$REPOSITORY/actions/workflows/pytest.yml?query=branch:xxx\"><img src=\"https://github.com/$REPOSITORY/actions/workflows/pytest.yml/badge.svg?branch=xxx\" alt=\"pytest\" style=\"max-width: 100%;\"></a><a href=\"xxx/pytest.html\">xxx</a></li>" >> index.html
+        find . -name pytest.html | xargs -Ixxx dirname xxx | awk '{print substr($0, 3)}' | xargs -Ixxx echo "<li><a href=\"https://github.com/$REPOSITORY/actions/workflows/pytest.yml?query=branch:xxx\"><img src=\"https://github.com/$REPOSITORY/actions/workflows/pytest.yml/badge.svg?branch=xxx\" alt=\"pytest\" style=\"max-width: 100%;\"></a>xxx<a href=\"xxx/pytest.html\">(Test Report)</a><a href=\"xxx/htmlcov/index.html\">(Test Coverage Report)</a></li>" >> index.html
         echo "</ul></body></html>" >> index.html
         popd
       shell: bash
