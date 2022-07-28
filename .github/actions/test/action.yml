@@ -51,7 +51,7 @@ runs:
       env:
         CC_TEST_REPORTER_ID: ${{ env.CC_TEST_REPORTER_ID }}
       with:
-        debug: true
+        debug: false
         coverageLocations: src/coverage.xml:coverage.py
 
     - name: Notice Error
