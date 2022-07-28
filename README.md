@@ -1,5 +1,5 @@
 [![pytest](https://github.com/JASMINE-Mission/telescope_baseline/actions/workflows/pytest.yml/badge.svg?branch=develop)](https://JASMINE-Mission.github.io/telescope_baseline/test_report/index.html)
-[![linter](https://github.com/JASMINE-Mission/telescope_baseline/actions/workflows/linter.yml/badge.svg?branch=develop)](https://github.com/JASMINE-Mission/telescope_baseline/actions/workflows/linter.yml)
+[![build](https://github.com/JASMINE-Mission/telescope_baseline/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/JASMINE-Mission/telescope_baseline/actions/workflows/build.yml)
 
 # Baseline study of the JASMINE telescope
 
