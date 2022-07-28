@@ -19,9 +19,9 @@ runs:
         pytest tests --junitxml=pages/test_report/$BRANCH/pytest.xml --html=pages/test_report/$BRANCH/pytest.html
         pushd src
         python -m pytest ../tests --junitxml=../pages/test_report/$BRANCH/pytest.xml --html=../pages/test_report/$BRANCH/pytest.html --cov=. --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
-        rm htmlcov/.gitignore
-        rm -rf ../pages/test_report/$BRANCH/htmlcov
-        mv htmlcov ../pages/test_report/$BRANCH/
+#        rm htmlcov/.gitignore
+#        rm -rf ../pages/test_report/$BRANCH/htmlcov
+#        mv htmlcov ../pages/test_report/$BRANCH/
         popd
       shell: bash
 
