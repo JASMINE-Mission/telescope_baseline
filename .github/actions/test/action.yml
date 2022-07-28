@@ -28,6 +28,8 @@ runs:
         BRANCH: ${{ github.ref_name}}
         REPOSITORY: ${{ github.repository}}
       run: |
+        ls -al src
+        ls -al src/htmlcov
         rm src/htmlcov/.gitignore
         rm -rf pages/test_report/$BRANCH/htmlcov
         mv src/htmlcov pages/test_report/$BRANCH/
