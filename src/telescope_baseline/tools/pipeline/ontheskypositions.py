@@ -50,17 +50,7 @@ class OnTheSkyPositions(SimNode):
         """
         super().__init__()
         self.__time = time
-        self.__catalogue = None
-        self.__position_list = []
-
-    def get_parent_list(self):
-        """getting parent information as list
-
-        Returns:None
-
-        """
-        self.__catalogue = self._parent.get_list()
-        self.__position_list = [None for _ in range(len(self.__catalogue))]
+        self.__sky_positions = []
 
     def add_entry(self, obj: SkyPosition):
         """Add instantaneous position data.
@@ -71,7 +61,7 @@ class OnTheSkyPositions(SimNode):
         Returns:None
 
         """
-        self.__position_list.append(obj)
+        self.__sky_positions.append(obj)
 
     def set_on_the_sky_list(self):
         """Calculate sky coordinate from astrometric parameters
@@ -79,10 +69,15 @@ class OnTheSkyPositions(SimNode):
         Returns: None
 
         """
-        for i in range(len(self.__catalogue)):
-            c = self.__catalogue[i]
+        catalogue = self.get_parent_list()
+        self.__sky_positions = [None for _ in range(len(catalogue))]
+        for i in range(len(catalogue)):
+            c = catalogue[i]
             c1 = c.coord.apply_space_motion(new_obstime=self.__time)
-            self.__position_list[i] = SkyPosition(c.id, c1, c.mag)
+            self.__sky_positions[i] = SkyPosition(c.id, c1, c.mag)
+
+    def get_coord(self, i):
+        return self.__sky_positions[i].coord
 
     def get_time(self):
         """ get time
@@ -98,7 +93,7 @@ class OnTheSkyPositions(SimNode):
         Returns: list of instantaneous stellar position list.
 
         """
-        return self.__position_list
+        return self.__sky_positions
 
     def get(self, i):
         """
@@ -109,7 +104,30 @@ class OnTheSkyPositions(SimNode):
         Returns: instantaneous stellar position object wish ID = i.
 
         """
-        return self.__position_list[i]
+        return self.__sky_positions[i]
+
+    def solve_distortion(self):
+        """
+
+        Returns:
+        TODO: Should implement.
+        """
+        pass
+
+    def map_to_the_sky(self):
+        """
+
+        Returns:
+        TODO: should implement.
+        """
+        a = []
+        for i in range(self.get_child_size()):
+            for j in range(len(self._child[i].pixel_to_world())):
+                a.append(self._child[i].pixel_to_world()[j])
+        if self.get_child_size() > 0:
+            self.__sky_positions = []
+            for i in range(len(a)):
+                self.__sky_positions.append(SkyPosition(a[i][0], a[i][1], a[i][2]))
 
     def accept(self, v):
         v.visit(self)

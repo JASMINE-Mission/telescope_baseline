@@ -13,6 +13,17 @@ class SimComponent(metaclass=ABCMeta):
     def __init__(self):
         self._parent = None
 
+    def get_parent_list(self):
+        """ Get parent list.
+
+        Parent object is OnTheSkyCoordinates object. From the position list written in the sky coordinate, calculate
+         position list in detector coordinate, and hold it.
+
+        Returns:
+
+        """
+        return self._parent.get_list()
+
     def has_parent(self):
         """Check whether the object has parent or not.
 

@@ -8,7 +8,7 @@ class CatalogueEntry:
     This is the data holder class.So, the values are set in the argument of constructor, and got by property.
 
     """
-    def __init__(self, number, coord:SkyCoord, mag):
+    def __init__(self, number, coord: SkyCoord, mag):
         """The constructor
 
         Args:

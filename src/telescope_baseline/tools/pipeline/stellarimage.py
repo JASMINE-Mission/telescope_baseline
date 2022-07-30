@@ -1,4 +1,3 @@
-import numpy as np
 from astropy.nddata import NDData
 from photutils import extract_stars, EPSFBuilder
 from telescope_baseline.tools.pipeline.simnode import SimNode
@@ -10,11 +9,27 @@ class OnDetectorPosition:
     """Hold position on detector, id, and magnitude
 
     """
-    def __init__(self):
-        self.__id = 0
-        self.__x = 0
-        self.__y = 0
-        self.__mag = 0
+    def __init__(self, n, x, y, m):
+        self.__id = n
+        self.__x = x
+        self.__y = y
+        self.__mag = m
+
+    @property
+    def x(self):
+        return self.__x
+
+    @property
+    def y(self):
+        return self.__y
+
+    @property
+    def id(self):
+        return self.__id
+
+    @property
+    def mag(self):
+        return self.__mag
 
 
 class StellarImage(SimNode):
@@ -33,7 +48,6 @@ class StellarImage(SimNode):
         """
         super().__init__()
         self.__wcs = wcs
-        self.__parent_list = []
         self.__position_list = []
         self.__pix_max = 4000
         self.__e_psf_stars = None
@@ -42,17 +56,6 @@ class StellarImage(SimNode):
 
     def accept(self, v):
         v.visit(self)
-
-    def get_parent_list(self):
-        """ Get parent list.
-
-        Parent object is OnTheSkyCoordinates object. From the position list written in the sky coordinate, calculate
-         position list in detector coordinate, and hold it.
-
-        Returns:
-
-        """
-        self.__parent_list = self._parent.get_list()
 
     def world_to_pixel(self):
         """Calculate position in detector coordinate
@@ -68,16 +71,24 @@ class StellarImage(SimNode):
         if "GLON" not in self.__wcs.wcs.ctype[0]:
             print("Coordinate system " + self.__wcs.wcs.ctype[0] + " is not supported")
             raise ValueError
+        tmp = []
         self.__position_list = []
-        for i in range(len(self.__parent_list)):
-            self.__position_list.append([self.__parent_list[i].coord.galactic.l.deg,
-                                         self.__parent_list[i].coord.galactic.b.deg, 3000])
-        self.__position_list = self.__wcs.wcs_world2pix(self.__position_list, 0)
+        parent_list = self.get_parent_list()
+        for i in range(len(parent_list)):
+            tmp.append([parent_list[i].coord.galactic.l.deg, parent_list[i].coord.galactic.b.deg])
+        tmp = self.__wcs.wcs_world2pix(tmp, 0)
+        for i in range(len(tmp)):
+            if not(tmp[i][0] < 0 or tmp[i][1] < 0 or tmp[i][0] > self.__pix_max or tmp[i][1] > self.__pix_max):
+                c = OnDetectorPosition(i, tmp[i][0], tmp[i][1], 3000)
+                self.__position_list.append(c)
+        #  for revert conversion use self.__wcs.wcs_pix2world(pix_array, 0)
+
+    def pixel_to_world(self):
+        tmp = []
         for i in range(len(self.__position_list)):
-            if self.__position_list[i][0] < 0 or self.__position_list[i][1] < 0 \
-                    or self.__position_list[i][0] > self.__pix_max or self.__position_list[i][1] > self.__pix_max:
-                self.__position_list = np.delete(self.__position_list, i, 0)
-        #  for revert conversion use self.__wcs.wcs.wcs_pix2world(pix_array, 0)
+            sky = self.__wcs.pixel_to_world(self.__position_list[i].x, self.__position_list[i].y)
+            tmp.append([self.__position_list[i].id, sky, self.__position_list[i].mag])
+        return tmp
 
     def add_position(self, pos_list):
         """ List of stellar positions
@@ -143,3 +154,10 @@ class StellarImage(SimNode):
     TODO: should implement.
         """
         pass
+
+    def make_list(self):
+        self.__position_list = []
+        i = 0
+        for s in self.__e_psf_stars.all_stars:
+            self.__position_list.append(OnDetectorPosition(i, s.center[0], s.center[1], 0))
+        return self.__position_list

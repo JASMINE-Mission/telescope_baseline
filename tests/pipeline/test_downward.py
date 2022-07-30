@@ -36,11 +36,13 @@ class SimpleDownwardVisitor(SimVisitor):
 def fixture1():
     from telescope_baseline.tools.pipeline.stellarimage import StellarImage
     from telescope_baseline.tools.pipeline.detectorimage import DetectorImage
+    from astropy.wcs import WCS
+    wcs = WCS(naxis=2)
     print("Pre Processing\n")
     v = SimpleDownwardVisitor()
-    a = DetectorImage()
-    b = DetectorImage()
-    c = StellarImage()
+    a = DetectorImage("output.fits")
+    b = DetectorImage("output.fits")
+    c = StellarImage(wcs)
     c.add_child(a)
     c.add_child(b)
     c.accept(v)

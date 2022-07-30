@@ -1,6 +1,28 @@
+import math
+
+import numpy as np
+from astropy.coordinates import get_sun
+from scipy import optimize
+
 from telescope_baseline.tools.pipeline.simnode import SimNode
 from telescope_baseline.tools.pipeline.catalogue_entry import CatalogueEntry
 import astropy.units as u
+
+
+def fit_func2(parameter, ty, ls, lon, lat):
+    lon0 = parameter[0]
+    lat0 = parameter[1]
+    pm_lon_coslat = parameter[2]
+    pm_lat = parameter[3]
+    para = parameter[4]
+    lont = np.ndarray((len(ty)))
+    latt = np.ndarray((len(ty)))
+    residual = np.ndarray((len(ty)))
+    for i in range(len(ty)):
+        lont[i] = lon0 + (para * math.sin(ls[i] - lon0) + pm_lon_coslat * ty[i]) / math.cos(lat0)
+        latt[i] = lat0 + (pm_lat * ty[i] - para * math.sin(lat0) * math.cos(ls[i] - lon0))
+        residual[i] = (lon[i] - lont[i]) ** 2 + (lat[i] - latt[i]) ** 2
+    return residual
 
 
 class AstrometricCatalogue(SimNode):
@@ -13,11 +35,12 @@ class AstrometricCatalogue(SimNode):
     def __init__(self):
         super().__init__()
         self.__catalogue = []
+        self.__result = []
 
     def accept(self, v):
         v.visit(self)
 
-    def add_entry(self, c:CatalogueEntry):
+    def add_entry(self, c: CatalogueEntry):
         """add catalogue entry to the AstrometricCatalogue object.
 
         Args:
@@ -36,6 +59,29 @@ class AstrometricCatalogue(SimNode):
         """
         return self.__catalogue
 
+    def calculate_ap_parameters(self):
+        t = []
+        londata = []
+        latdata = []
+        ls = []
+        ty = []
+        for i in range(self.get_child_size()):
+            c = self.get_child(i)
+            t.append(c.get_time())
+            londata.append(self.get_child(i).get_coord(0).barycentricmeanecliptic.lon.rad)
+            latdata.append(self.get_child(i).get_coord(0).barycentricmeanecliptic.lat.rad)
+            ls.append(get_sun(t[i]).geocentricmeanecliptic.lon.rad)
+            ty.append(t[i].jyear)
+        ls = np.array(ls)
+        ty = np.array(ty)
+        tc = (np.max(ty) + np.min(ty)) / 2
+        ty = ty - tc
+        parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
+        self.__result = optimize.leastsq(fit_func2, parameter, args=(ty, ls, londata, latdata))
+
+    def get_parameters(self):
+        return self.__result
+
     def save(self, filename):
         """The method for save the catalogue to the file.
 
@@ -47,7 +93,7 @@ class AstrometricCatalogue(SimNode):
         """
         f = open(filename, 'w')
         for i in range(len(self.__catalogue)):
-            f.write(str(self.__catalogue[i].id) +"," + str(self.__catalogue[i].ra) + "," +
+            f.write(str(self.__catalogue[i].id) + "," + str(self.__catalogue[i].ra) + "," +
                     str(self.__catalogue[i].dec) + "," + str(self.__catalogue[i].parallax / u.mas) + "," +
                     str(self.__catalogue[i].pm_ra * u.yr / u.mas) + "," +
                     str(self.__catalogue[i].pm_dec * u.yr / u.mas) + "\n")
