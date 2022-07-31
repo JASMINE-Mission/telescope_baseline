@@ -3,6 +3,9 @@ import pytest
 
 
 class SimpleDownwardVisitor(SimVisitor):
+    """ test for visitor structure in simulation direction
+
+    """
     def __init__(self):
         self.__num = 0
 

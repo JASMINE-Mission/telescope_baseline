@@ -15,6 +15,9 @@ class CatalogueEntry:
             number: id of the entry.
             coord: astropy.coordinates.SkyCoord object
             mag: magnitude of the star
+
+        TODO: Need to consistent implementation of what frame we should use.
+
         """
         self.__id = number
         self.__coord = coord

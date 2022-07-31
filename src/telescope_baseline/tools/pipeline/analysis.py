@@ -6,6 +6,9 @@ from telescope_baseline.tools.pipeline.visitor import SimVisitor
 
 
 class Analysis(SimVisitor):
+    """ Visitor class for analysis
+
+    """
     def visit_di(self, obj: DetectorImage):
         try:
             obj.load()

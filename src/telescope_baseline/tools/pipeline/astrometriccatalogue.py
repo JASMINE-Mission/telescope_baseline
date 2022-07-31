@@ -9,7 +9,21 @@ from telescope_baseline.tools.pipeline.catalogue_entry import CatalogueEntry
 import astropy.units as u
 
 
-def fit_func2(parameter, ty, ls, lon, lat):
+def fit_astrometry(parameter, ty, ls, lon, lat):
+    """ fitting function for leastsq function
+
+    Args:
+        parameter: array for [lon0, lat0, pm_lon_coslat, pm_lat, para]
+        ty: array for type in year unit
+        ls: solar longitude
+        lon: observation result of ecliptic longitude in radian
+        lat: observation result of ecliptic latitude in radian
+
+    Returns: Updated parameter array.
+
+    TODO: Need trade off between leastsq and least_square.
+
+    """
     lon0 = parameter[0]
     lat0 = parameter[1]
     pm_lon_coslat = parameter[2]
@@ -30,6 +44,10 @@ class AstrometricCatalogue(SimNode):
 
     The constructor is default constructor. After instantiate the class, entry is added by add_entry(c) method. The
      variable c is the CatalogueEntry object.
+
+    Attributes:
+        __catalogue: array of CatalogueEntry object.
+        __result: It is needed for pass the result from calculate_ap_parameter to get_result
 
     """
     def __init__(self):
@@ -60,6 +78,15 @@ class AstrometricCatalogue(SimNode):
         return self.__catalogue
 
     def calculate_ap_parameters(self):
+        """calculate astrometric parameter from child OnTheSkyPosition objects.
+
+        Returns: Non
+            result is saved to the attribute __result
+
+        TODO: check stellar id, gather the input for leastsq function for the same array.
+            Now the function assumes only one stars in child object and these are for the same stars.
+
+        """
         t = []
         londata = []
         latdata = []
@@ -77,9 +104,15 @@ class AstrometricCatalogue(SimNode):
         tc = (np.max(ty) + np.min(ty)) / 2
         ty = ty - tc
         parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
-        self.__result = optimize.leastsq(fit_func2, parameter, args=(ty, ls, londata, latdata))
+        self.__result = optimize.leastsq(fit_astrometry, parameter, args=(ty, ls, londata, latdata))
 
     def get_parameters(self):
+        """
+
+        Returns: parameter array for 0th star.
+        TODO: Need to handle multiple stars.
+
+        """
         return self.__result
 
     def save(self, filename):

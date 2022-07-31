@@ -4,6 +4,8 @@ from telescope_baseline.tools.pipeline.simnode import SimNode
 class SkyPosition:
     """class of hold instantaneous stellar characteristics.
 
+    TODO: Need to consistent implementation of what frame we should use.
+
     """
     def __init__(self, num, coord, mag):
         """Constructor
@@ -39,7 +41,7 @@ class SkyPosition:
 
 
 class OnTheSkyPositions(SimNode):
-    """Data class of instantaneous stellar positions at a certain time
+    """ Data class of instantaneous stellar positions at a certain time
 
     """
     def __init__(self, time=None):
@@ -77,6 +79,16 @@ class OnTheSkyPositions(SimNode):
             self.__sky_positions[i] = SkyPosition(c.id, c1, c.mag)
 
     def get_coord(self, i):
+        """
+
+        Args:
+            i: Stellar id
+
+        TODO: Need to define the meaning of id. (stellar id or observation id or their combination)
+
+        Returns: SkyCoord object for ith object.
+
+        """
         return self.__sky_positions[i].coord
 
     def get_time(self):

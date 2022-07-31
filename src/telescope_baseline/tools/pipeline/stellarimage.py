@@ -84,6 +84,11 @@ class StellarImage(SimNode):
         #  for revert conversion use self.__wcs.wcs_pix2world(pix_array, 0)
 
     def pixel_to_world(self):
+        """ comvert pixel coordinate to world
+
+        Returns: array for world coordinate
+
+        """
         tmp = []
         for i in range(len(self.__position_list)):
             sky = self.__wcs.pixel_to_world(self.__position_list[i].x, self.__position_list[i].y)

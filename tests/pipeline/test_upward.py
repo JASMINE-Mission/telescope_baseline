@@ -3,6 +3,9 @@ from telescope_baseline.tools.pipeline.visitor import SimVisitor
 
 
 class SimpleUpwardVisitor(SimVisitor):
+    """ test for the visitor structure in analysis direction.
+
+    """
     def __init__(self):
         self.__num = 0
 

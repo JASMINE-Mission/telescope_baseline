@@ -12,7 +12,7 @@ from telescope_baseline.tools.pipeline.stellarimage import StellarImage, OnDetec
 
 
 def test_step1():
-    """
+    """ test for the step from detector image to stellar position on detector coordinate
 
     Returns:
     TODO: Error(s) sometimes occurs because the value is generated from random number.
@@ -53,6 +53,11 @@ def test_step1():
 
 
 def test_step2():
+    """ test for the step from image position on the detector coordinate to the sky position
+
+    Returns:
+
+    """
     t = Time('2000-01-01 00:00:00.0')
     w = WCS(naxis=2)
     w.wcs.crpix = [50, 50]  # Reference point in pixel
@@ -75,6 +80,11 @@ def test_step2():
 
 
 def test_step3():
+    """ test for the step from time sequence of stellar position in the sky coordinate to astrometric parameter.
+
+    Returns:
+
+    """
     t = [Time('2000-01-01 00:00:00.0'), Time('2000-02-01 00:00:00.0'), Time('2000-03-01 00:00:00.0'),
          Time('2000-04-01 00:00:00.0'), Time('2000-05-01 00:00:00.0'), Time('2000-06-01 00:00:00.0'),
          Time('2000-07-01 00:00:00.0'), Time('2000-08-01 00:00:00.0'), Time('2000-09-01 00:00:00.0'),

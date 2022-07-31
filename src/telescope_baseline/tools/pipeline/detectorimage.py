@@ -38,6 +38,11 @@ class DetectorImage(SimComponent):
         return self.__hdu
 
     def make_image(self):
+        """make image array data from stellar position array.
+
+        Returns: None
+
+        """
         self.__array = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         for s in self.get_parent_list():
             for j in range(int(s.mag)):
@@ -47,20 +52,40 @@ class DetectorImage(SimComponent):
                     self.__array[xp][yp] += 1
 
     def load(self):
+        """ load fits data
+
+        Returns: None
+
+        """
         ft = fits.open(self.__file_name)
         self.__nx = ft[0].header['NAXIS1']
         self.__ny = ft[0].header['NAXIS2']
         self.__hdu = ft[0]
 
     def make_fits(self):
+        """ make fits data from image array data.
+
+        Returns: header data unit of fits.
+
+        """
         self.__hdu = fits.PrimaryHDU()
         self.__hdu.data = self.__array
         return self.__hdu
 
     def save_fits(self):
+        """ save image array to fits file
+
+        Returns: None
+
+        """
         self.__hdu.writeto(self.__file_name, overwrite=True)
 
     def get_array(self):
+        """ get image array.
+
+        Returns: image array
+
+        """
         return self.__array
 
     def accept(self, v):

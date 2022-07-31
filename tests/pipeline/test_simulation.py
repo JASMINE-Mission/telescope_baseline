@@ -12,7 +12,7 @@ from telescope_baseline.tools.pipeline.simulation import Simulation
 
 
 def test_step1():
-    """
+    """ test for the step from stellar position in detector coordinate to image array
 
     Returns:
 
@@ -39,7 +39,7 @@ def test_step1():
 
 
 def test_step2():
-    """
+    """ test for the step the image position from the world coordinate to the detector coordinate.
 
     Returns:
     TODO: Usage of w is inconsistent to other source. Resolve reason and fix.
@@ -76,6 +76,11 @@ def test_step2():
 
 
 def test_step3():
+    """ test for the step from astrometric parameter to time series of the stellar position of world coordinate.
+
+    Returns:
+
+    """
     t = [Time('2000-01-01 00:00:00.0'), Time('2000-04-01 00:00:00.0'), Time('2000-07-01 00:00:00.0'),
          Time('2000-10-01 00:00:00.0'), Time('2001-01-01 00:00:00.0')]
     c1 = SkyCoord(l=0, b=0, unit=('deg', 'deg'), frame="galactic", distance=1 * u.pc, obstime=t[0],
