@@ -1,0 +1,43 @@
+runs:
+  using: "Composite"
+  steps:
+    - name: checkout Pages branch
+      uses: actions/checkout@v3
+      with:
+        ref: gh-pages
+        path: pages
+      id: check_out_pages_branch
+      continue-on-error: true
+
+    - name: Test with pytest
+      env:
+        BRANCH: ${{ github.ref_name}}
+      id: pytest
+      continue-on-error: true
+      run: |
+        python -m pip install pytest pytest-html
+        pytest tests --junitxml=pages/test_report/$BRANCH/pytest.xml --html=pages/test_report/$BRANCH/pytest.html
+      shell: bash
+
+    - name: Generate Test Report Index
+      env:
+        BRANCH: ${{ github.ref_name}}
+        REPOSITORY: ${{ github.repository}}
+      run: |
+        pushd pages/test_report
+        echo "<html><head><title>JASMINE Testing Report</title></head><body><h1>JASMINE TESTING REPORT</h1><ul>" > index.html
+        find . -name pytest.html | xargs -Ixxx dirname xxx | awk '{print substr($0, 3)}' | xargs -Ixxx echo "<li><a href=\"https://github.com/$REPOSITORY/actions/workflows/pytest.yml?query=branch:xxx\"><img src=\"https://github.com/$REPOSITORY/actions/workflows/pytest.yml/badge.svg?branch=xxx\" alt=\"pytest\" style=\"max-width: 100%;\"></a><a href=\"xxx/pytest.html\">xxx</a></li>" >> index.html
+        echo "</ul></body></html>" >> index.html
+        popd
+      shell: bash
+
+    - name: Publish Test Report
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ env.GITHUB_TOKEN }}
+        publish_dir: ./pages
+
+    - name: Notice Error
+      if: ${{ steps.pytest.outcome == 'failure' }}
+      run: exit 1
+      shell: bash

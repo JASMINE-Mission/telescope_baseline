@@ -6,6 +6,7 @@ pandas~=1.4.2
 astropy~=5.0.4
 scipy~=1.8.0
 pytest~=7.1.1
+pytest-html~=3.1.1
 tables~=3.6.1
 exocounts~=0.1.0
 setuptools~=57.0.0

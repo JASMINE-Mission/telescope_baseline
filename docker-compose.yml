@@ -1,0 +1,12 @@
+version: '3.4'
+services:
+  jasmine:
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: 'jasmine'
+    working_dir: /opt/jasmine
+    tty: true
+    volumes:
+      - .:/opt/jasmine
