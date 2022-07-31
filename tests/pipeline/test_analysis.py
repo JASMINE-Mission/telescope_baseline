@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 from astropy.wcs import WCS
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
@@ -11,16 +12,16 @@ from telescope_baseline.tools.pipeline.simulation import Simulation
 from telescope_baseline.tools.pipeline.stellarimage import StellarImage, OnDetectorPosition
 
 
-def test_step1():
+def test_step1(monkeypatch):
     """ test for the step from detector image to stellar position on detector coordinate
 
     Returns:
     TODO: Error(s) sometimes occurs because the value is generated from random number.
     """
+    monkeypatch.setattr(np.random, 'rand', lambda : 0.5)
+    monkeypatch.setattr(np.random, 'randn', lambda : 0)
+    monkeypatch.setattr(np.random, 'uniform', lambda x, y, z: np.zeros(z))
     a = [OnDetectorPosition(1, 50., 50., 3000.)]
-    for i in range(10):
-        a.append(OnDetectorPosition(i + 1, 5 + 90 * np.random.rand(), 5 + 90 * np.random.rand(),
-                                    int(2000 + 2000 * np.random.rand())))
     w = WCS(naxis=2)
 
     s1 = StellarImage(w)
