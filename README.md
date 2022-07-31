@@ -1,5 +1,7 @@
 [![pytest](https://github.com/JASMINE-Mission/telescope_baseline/actions/workflows/pytest.yml/badge.svg?branch=develop)](https://JASMINE-Mission.github.io/telescope_baseline/test_report/index.html)
 [![build](https://github.com/JASMINE-Mission/telescope_baseline/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/JASMINE-Mission/telescope_baseline/actions/workflows/build.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/e0f6c93692302fabba92/maintainability)](https://codeclimate.com/github/JASMINE-Mission/telescope_baseline/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/e0f6c93692302fabba92/test_coverage)](https://codeclimate.com/github/JASMINE-Mission/telescope_baseline/test_coverage)
 
 # Baseline study of the JASMINE telescope
 
