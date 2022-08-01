@@ -8,12 +8,10 @@ from telescope_baseline.tools.pipeline.simulation import Simulation
 from telescope_baseline.tools.pipeline.stellarimage import StellarImage, OnDetectorPosition
 
 
-# Test code that continues to maintain what you didn't break by refactoring.
-def test_makeImage(monkeypatch):
-    monkeypatch.setattr(np.random, 'rand', lambda: 0.5)
+def test_make_image_set_position(monkeypatch):
     monkeypatch.setattr(np.random, 'randn', lambda: 0)
     monkeypatch.setattr(np.random, 'uniform', lambda x, y, z: np.zeros(z))
-    a = [OnDetectorPosition(1, 50., 50., 3000.)]
+    a = [OnDetectorPosition(1, 20., 30., 100.)]
     w = WCS(naxis=2)
 
     s1 = StellarImage(w)
@@ -24,14 +22,7 @@ def test_makeImage(monkeypatch):
     s1.accept(vs)
 
     sut = d1.get_array()
-    assert (len(sut) == 100)
-    for x in range(0, 100):
-        assert (len(sut[x]) == 100)
-        for y in range(0, 100):
-            if (50, 50) == (x, y):
-                assert (sut[x][y] == 3000)
-            else:
-                assert (sut[x][y] == 0)
+    assert (sut[30][20] == 100)
 
 
 @pytest.mark.parametrize('pos_array, actual_count', [
@@ -41,7 +32,7 @@ def test_makeImage(monkeypatch):
     ([], 0),
     ([OnDetectorPosition(1, 50., 50., 0.)], 0),
 ])
-def test_makeImage_point_count(monkeypatch, pos_array, actual_count):
+def test_make_image_point_count(monkeypatch, pos_array, actual_count):
     monkeypatch.setattr(np.random, 'uniform', lambda x, y, z: np.zeros(z))
     w = WCS(naxis=2)
     s1 = StellarImage(w)
@@ -70,8 +61,9 @@ def test_makeImage_point_count(monkeypatch, pos_array, actual_count):
 def test__incriment_position(mocker: MockFixture, pos, randn, actual):
     mocker.patch.object(np.random, 'randn').side_effect = randn
     d1 = DetectorImage("outputa.fits")
-    sut = d1._incriment_position(pos);
+    sut = d1._incriment_position(pos)
     assert (sut == actual)
+
 
 @pytest.mark.parametrize('pos, actual', [
     ((0, 0), True),
