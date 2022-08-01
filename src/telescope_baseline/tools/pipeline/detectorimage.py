@@ -47,8 +47,11 @@ class DetectorImage(SimComponent):
         for s in self.get_parent_list():
             for j in range(int(s.mag)):
                 pos = self._incriment_position(s)
-                if 0 <= pos[0] < self.__nx and 0 <= pos[1] < self.__ny:
+                if self._is_include_area(pos):
                     self.__array[pos[0]][pos[1]] += 1
+
+    def _is_include_area(self, pos):
+        return 0 <= pos[0] < self.__nx and 0 <= pos[1] < self.__ny
 
     def _incriment_position(self, s):
         xp = int(self.__psf_w * np.random.randn() + s.y + 0.5)

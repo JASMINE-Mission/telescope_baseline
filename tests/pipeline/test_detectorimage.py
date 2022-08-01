@@ -34,9 +34,9 @@ def test_makeImage(monkeypatch):
                 assert (sut[x][y] == 0)
 
 
-@pytest.mark.parametrize('pos,randn,actual', [
+@pytest.mark.parametrize('pos, randn, actual', [
     (OnDetectorPosition(1, 50., 50., 3000.), (0.0, 0.0), (50, 50)),
-    (OnDetectorPosition(1, 30., 40., 3000.), (0.0, 0.0), (40, 30)),
+    (OnDetectorPosition(1, 30., 40., 3000.), (0.0, 0.0), (40, 30)),  # swap position
     (OnDetectorPosition(1, 50., 50., 3000.), (0.4, 0.0), (50, 50)),
     (OnDetectorPosition(1, 50., 50., 3000.), (0.5, 0.0), (51, 50)),
     (OnDetectorPosition(1, 50., 50., 3000.), (0.0, 0.4), (50, 50)),
@@ -47,3 +47,17 @@ def test__incriment_position(mocker: MockFixture, pos, randn, actual):
     d1 = DetectorImage("outputa.fits")
     sut = d1._incriment_position(pos);
     assert (sut == actual)
+
+@pytest.mark.parametrize('pos, actual', [
+    ((0, 0), True),
+    ((-1, 0), False),
+    ((0, -1), False),
+    ((50, 50), True),
+    ((99, 99), True),
+    ((100, 99), False),
+    ((99, 100), False),
+])
+def test__is_include_area(pos, actual):
+    d1 = DetectorImage("outputa.fits")
+    sut = d1._is_include_area(pos)
+    assert(sut == actual)
