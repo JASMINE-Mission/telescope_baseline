@@ -46,10 +46,14 @@ class DetectorImage(SimComponent):
         self.__array = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         for s in self.get_parent_list():
             for j in range(int(s.mag)):
-                xp = int(self.__psf_w * np.random.randn() + s.y + 0.5)
-                yp = int(self.__psf_w * np.random.randn() + s.x + 0.5)
-                if 0 <= xp < self.__nx and 0 <= yp < self.__ny:
-                    self.__array[xp][yp] += 1
+                pos = self._incriment_position(s)
+                if 0 <= pos[0] < self.__nx and 0 <= pos[1] < self.__ny:
+                    self.__array[pos[0]][pos[1]] += 1
+
+    def _incriment_position(self, s):
+        xp = int(self.__psf_w * np.random.randn() + s.y + 0.5)
+        yp = int(self.__psf_w * np.random.randn() + s.x + 0.5)
+        return xp, yp
 
     def load(self):
         """ load fits data
