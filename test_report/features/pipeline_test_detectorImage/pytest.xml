@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="3.628" timestamp="2022-08-01T13:26:16.889321" hostname="fv-az201-68"><testcase classname="" name="tests.pipeline.test_detectorimage" time="0.000"><error message="collection failure">ImportError while importing test module '/home/runner/work/telescope_baseline/telescope_baseline/tests/pipeline/test_detectorimage.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/hostedtoolcache/Python/3.9.13/x64/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/pipeline/test_detectorimage.py:2: in &lt;module&gt;
+    from pytest_mock import MockFixture
+E   ModuleNotFoundError: No module named 'pytest_mock'</error></testcase></testsuite></testsuites>
