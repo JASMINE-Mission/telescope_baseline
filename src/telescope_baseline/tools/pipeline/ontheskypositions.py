@@ -137,9 +137,13 @@ class OnTheSkyPositions(SimNode):
             for j in range(len(self._child[i].pixel_to_world())):
                 a.append(self._child[i].pixel_to_world()[j])
         if self.get_child_size() > 0:
-            self.__sky_positions = []
-            for i in range(len(a)):
-                self.__sky_positions.append(SkyPosition(a[i][0], a[i][1], a[i][2]))
+            self._set_sky_positions_from_child(a)
+
+    def _set_sky_positions_from_child(self, a):
+        b = []
+        for i in range(len(a)):
+            b.append(SkyPosition(a[i][0], a[i][1], a[i][2]))
+        self.__sky_positions = b
 
     def accept(self, v):
         v.visit(self)
