@@ -27,13 +27,13 @@ def test_world_to_pixel():
     o.add_child(s)
     s.world_to_pixel()
     plist = s.get_list()
-    assert(len(plist), 3)
-    assert(abs(plist[0].x - 255) < 2e-10)
-    assert(abs(plist[0].y - 255) < 2e-10)
-    assert(abs(plist[1].x - 255) < 2e-10)
-    assert(abs(plist[1].y - 1018.35955373) < 1e-8)
-    assert(abs(plist[2].x - 1018.35955373) < 1e-8)
-    assert(abs(plist[2].y - 255) < 2e-10)
+    assert len(plist), 3
+    assert abs(plist[0].x - 255) < 2e-10
+    assert abs(plist[0].y - 255) < 2e-10
+    assert abs(plist[1].x - 255) < 2e-10
+    assert abs(plist[1].y - 1018.35955373) < 1e-8
+    assert abs(plist[2].x - 1018.35955373) < 1e-8
+    assert abs(plist[2].y - 255) < 2e-10
 
 
 def test_pixel_to_world():
