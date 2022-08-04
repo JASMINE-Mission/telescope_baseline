@@ -54,7 +54,7 @@ class Efficiency:
         """evaluate the efficiency by a linear interpolation.
 
         Args:
-            wavelength: wavelength 
+            wavelength: wavelength
 
         Returns:
             interpolated efficiency
@@ -74,7 +74,7 @@ class Efficiency:
         """compute the weighted mean of interpolated efficiency.
 
         Args:
-            wavelength: wavelength 
+            wavelength: wavelength
             weight: weight
 
         Returns:
