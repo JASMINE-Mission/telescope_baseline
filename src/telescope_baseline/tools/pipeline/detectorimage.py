@@ -45,11 +45,14 @@ class DetectorImage(SimComponent):
         """
         a = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         for s in self.get_parent_list():
-            for j in range(int(s.mag)):
-                pos = self._incriment_position(s)
-                if self._is_include_area(pos):
-                    a[pos[0]][pos[1]] += 1
+            self._add_a_star_on_detector(a, s)
         self.__array = a
+
+    def _add_a_star_on_detector(self, a, s):
+        for j in range(int(s.mag)):
+            pos = self._incriment_position(s)
+            if self._is_include_area(pos):
+                a[pos[0]][pos[1]] += 1
 
     def _is_include_area(self, pos):
         return 0 <= pos[0] < self.__nx and 0 <= pos[1] < self.__ny
