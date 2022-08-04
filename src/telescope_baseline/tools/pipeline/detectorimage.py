@@ -43,12 +43,13 @@ class DetectorImage(SimComponent):
         Returns: None
 
         """
-        self.__array = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
+        a = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         for s in self.get_parent_list():
             for j in range(int(s.mag)):
                 pos = self._incriment_position(s)
                 if self._is_include_area(pos):
-                    self.__array[pos[0]][pos[1]] += 1
+                    a[pos[0]][pos[1]] += 1
+        self.__array = a
 
     def _is_include_area(self, pos):
         return 0 <= pos[0] < self.__nx and 0 <= pos[1] < self.__ny
