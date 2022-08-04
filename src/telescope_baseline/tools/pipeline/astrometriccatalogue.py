@@ -9,7 +9,7 @@ from telescope_baseline.tools.pipeline.catalogue_entry import CatalogueEntry
 import astropy.units as u
 
 
-def fit_astrometry(parameter, ty, ls, lon, lat):
+def fit_astrometry(parameter, t, lon, lat):
     """ fitting function for leastsq function
 
     Args:
@@ -29,6 +29,15 @@ def fit_astrometry(parameter, ty, ls, lon, lat):
     pm_lon_coslat = parameter[2]
     pm_lat = parameter[3]
     para = parameter[4]
+    ls = []
+    ty = []
+    for i in range(len(t)):
+        ls.append(get_sun(t[i]).geocentricmeanecliptic.lon.rad)
+        ty.append(t[i].jyear)
+    ls = np.array(ls)
+    ty = np.array(ty)
+    tc = (np.max(ty) + np.min(ty)) / 2
+    ty = ty - tc
     lont = np.ndarray((len(ty)))
     latt = np.ndarray((len(ty)))
     residual = np.ndarray((len(ty)))
@@ -90,21 +99,13 @@ class AstrometricCatalogue(SimNode):
         t = []
         londata = []
         latdata = []
-        ls = []
-        ty = []
         for i in range(self.get_child_size()):
             c = self.get_child(i)
             t.append(c.get_time())
             londata.append(self.get_child(i).get_coord(0).barycentricmeanecliptic.lon.rad)
             latdata.append(self.get_child(i).get_coord(0).barycentricmeanecliptic.lat.rad)
-            ls.append(get_sun(t[i]).geocentricmeanecliptic.lon.rad)
-            ty.append(t[i].jyear)
-        ls = np.array(ls)
-        ty = np.array(ty)
-        tc = (np.max(ty) + np.min(ty)) / 2
-        ty = ty - tc
         parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
-        self.__result = optimize.leastsq(fit_astrometry, parameter, args=(ty, ls, londata, latdata))
+        self.__result = optimize.leastsq(fit_astrometry, parameter, args=(t, londata, latdata))
 
     def get_parameters(self):
         """
