@@ -72,16 +72,20 @@ class StellarImage(SimNode):
             print("Coordinate system " + self.__wcs.wcs.ctype[0] + " is not supported")
             raise ValueError
         tmp = []
-        self.__position_list = []
         parent_list = self.get_parent_list()
         for i in range(len(parent_list)):
             tmp.append([parent_list[i].coord.galactic.l.deg, parent_list[i].coord.galactic.b.deg])
         tmp = self.__wcs.wcs_world2pix(tmp, 0)
+        a = []
         for i in range(len(tmp)):
-            if not(tmp[i][0] < 0 or tmp[i][1] < 0 or tmp[i][0] > self.__pix_max or tmp[i][1] > self.__pix_max):
-                c = OnDetectorPosition(i, tmp[i][0], tmp[i][1], 3000)
-                self.__position_list.append(c)
+            self._make_pixel_coord_list(a, i, tmp)
+        self.__position_list = a
         #  for revert conversion use self.__wcs.wcs_pix2world(pix_array, 0)
+
+    def _make_pixel_coord_list(self, a, i, tmp):
+        if not (tmp[i][0] < 0 or tmp[i][1] < 0 or tmp[i][0] > self.__pix_max or tmp[i][1] > self.__pix_max):
+            c = OnDetectorPosition(i, tmp[i][0], tmp[i][1], 3000)
+            a.append(c)
 
     def pixel_to_world(self):
         """ comvert pixel coordinate to world
