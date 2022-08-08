@@ -9,7 +9,7 @@ import os
 from multiprocessing import Pool
 from astropy import units as u
 import pkgutil
-import pkg_resources           
+import pkg_resources
 from io import BytesIO
 from scipy import interpolate
 from scipy.optimize import minimize
@@ -119,14 +119,14 @@ def load_filter():
 def set_range_Hw_band(lower, upper):
     """set range of Hw band
 
-    Args: 
+    Args:
         lower: lower wavelength in the unit of angstrom
         upper: upper wavelength in the unit of angstrom
 
     Returns:
         Hw
     """
-    
+
     lw = lower
     up = upper
     nd = 150  # number of data
@@ -139,7 +139,25 @@ def set_range_Hw_band(lower, upper):
 
 
 def A_lambda(Av, x):
-    """A lambda
+    """calculate A lambda.
+
+    Args:
+        Av: Av
+        x: x
+
+    Returns:
+        A_lambda
+
+    """
+    Ak_Av   = 0.112
+    Ak      = Ak_Av*Av
+    x_um    = x*1e-4
+    coeff   = 5.2106*(x_um**(-2.112))
+
+    return coeff*Ak
+
+def A_lambda_linear(Av, x):
+    """calculate A lambda with linear law.
 
     Args:
         Av: Av
@@ -190,14 +208,14 @@ def calc_zero_magnitude_spectra(fil_J, fil_H, fil_Hw):
         fil_J:
         fil_H:
         fil_Hw:
-    
+
     Returns:
         zero magnitude of J?
         zero magnitude of H?
         zero magnitude of Hw?
 
     """
-    
+
     uka0v = pkgutil.get_data('telescope_baseline', 'data//spectra/uka0v.dat')
     spec_a0v = np.loadtxt(BytesIO(uka0v), comments='#', dtype='f8').T
     p_Jo = cal_photon([spec_a0v, fil_J, 0])
@@ -211,8 +229,8 @@ def calc_color_arrays(data_spec, fil_J, fil_H, fil_Hw, p_Jo, p_Ho, p_Hwo):
     Args:
         data_spec:
         fil_J:
-        fil_H: 
-        fil_Hw: 
+        fil_H:
+        fil_Hw:
         p_Jo: zero magnitude of J?
         p_Ho:  zero magnitude of H?
         p_Hwo:  zero magnitude of Hw?
@@ -220,7 +238,7 @@ def calc_color_arrays(data_spec, fil_J, fil_H, fil_Hw, p_Jo, p_Ho, p_Hwo):
     Returns:
         ar_J_H: J-H array
         ar_Hw_H: Hw-H array
-        Av array used 
+        Av array used
 
     """
     Av_ar = np.linspace(0, 60, 5)
@@ -242,7 +260,7 @@ def calc_color_arrays(data_spec, fil_J, fil_H, fil_Hw, p_Jo, p_Ho, p_Hwo):
         ar_Hw_H.append(Hw_H)
         ar_J_H.append(J_H)
         A_arr.append(Av)
-        
+
     return ar_J_H, ar_Hw_H, A_arr
 
 def calc_colors(ar_J_H, ar_Hw_H):
@@ -292,7 +310,7 @@ def compute_Hw_relation(Hw_l, Hw_u):
 
 def plot_Hwfit(Hw_l,Hw_u,res, sigma, colors, ar_J_H, ar_Hw_H, residuals):
     """plot Hw fitting results
-    
+
     Args:
        Hw_l: lower limit of passband in angstrom
        Hw_u: upper limit of passband in angstrom
@@ -321,7 +339,7 @@ def plot_Hwfit(Hw_l,Hw_u,res, sigma, colors, ar_J_H, ar_Hw_H, residuals):
     ax1.grid(color='gray', ls=':', lw=0.5)
     for i in range(len(ar_J_H)):
         ax0.scatter(ar_J_H[i], ar_Hw_H[i], s=5)#, label='Av = '+str(Av_arr[i]))
-    
+
     ax0.plot(x_pl, y_pl, ls='--', c='black', lw=1)
     ax0.text(x_pl[int((len(x_pl)*0.3))], y_pl[int((len(y_pl)*0.1))],
              pl_txt1, fontsize=12)
@@ -350,7 +368,7 @@ if __name__ == '__main__':
         print(
             'ex) '+sys.argv[0]+' 9000 15000')
 
-    
+
     res, sigma, colors, ar_J_H, ar_Hw_H, residuals=compute_Hw_relation(Hw_l, Hw_u)
     plot_Hwfit(Hw_l,Hw_u,res, sigma, colors, ar_J_H, ar_Hw_H, residuals)
 
