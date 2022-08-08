@@ -157,7 +157,8 @@ def A_lambda(Av, x):
     """
     Ak_Av   = 0.112
     Ak      = Ak_Av*Av
-    coeff   = 5.2106*(x**(-2.112))
+    x_um    = x*1e-4
+    coeff   = 5.2106*(x_um**(-2.112))
 
     return coeff*Ak
 
