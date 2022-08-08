@@ -1,3 +1,8 @@
+version: "2"
+checks:
+  method-count:
+    config:
+      threshold: 30
 plugins:
   sonar-python:
     enabled: true
