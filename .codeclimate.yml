@@ -5,7 +5,10 @@ checks:
       threshold: 270  # default 250
   method-count:
     config:
-      threshold: 30  # default 20.
+      threshold: 30  # default 20
+  method-lines:
+    config:
+      threshold: 40  # default 25
 plugins:
   sonar-python:
     enabled: true
