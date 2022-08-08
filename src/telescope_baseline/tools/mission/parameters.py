@@ -7,7 +7,7 @@ import pkg_resources
 from telescope_baseline.dataclass.efficiency import Efficiency
 
 
-# xxx_1
+# xxx_2
 
 class Parameters:
     """This class is parameter holder
