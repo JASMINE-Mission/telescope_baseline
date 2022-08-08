@@ -9,7 +9,9 @@ import os
 import pkgutil
 from io import BytesIO
 
-#-- load spectra files here
+# -- load spectra files here
+
+
 def load_spectra(file_path):
     """load spectra files
 
@@ -20,6 +22,7 @@ def load_spectra(file_path):
         loaded spectral data
     """
     return np.loadtxt(file_path, comments='#', dtype='f8').T
+
 
 def loadspec_map_multi(dir_spectra=None):
     """function for multiprocessing of load_spectra
@@ -34,9 +37,9 @@ def loadspec_map_multi(dir_spectra=None):
         ds = pkgutil.get_data('telescope_baseline', 'data/spectra')
         dir_spectra     = BytesIO(ds)
 
-    spectra_files = sorted(glob.glob(dir_spectra+"/*"))
+    spectra_files = sorted(glob.glob(dir_spectra + "/*"))
     p   = Pool(os.cpu_count())
-    data_spec   = p.map(load_spectra, spectra_files) # map で並列読み込み
+    data_spec   = p.map(load_spectra, spectra_files)  # map で並列読み込み
     p.close()
     return data_spec
 
@@ -51,21 +54,22 @@ def cal_photon(input_arrays):
     Returns:
         relative photon counts
     """
-    spectra_array,filter_func,Av    = input_arrays
+    spectra_array, filter_func, Av    = input_arrays
 
-    ff  = interpolate.interp1d(x=filter_func[1],\
-                               y=filter_func[2],kind="cubic")
+    ff  = interpolate.interp1d(x=filter_func[1],
+                               y=filter_func[2], kind="cubic")
 
-    spec_narrow     = spectra_array[:,((filter_func[1,0]<spectra_array[0])&\
-                                       (spectra_array[0]<filter_func[1,-1]))]
+    spec_narrow     = spectra_array[:, ((filter_func[1, 0] < spectra_array[0]) &
+                                       (spectra_array[0] < filter_func[1, -1]))]
 
-    transmit_f  = ff(spec_narrow[0])*spec_narrow[1] #transmitted flux
+    transmit_f  = ff(spec_narrow[0]) * spec_narrow[1]  # transmitted flux
     dx          = np.diff(spec_narrow[0])
 
-    extinction  =  10** (-1*A_lambda(Av, spec_narrow[0,:-1])/2.5)
-    photon      = np.sum(transmit_f[:-1] * dx * spec_narrow[0,:-1] * extinction)
+    extinction  =  10 ** (-1 * A_lambda(Av, spec_narrow[0, :-1]) / 2.5)
+    photon      = np.sum(transmit_f[:-1] * dx * spec_narrow[0, :-1] * extinction)
 
     return photon
+
 
 def calphoton_map_multi(data_spec, filter_func, Av):
     """function for multiprocessing of cal_photon
@@ -78,7 +82,7 @@ def calphoton_map_multi(data_spec, filter_func, Av):
     Returns:
         relative photon counts in array
     """
-    data_array  = [(x,filter_func,Av) for x in data_spec]
+    data_array  = [(x, filter_func, Av) for x in data_spec]
     xlen    = len(filter_func)
     ylen    = len(data_spec)
 
@@ -89,6 +93,7 @@ def calphoton_map_multi(data_spec, filter_func, Av):
     data_photon = np.array(data_photon, dtype='f8')
 
     return data_photon
+
 
 def load_filter(fl_J=None, fl_H=None):
     """load filter functions
@@ -117,10 +122,11 @@ def load_filter(fl_J=None, fl_H=None):
 
     fltJ    = np.loadtxt(fl_J, comments="#", dtype='f8').T
     fltH    = np.loadtxt(fl_H, comments="#", dtype='f8').T
-    fltJ[1] = fltJ[1]*1e4 #mic -> angstrom
-    fltH[1] = fltH[1]*1e4
+    fltJ[1] = fltJ[1] * 1e4  # mic -> angstrom
+    fltH[1] = fltH[1] * 1e4
 
-    return fltJ,fltH
+    return fltJ, fltH
+
 
 def Hw_func(lower, upper):
     """Hw band with box function
@@ -133,16 +139,17 @@ def Hw_func(lower, upper):
         filter function with box
 
     """
-    lw  = lower #angstrom
-    up  = upper #
-    nd  = 150 #number of data
+    lw  = lower  # angstrom
+    up  = upper
+    nd  = 150  # number of data
 
-    x   = np.linspace(lw-1000, up+1000, nd)
-    y   = np.where((lw <= x)&(x <= up),1.,0.)
-    index   = np.linspace(1,nd,nd)
-    Hw  = np.array((index,x,y))
+    x   = np.linspace(lw - 1000, up + 1000, nd)
+    y   = np.where((lw <= x) & (x <= up), 1., 0.)
+    index   = np.linspace(1, nd, nd)
+    Hw  = np.array((index, x, y))
 
     return Hw
+
 
 def A_lambda(Av, x):
     """extinction value in a given wavelength (angstrom)
@@ -156,11 +163,11 @@ def A_lambda(Av, x):
 
     """
     Ak_Av   = 0.112
-    Ak      = Ak_Av*Av
-    x_um    = x*1e-4
-    coeff   = 5.2106*(x_um**(-2.112))
+    Ak      = Ak_Av * Av
+    x_um    = x * 1e-4
+    coeff   = 5.2106 * (x_um**(-2.112))
 
-    return coeff*Ak
+    return coeff * Ak
 
 
 def A_lambda_linear(Av, x):
@@ -177,10 +184,10 @@ def A_lambda_linear(Av, x):
     Aj_Av   = 0.282
     Ak_Av   = 0.112
 
-    Aj  = Aj_Av*Av
-    Ak  = Ak_Av*Av
+    Aj  = Aj_Av * Av
+    Ak  = Ak_Av * Av
 
-    return ((x-12000)*Ak + (20000-x)*Aj)/(20000 - 12000)
+    return ((x - 12000) * Ak + (20000 - x) * Aj) / (20000 - 12000)
 
 
 def load_specA0V(spec_a0v=None):
@@ -219,27 +226,26 @@ def cal_colordata(dir_spec, J_filter, H_filter, Hw_l, Hw_u, Av_ar):
     data_spec   = loadspec_map_multi(dir_spec)
 
     # set range of Hw band
-    fil_Hw  = Hw_func(Hw_l, Hw_u) #
+    fil_Hw  = Hw_func(Hw_l, Hw_u)
 
     # zero magnitude spectra
-    spec_a0v    = load_specA0V(dir_spec+'/uka0v.dat')
-    fil_J,fil_H = load_filter(J_filter, H_filter)
+    spec_a0v    = load_specA0V(dir_spec + '/uka0v.dat')
+    fil_J, fil_H = load_filter(J_filter, H_filter)
 
     p_Jo    = cal_photon([spec_a0v, fil_J, 0])
     p_Ho    = cal_photon([spec_a0v, fil_H, 0])
     p_Hwo   = cal_photon([spec_a0v, fil_Hw, 0])
 
-
     lst_Hw_H     = []
     lst_J_H      = []
-    for Av in Av_ar: # -- roop for Av
+    for Av in Av_ar:  # -- roop for Av
         p_J     = calphoton_map_multi(data_spec, fil_J, Av)
         p_H     = calphoton_map_multi(data_spec, fil_H, Av)
         p_Hw    = calphoton_map_multi(data_spec, fil_Hw, Av)
 
-        rel_J   = -2.5*(np.log10(p_J) - np.log10(p_Jo))
-        rel_H   = -2.5*(np.log10(p_H) - np.log10(p_Ho))
-        rel_Hw  = -2.5*(np.log10(p_Hw) - np.log10(p_Hwo))
+        rel_J   = -2.5 * (np.log10(p_J) - np.log10(p_Jo))
+        rel_H   = -2.5 * (np.log10(p_H) - np.log10(p_Ho))
+        rel_Hw  = -2.5 * (np.log10(p_Hw) - np.log10(p_Hwo))
 
         J_H     = rel_J  - rel_H
         Hw_H    = rel_Hw - rel_H
@@ -250,4 +256,4 @@ def cal_colordata(dir_spec, J_filter, H_filter, Hw_l, Hw_u, Av_ar):
     result  = {"Hw-H": lst_Hw_H,
                "J-H": lst_J_H}
 
-    return  result
+    return result
