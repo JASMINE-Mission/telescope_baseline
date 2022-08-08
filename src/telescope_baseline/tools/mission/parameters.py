@@ -5,7 +5,6 @@ import numpy as np
 import pkg_resources
 
 from telescope_baseline.dataclass.efficiency import Efficiency
-# dummy comment
 
 class Parameters:
     """This class is parameter holder
