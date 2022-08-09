@@ -1,0 +1,16 @@
+{
+    "title": "LPF (Cut-on 1.10 um; Tr. 0.997; Trans. width 0.0167 um; polygonal line)",
+    "comment": "Reference JASMINE_HO_TN_HKZ_220513_filter.pdf",
+    "wavelength": [
+        0.85,
+        1.09165,
+        1.1083500000000002,
+        1.8
+    ],
+    "efficiency": [
+        0.0,
+        0.0,
+        0.997,
+        0.997
+    ]
+}

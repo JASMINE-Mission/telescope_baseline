@@ -18,7 +18,7 @@ def get_magdict(maglist=None):
 
     """
     magdict = {}
-    if(maglist is None):
+    if maglist is None:
         mn = pkgutil.get_data('telescope_baseline', 'data/mag.list')
         maglist = pd.read_csv(BytesIO(mn), delimiter=',')
     return maglist
@@ -29,14 +29,14 @@ def get_flux(band, mag, magdict):
 
     Args:
        band: band symbol (J,H, etc..)
-       mag: magnitude 
+       mag: magnitude
        maglist: infromation table of maglist
 
     Returns:
        flux (per-wavelength form, f_lambda) with the unit of astropy
 
     """
-    
+
     mask = magdict['band'] == band
     a = float(magdict['a'][mask].values[0])
     flux = 10**(a - 0.4*mag)*u.erg/u.s/(u.cm)**2/u.micron
@@ -52,14 +52,12 @@ def get_mag(band, flux, magdict):
        maglist: infromation table of maglist
 
     Returns:
-       mag: magnitude 
+       mag: magnitude
 
-    """    
+    """
     mask = magdict['band'] == band
     a = float(magdict['a'][mask].values[0])
     fluxcgs = flux.to(u.erg/u.s/(u.cm)**2/u.micron).value
     mag = 2.5*(a - np.log10(fluxcgs))
 
     return mag
-
-    
