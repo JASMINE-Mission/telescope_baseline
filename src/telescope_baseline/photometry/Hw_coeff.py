@@ -139,7 +139,25 @@ def set_range_Hw_band(lower, upper):
 
 
 def A_lambda(Av, x):
-    """A lambda
+    """calculate A lambda.
+
+    Args:
+        Av: Av
+        x: x
+
+    Returns:
+        A_lambda
+
+    """
+    Ak_Av   = 0.112
+    Ak      = Ak_Av*Av
+    x_um    = x*1e-4
+    coeff   = 5.2106*(x_um**(-2.112))
+
+    return coeff*Ak
+
+def A_lambda_linear(Av, x):
+    """calculate A lambda with linear law.
 
     Args:
         Av: Av
