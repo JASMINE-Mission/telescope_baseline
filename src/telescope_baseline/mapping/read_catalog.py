@@ -5,20 +5,20 @@ from astropy.coordinates import SkyCoord
 
 
 def read_jasmine_targets(hdffile):
-    """Read JASMINE catalog 
-        
+    """Read JASMINE catalog
+
         Args:
-            hdffile: HDF (ra,dec, ...) 
+            hdffile: HDF (ra,dec, ...)
 
         Returns:
             targets coordinate list (in radian), l in deg, b in deg, Hw
 
- 
+
         Notes:
             HDF file can be generated using jasmine_catalog, for instance, by the following example.
 
         Examples:
-            
+
             >>> import psycopg2 as sql
             >>> import pandas as pd
             >>> login = {
