@@ -2,6 +2,7 @@ name: pytest
 
 on:
   push
+    branches: [ "main", "develop" ]
 
 jobs:
   pytest:
