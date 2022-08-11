@@ -35,7 +35,7 @@ def read_jasmine_targets(hdffile):
 
     """
 
-    dat = pd.read_hdf(hdffile)
+    dat = pd.read_hdf(hdffile) #  hogehoge
     ra = dat["ra"].values
     dec = dat["dec"].values
     hw = dat["phot_hw_mag"].values
