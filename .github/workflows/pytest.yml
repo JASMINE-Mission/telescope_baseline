@@ -1,8 +1,7 @@
 name: pytest
 
 on:
-  push:
-    branches: [ "main", "develop" ]
+  push
 
 jobs:
   pytest:
