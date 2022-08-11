@@ -42,7 +42,7 @@ def read_jasmine_targets(hdffile):
     c = SkyCoord(ra=ra * u.degree, dec=dec * u.degree, frame='icrs')
     phi = c.galactic.l.radian
     theta = np.pi / 2.0 - c.galactic.b.radian
-    l= c.galactic.l.degree
+    l = c.galactic.l.degree
     b = c.galactic.b.degree
     l[l > 180] = l[l > 180] - 360
     return np.array([theta, phi]), l, b, hw
