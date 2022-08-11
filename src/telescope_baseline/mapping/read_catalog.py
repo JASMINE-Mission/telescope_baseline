@@ -3,6 +3,7 @@ import pandas as pd
 from astropy import units as u
 from astropy.coordinates import SkyCoord
 
+
 def read_jasmine_targets(hdffile):
     """Read JASMINE catalog 
         
@@ -33,17 +34,15 @@ def read_jasmine_targets(hdffile):
             >>> dat.to_hdf("cat.hdf", 'key', mode='w', complevel=5)
 
     """
-        
-    dat=pd.read_hdf(hdffile)
-    ra=dat["ra"].values
-    dec=dat["dec"].values
-    hw=dat["phot_hw_mag"].values
-    c = SkyCoord(ra=ra*u.degree, dec=dec*u.degree, frame='icrs')
-    phi=c.galactic.l.radian
-    theta=np.pi/2.0-c.galactic.b.radian
-    l=c.galactic.l.degree
-    b=c.galactic.b.degree
-    l[l>180]=l[l>180]-360
-    return np.array([theta,phi]),l,b, hw
 
-
+    dat = pd.read_hdf(hdffile)
+    ra = dat["ra"].values
+    dec = dat["dec"].values
+    hw = dat["phot_hw_mag"].values
+    c = SkyCoord(ra=ra * u.degree, dec=dec * u.degree, frame='icrs')
+    phi = c.galactic.l.radian
+    theta = np.pi / 2.0 - c.galactic.b.radian
+    l = c.galactic.l.degree
+    b = c.galactic.b.degree
+    l[l > 180] = l[l > 180] - 360
+    return np.array([theta, phi]), l, b, hw
