@@ -1,7 +1,7 @@
 name: cleanup
 
 on:
-  push
+  delete
 
 jobs:
   cleanup:
@@ -19,8 +19,6 @@ jobs:
       run: |
         echo $BRANCH
         echo ${BRANCH#refs/heads/}
-        mkdir -p tmp/${BRANCH#refs/heads/}
-        ls -al tmp
 #        rm -rf test_report/$BRANCH
       shell: bash
 
