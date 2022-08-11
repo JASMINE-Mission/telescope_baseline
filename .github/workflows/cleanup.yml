@@ -18,9 +18,9 @@ jobs:
         BRANCH: ${{ github.event.ref}}
       run: |
         echo $BRANCH
-        echo ${BRANCH#refs/heads}
-        mkdir -p test_report/${BRANCH#refs/heads}
-        ls -al test_report
+        echo ${BRANCH#refs/heads/}
+        mkdir -p tmp/${BRANCH#refs/heads/}
+        ls -al tmp
 #        rm -rf test_report/$BRANCH
       shell: bash
 
