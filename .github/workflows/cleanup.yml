@@ -11,23 +11,19 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: gh-pages
-        path: pages
-      id: check_out_pages_branch
-      continue-on-error: true
 
     - name: Cleanup per branch information
       env:
-        BRANCH: ${{ github.ref_name}}
-      id: pytest
-      continue-on-error: true
+        BRANCH: ${{ github.event.ref}}
       run: |
-        rm -rf pages/test_report/$BRANCH
+        echo $BRANCH
+        rm -rf test_report/$BRANCH
       shell: bash
 
-    - name: push pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ env.GITHUB_TOKEN }}
-        publish_dir: ./pages
+#    - name: push pages
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      uses: peaceiris/actions-gh-pages@v3
+#      with:
+#        github_token: ${{ env.GITHUB_TOKEN }}
+#        publish_dir: ./pages
