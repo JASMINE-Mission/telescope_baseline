@@ -18,7 +18,10 @@ jobs:
         BRANCH: ${{ github.event.ref}}
       run: |
         echo $BRANCH
-        rm -rf test_report/$BRANCH
+        echo ${BRANCH#refs/heads}
+        mkdir -p test_report/${BRANCH#refs/heads}
+        ls -al test_report
+#        rm -rf test_report/$BRANCH
       shell: bash
 
 #    - name: push pages
