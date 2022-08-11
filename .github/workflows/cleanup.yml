@@ -19,13 +19,15 @@ jobs:
       run: |
         echo $BRANCH
         echo ${BRANCH#refs/heads/}
-#        rm -rf test_report/$BRANCH
+        mkdir -p tmp/${BRANCH#refs/heads/}
+        ls -al tmp
+        rm -rf test_report/${BRANCH#refs/heads/}
       shell: bash
 
-#    - name: push pages
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      uses: peaceiris/actions-gh-pages@v3
-#      with:
-#        github_token: ${{ env.GITHUB_TOKEN }}
-#        publish_dir: ./pages
+    - name: push pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ env.GITHUB_TOKEN }}
+        publish_dir: ./pages
