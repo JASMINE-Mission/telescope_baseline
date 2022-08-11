@@ -1,11 +1,12 @@
 name: cleanup
 
 on:
-  delete
+  push
 
 jobs:
   cleanup:
     runs-on: ubuntu-latest
+
     steps:
     - name: checkout Pages branch
       uses: actions/checkout@v3
