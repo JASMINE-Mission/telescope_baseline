@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [ "main", "develop", "feature/modify_github_actions" ]
+    branches: [ "main", "develop" ]
   pull_request:
     branches: [ "main", "develop" ]
 
