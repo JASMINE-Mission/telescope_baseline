@@ -27,7 +27,7 @@ runs:
       run: |
         rm src/htmlcov/.gitignore
         rm -rf pages/test_report/$BRANCH
-        mv test_report/$BRANCH pages/test_report
+        cp -r test_report/* pages/test_report
         mv src/htmlcov pages/test_report/$BRANCH/
         pushd pages/test_report
         echo "<html><head><title>JASMINE Testing Report</title></head><body><h1>JASMINE TESTING REPORT</h1><ul>" > index.html
