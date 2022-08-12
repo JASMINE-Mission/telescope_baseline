@@ -1,8 +1,9 @@
 import pytest
+from test_pipeline import get_fits_file_name
 
 from telescope_baseline.tools.pipeline_v2.fitsstorage import FitsStorage
 
 
 def test_load():
-    di = FitsStorage.load('telescope_baseline/tools/pipeline/for_test.fits')
+    di = FitsStorage.load(get_fits_file_name())
     assert(di != None)

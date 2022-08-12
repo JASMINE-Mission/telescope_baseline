@@ -1,14 +1,16 @@
+import os
+
 import pytest
 from telescope_baseline.tools.pipeline_v2.astrometriccatalogue import AstrometricCatalogue
 from telescope_baseline.tools.pipeline_v2.detectorimagecatalogue import DetectorImageCatalogue
-from telescope_baseline.tools.pipeline_v2.c import C
+from telescope_baseline.tools.pipeline_v2.pipeline import Pipeline
 from telescope_baseline.tools.pipeline_v2.fitsstorage import FitsStorage
 from telescope_baseline.tools.pipeline_v2.ontheskyposition import OnTheSkyPosition
 from astropy.wcs import WCS
 
 
 def test_simulation():
-    c = C()
+    c = Pipeline()
     a = AstrometricCatalogue([
         OnTheSkyPosition(),
         OnTheSkyPosition(),
@@ -17,10 +19,23 @@ def test_simulation():
     assert(b != None)
 
 
+def get_fits_file_name():
+    file = os.getcwd()
+    sep = file.split('\\')
+    file = ""
+    for i in range(len(sep)):
+        file = file + sep[i] + "\\"
+        if sep[i] == 'telescope_baseline':
+            break
+    file = file + "src\\telescope_baseline\\tools\\pipeline\\for_test.fits"
+    return file
+
+
 def test_analysis():
-    c = C()
+    c = Pipeline()
+    file = get_fits_file_name()
     d = DetectorImageCatalogue([
-        FitsStorage.load('telescope_baseline/tools/pipeline/for_test.fits')
+        FitsStorage.load(file)
     ])
     w = WCS(naxis=2)
     w.wcs.crpix = [256, 256]  # Reference point in pixel

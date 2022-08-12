@@ -47,7 +47,7 @@ def fit_astrometry(parameter, t, lon, lat):
         residual[i] = (lon[i] - lont[i]) ** 2 + (lat[i] - latt[i]) ** 2
     return residual
 
-class C:
+class Pipeline:
     def simulation(self, a: AstrometricCatalogue) -> DetectorImageCatalogue:
         return DetectorImageCatalogue()
 
@@ -67,6 +67,7 @@ class C:
             londata.append(sp.coord.barycentricmeanecliptic.lon.rad)
             latdata.append(sp.coord.barycentricmeanecliptic.lat.rad)
         parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
+        # TODO: result should be the attributes of AstrometricCatalogue.
         result = optimize.leastsq(fit_astrometry, parameter, args=(t, londata, latdata))
         return AstrometricCatalogue()
 
