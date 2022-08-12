@@ -3,7 +3,7 @@ if __name__ == "__main__":
     import pkg_resources
     from telescope_baseline.mapping.read_catalog import read_jasmine_targets
     from telescope_baseline.mapping.mapset import ditheringmap, inout_convexesset
-    from telescope_baseline.mapping.plot_mapping import plot_targets, plot_n_targets, hist_n_targets, plot_ae_targets, \
+    from telescope_baseline.mapping.plot_mapping import plot_n_targets, hist_n_targets, plot_ae_targets, \
         hist_ae_targets, convert_to_convexes, plot_convexes
     import numpy as np
 
