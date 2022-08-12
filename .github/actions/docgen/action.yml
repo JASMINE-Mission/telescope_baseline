@@ -15,6 +15,8 @@ runs:
         sphinx-build -b singlehtml ./apidoc/ ./apidoc/html
         rm -rf pages/apidoc
         mv ./apidoc/html pages/apidoc
+        ls -altr pages
+        ls -altr pages/apidoc
       shell: bash
 
     - name: Publish apidoc
