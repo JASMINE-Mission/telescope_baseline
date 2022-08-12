@@ -54,3 +54,7 @@ Test cases are provided in the `tests` directory. We use `pytest` to check the c
 $ cd tests
 $ pytest
 ```
+
+### API
+
+https://jasmine-mission.github.io/telescope_baseline/apidoc/index.html
