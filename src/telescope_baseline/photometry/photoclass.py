@@ -5,7 +5,6 @@ from telescope_baseline.tools.mission.parameters import Parameters
 class InstClass(object):
     """Class for Instrumental Setting used in exocounts, matched to InstClass in exocounts but using Parameters."""
 
-
     def __init__(self):
 
         par = Parameters.get_instance()
@@ -33,7 +32,6 @@ class TargetClass(object):
 
 class ObsClass(object):
     """Class for Observational Procedure."""
-
 
     def __init__(self, Inst, Target):
 
