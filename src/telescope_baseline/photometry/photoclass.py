@@ -4,9 +4,11 @@ from telescope_baseline.tools.mission.parameters import Parameters
 
 class InstClass(object):
     """Class for Instrumental Setting used in exocounts, matched to InstClass in exocounts but using Parameters."""
+
+
     def __init__(self):
-        
-        par = Parameters.get_instance()    
+
+        par = Parameters.get_instance()
         self.lamb = (par.long_wavelength_limit + par.short_wavelength_limit) / 2.0 * u.m
         self.dlam = (par.long_wavelength_limit - par.short_wavelength_limit) * u.m
         self.dtel = par.effective_pupil_diameter*u.m
@@ -28,15 +30,16 @@ class TargetClass(object):
         self.d = None
         self.name = 'No Name'
         self.contrast = 1
-        
+
 class ObsClass(object):
     """Class for Observational Procedure."""
+
 
     def __init__(self, Inst, Target):
 
         self.inst = Inst
         self.target = Target
-        
+
         # INPUTS
         self.mu = None
         self.texposure = None  # th
@@ -44,7 +47,7 @@ class ObsClass(object):
         self.napix = None
         self.effnpix = None  # conversion for the brightest pixel
         self.fgaperture = None  # for foreground noise
-        ####OUTPUTS####
+        # OUTPUTS
         self.nphoton_exposure = None
         self.nphoton_frame = None
         self.flux = None
@@ -100,5 +103,3 @@ class ObsClass(object):
                                        self.texposure*(self.inst.dtel/2.0)**2*np.pi*self.inst.throughput).to(1)
         except:
             self.nphoton_foreground = None
-
-
