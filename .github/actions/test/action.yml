@@ -23,7 +23,6 @@ runs:
       shell: bash
 
     - name: Generate Test Report Index
-      if: ${{ github.event_name == 'push' }}
       env:
         BRANCH: ${{ github.ref_name}}
         REPOSITORY: ${{ github.repository}}
@@ -39,14 +38,13 @@ runs:
       shell: bash
 
     - name: Publish Test Report
-      if: ${{ github.event_name == 'push' }}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ env.GITHUB_TOKEN }}
         publish_dir: ./pages
 
     - name: Send Coverage Report to CodeClimate
-      if: ${{ steps.pytest.outcome == 'success' && github.event_name == 'push'}}
+      if: ${{ steps.pytest.outcome == 'success'}}
       uses: paambaati/codeclimate-action@v3.0.0
       env:
         CC_TEST_REPORTER_ID: ${{ env.CC_TEST_REPORTER_ID }}
