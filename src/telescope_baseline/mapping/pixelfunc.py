@@ -2,6 +2,8 @@
 
 """
 import numpy as np
+
+
 def lonlat2thetaphi(lon, lat):
     """Transform longitude and latitude (deg) into co-latitude and longitude (rad)
     Args:
@@ -23,6 +25,7 @@ def thetaphi2lonlat(theta, phi):
     """
     return np.degrees(phi), 90.0 - np.degrees(theta)
 
+
 def vec2ang(vectors, lonlat=False):
     """vec2ang: vectors [x, y, z] -> theta[rad], phi[rad], Borrowed from Healpy GPL-2.0 license, https://github.com/healpy/
     Args:
@@ -42,6 +45,7 @@ def vec2ang(vectors, lonlat=False):
     else:
         return theta, phi
 
+
 def ang2vec(theta, phi, lonlat=False):
     """ang2vec : convert angles to 3D position vector, Borrowed from Healpy GPL-2.0 license, https://github.com/healpy/
     Args:
@@ -57,8 +61,9 @@ def ang2vec(theta, phi, lonlat=False):
     sintheta = np.sin(theta)
     return np.array([sintheta * np.cos(phi), sintheta * np.sin(phi), np.cos(theta)]).T
 
+
 def check_theta_valid(theta):
     """Raises exception if theta is not within 0 and pi"""
     theta = np.asarray(theta)
     if not ((theta >= 0).all() and (theta <= np.pi + 1e-5).all()):
-        raise ValueError("THETA is out of range [0,pi]: theta="+str(theta))
+        raise ValueError("THETA is out of range [0,pi]: theta=" + str(theta))
