@@ -1,9 +1,9 @@
 if __name__ == "__main__":
     import pkg_resources           
     from telescope_baseline.mapping.read_catalog import read_jasmine_targets
-    from telescope_baseline.mapping.plot_mapping import plot_targets, plot_n_targets, hist_n_targets, plot_ae_targets, hist_ae_targets, convert_to_convexes
+    from telescope_baseline.mapping.plot_mapping import plot_n_targets, hist_n_targets, plot_ae_targets, \
+        hist_ae_targets, convert_to_convexes
     from telescope_baseline.mapping.mapset import fillgap_large_frame, inout_fillgap_large_frame
-    import matplotlib.pyplot as plt
     import numpy as np
     import tqdm
     each_width_mm = 19.52
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     hdf = pkg_resources.resource_filename('telescope_baseline', 'data/cat_hw14.5.hdf')
     targets, l, b, hw = read_jasmine_targets(hdf)
     Nstar = 10 ** (hw / -2.5) / 10 ** (12.5 / -2.5)
-    
+
     Ng = 11
     dizLmax = 1.5
     grid = np.linspace(-dizLmax, dizLmax, Ng)
@@ -27,7 +27,8 @@ if __name__ == "__main__":
     nans = np.zeros_like(hw)
     pos = []
     for i in tqdm.tqdm(range(0, Ng * Ng)):
-        fillgap_large_convexes = fillgap_large_frame(l_center, b_center, PA_deg, width_mm=width_mm, each_width_mm=each_width_mm, EFL_mm=EFL_mm, left=gx[i], top=gy[i])
+        fillgap_large_convexes = fillgap_large_frame(l_center, b_center, PA_deg, width_mm=width_mm,
+                                                     each_width_mm=each_width_mm, EFL_mm=EFL_mm, left=gx[i], top=gy[i])
         ans = inout_fillgap_large_frame(targets, fillgap_large_convexes)
         nans_each = np.sum(ans, axis=(0, 1, 2))
         nans = nans + nans_each
@@ -37,10 +38,10 @@ if __name__ == "__main__":
     Nlshape = 3  # # of Lshapes to construct the large frames
     accuracy_per_oneframe = 6000  # uas
     scale = 50.0 * accuracy_per_oneframe / Nlargeframe / Nlshape / (Ng * Ng)
-    
+
     print("Nobs=", len(nans[nans > 0]))
     ac = 6000  # micro arcsec per frame
-    
+
     final_ac = ac / np.sqrt(nans * scale) / np.sqrt(Nstar)
     print(np.shape(l), np.shape(b), np.shape(final_ac))
     
