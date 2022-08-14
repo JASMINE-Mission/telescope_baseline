@@ -1,6 +1,10 @@
+version: "2"
 plugins:
   sonar-python:
     enabled: true
+    checks:
+      python:S107:
+        enabled: false
   pep8:
     enabled: true
   radon:
