@@ -5,7 +5,7 @@ import os
 
 def test_it():
     if os.path.isfile("map.svg"):
-            os.remove("map.svg")
+        os.remove("map.svg")
     make_image()
     assert(filecmp.cmp("map.svg", "../tests/obsplan/out.svg"))
     os.remove("map.svg")
