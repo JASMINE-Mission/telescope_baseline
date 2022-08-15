@@ -16,7 +16,7 @@ from docopt import docopt
 
 
 class Mapsim1:
-    def __init__(self, efl_per_cellsize:int = 6320, outfile:str = 'map.svg'):
+    def __init__(self, efl_per_cellsize: int = 6320, outfile: str = 'map.svg'):
         self.efl_per_cellsize = efl_per_cellsize
         self.outfile = outfile
 
@@ -113,13 +113,13 @@ class Mapsim1:
         disk.fill('blue', opacity=0.1)
 
         self.addfield(-self.gc + self.chip_spacing_a / 2 + self.num_pixels * self.pfov / 2, -self.gc +
-                 self.chip_spacing_b / 2 + self.num_pixels * self.pfov / 2, 0, dwg, 0)
+                      self.chip_spacing_b / 2 + self.num_pixels * self.pfov / 2, 0, dwg, 0)
         self.addfield(-self.gc + self.chip_spacing_a / 2 + self.num_pixels * self.pfov / 2, -self.gc +
-                 self.chip_spacing_b / 2 * 3 + self.num_pixels * self.pfov / 2, 0, dwg, 1)
+                      self.chip_spacing_b / 2 * 3 + self.num_pixels * self.pfov / 2, 0, dwg, 1)
         self.addfield(-self.gc + self.chip_spacing_a / 2 + self.num_pixels * self.pfov / 2, -self.gc +
-                 self.chip_spacing_b / 2 * 7 + self.num_pixels * self.pfov / 2, 0, dwg, 1)
+                      self.chip_spacing_b / 2 * 7 + self.num_pixels * self.pfov / 2, 0, dwg, 1)
         self.addfield(-self.gc + self.chip_spacing_a * 3 / 2 + self.num_pixels * self.pfov / 2, - self.gc +
-                 self.chip_spacing_b / 2 * 7 + self.num_pixels * self.pfov / 2, 0, dwg, 1)
+                      self.chip_spacing_b / 2 * 7 + self.num_pixels * self.pfov / 2, 0, dwg, 1)
         dwg.save()
 
 
