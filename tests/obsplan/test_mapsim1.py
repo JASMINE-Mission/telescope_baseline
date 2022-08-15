@@ -1,12 +1,11 @@
-import pytest
-from telescope_baseline.obsplan.mapsim1 import make_image
+from telescope_baseline.obsplan.mapsim1 import Mapsim1
 import filecmp
 import os
 
-def test_it():
+def test_make_image():
     if os.path.isfile("map.svg"):
         os.remove("map.svg")
-    make_image()
+    Mapsim1().make_image()
     assert(filecmp.cmp("map.svg", "../tests/obsplan/out.svg"))
     os.remove("map.svg")
 
