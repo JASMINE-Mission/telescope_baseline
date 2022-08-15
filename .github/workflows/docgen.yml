@@ -1,0 +1,24 @@
+name: docgen
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+
+jobs:
+  docgen:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9
+
+    - name: get dependencies
+      uses: ./.github/actions/get_dependencies
+
+    - name: documentation build
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: ./.github/actions/docgen

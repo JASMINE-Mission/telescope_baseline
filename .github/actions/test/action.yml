@@ -1,14 +1,6 @@
 runs:
   using: "Composite"
   steps:
-    - name: checkout Pages branch
-      uses: actions/checkout@v3
-      with:
-        ref: gh-pages
-        path: pages
-      id: check_out_pages_branch
-      continue-on-error: true
-
     - name: Test with pytest
       env:
         BRANCH: ${{ github.ref_name}}
@@ -18,9 +10,15 @@ runs:
         python -m pip install pytest pytest-html pytest-cov
         pushd src
         cp ../.coveragerc .
-        python -m pytest ../tests --junitxml=../pages/test_report/$BRANCH/pytest.xml --html=../pages/test_report/$BRANCH/pytest.html --cov=. --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
+        python -m pytest ../tests --junitxml=../test_report/$BRANCH/pytest.xml --html=../test_report/$BRANCH/pytest.html --cov=. --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
         popd
       shell: bash
+
+    - name: checkout Pages branch
+      uses: actions/checkout@v3
+      with:
+        ref: gh-pages
+        path: pages
 
     - name: Generate Test Report Index
       env:
@@ -28,7 +26,8 @@ runs:
         REPOSITORY: ${{ github.repository}}
       run: |
         rm src/htmlcov/.gitignore
-        rm -rf pages/test_report/$BRANCH/htmlcov
+        rm -rf pages/test_report/$BRANCH
+        cp -r test_report/* pages/test_report
         mv src/htmlcov pages/test_report/$BRANCH/
         pushd pages/test_report
         echo "<html><head><title>JASMINE Testing Report</title></head><body><h1>JASMINE TESTING REPORT</h1><ul>" > index.html
@@ -42,6 +41,7 @@ runs:
       with:
         github_token: ${{ env.GITHUB_TOKEN }}
         publish_dir: ./pages
+        keep_files: true
 
     - name: Send Coverage Report to CodeClimate
       if: ${{ steps.pytest.outcome == 'success'}}

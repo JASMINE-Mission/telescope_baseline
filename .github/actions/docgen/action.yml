@@ -1,0 +1,30 @@
+runs:
+  using: "Composite"
+  steps:
+    - name: make apidoc
+      continue-on-error: true
+      run: |
+        python -m pip install sphinx
+        sphinx-apidoc -F -H telescope_baseline -o apidoc src
+        sphinx-build -b singlehtml ./apidoc/ ./apidoc/html
+      shell: bash
+
+    - name: checkout Pages branch
+      uses: actions/checkout@v3
+      with:
+        ref: gh-pages
+        path: pages
+
+    - name: move apidoc
+      continue-on-error: true
+      run: |
+        rm -rf pages/apidoc
+        mv ./apidoc/html pages/apidoc
+      shell: bash
+
+    - name: Publish apidoc
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ env.GITHUB_TOKEN }}
+        publish_dir: ./pages
+        keep_files: true
