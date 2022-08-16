@@ -2,7 +2,7 @@ from astropy.time import Time
 
 class OnDetectorPosition:
     def __init__(self, n: int, x: float, y: float, mag: float, datetime: Time):
-        self.__id = n
+        self.__exposure_id = n
         self.__x = x
         self.__y = y
         self.__mag = mag
@@ -17,8 +17,8 @@ class OnDetectorPosition:
         return self.__y
 
     @property
-    def id(self):
-        return self.__id
+    def exposure_id(self):
+        return self.__exposure_id
 
     @property
     def mag(self):

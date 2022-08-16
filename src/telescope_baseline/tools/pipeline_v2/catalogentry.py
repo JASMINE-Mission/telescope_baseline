@@ -2,24 +2,24 @@ from astropy.coordinates import SkyCoord
 import astropy.units as u
 
 class CatalogueEntry:
-    def __init__(self, number, coord: SkyCoord, mag):
+    def __init__(self, stellar_id, coord: SkyCoord, mag):
         """The constructor
 
         Args:
-            number: id of the entry.
+            stellar_id: id of the entry.
             coord: astropy.coordinates.SkyCoord object
             mag: magnitude of the star
 
         TODO: Need to consistent implementation of what frame we should use.
 
         """
-        self.__id = number
+        self.__stellar_id = stellar_id
         self.__coord = coord
         self.__mag = mag
 
     @property
-    def id(self):
-        return self.__id
+    def stellar_id(self):
+        return self.__stellar_id
 
     @property
     def coord(self):

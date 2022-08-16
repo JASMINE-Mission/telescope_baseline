@@ -1,7 +1,7 @@
 from astropy.time import Time
 
 class SkyPosition:
-    def __init__(self, num, coord, mag, datetime: Time):
+    def __init__(self, num, orbit_id, coord, mag, datetime: Time):
         """Constructor
 
         Args:
@@ -9,14 +9,19 @@ class SkyPosition:
             coord: coordinate
             mag: magnitude
         """
-        self.__id = num
+        self.__stellar_id = num
+        self.__orbit_id = orbit_id
         self.__coord = coord
         self.__mag = mag
         self.__datetime = datetime
 
     @property
-    def id(self):
-        return self.__id
+    def stellar_id(self):
+        return self.__stellar_id
+
+    @property
+    def orbit_id(self):
+        return self.__orbit_id
 
     @property
     def coord(self):

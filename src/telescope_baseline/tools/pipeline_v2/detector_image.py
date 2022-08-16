@@ -27,6 +27,11 @@ class DetectorImage:
         stars_tbl['y'] = y[mask]
         nddata = NDData(data=data)
         e_psf_stars = extract_stars(nddata, stars_tbl, size=window_size)
+        # TODO need to convert A/D value to photon count
+        e_psf_builder = EPSFBuilder(oversampling=4, maxiters=3, progress_bar=True)
+        es = e_psf_stars
+        e_psf_model, e_psf_stars = e_psf_builder(es)
+        # TODO need to implement cross-match
         position_list = []
         for s in e_psf_stars.all_stars:
             # TODO IDもこれじゃ駄目〜
