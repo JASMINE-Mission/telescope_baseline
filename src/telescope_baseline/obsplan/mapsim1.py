@@ -55,17 +55,15 @@ class Mapsim1:
     # Add a field
     def addfield(self, center_x, center_y, position_angle, dwg, id):
         field = dwg.add(dwg.g(id='field{}'.format(id)))
-        for i in range(4):
+        biases = [[-1, -1],
+                  [-1, 1],
+                  [1, -1],
+                  [1, 1]]
+        for bias in biases:
             x = np.empty(4)
             y = np.empty(4)
-            if i == 0 or i == 1:
-                x[0] = -self.chip_spacing_a / 2 - self.num_pixels * self.pfov / 2
-            else:
-                x[0] = self.chip_spacing_a / 2 - self.num_pixels * self.pfov / 2
-            if i == 0 or i == 2:
-                y[0] = -self.chip_spacing_b / 2 - self.num_pixels * self.pfov / 2
-            else:
-                y[0] = self.chip_spacing_b / 2 - self.num_pixels * self.pfov / 2
+            x[0] = self.chip_spacing_a / 2 * bias[0] - self.num_pixels * self.pfov / 2
+            y[0] = self.chip_spacing_b / 2 * bias[1] - self.num_pixels * self.pfov / 2
             x[1] = x[0] + self.num_pixels * self.pfov
             x[2] = x[1]
             x[3] = x[0]
