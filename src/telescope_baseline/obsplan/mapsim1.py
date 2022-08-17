@@ -47,10 +47,10 @@ class Mapsim1:
         self.gdh = 0.3
 
     def degxys(self, x, y):
-        return (x * self.deg * self.mm, y * self.deg * self.mm)
+        return x * self.deg * self.mm, y * self.deg * self.mm
 
     def degxy(self, x, y):
-        return ((x * self.deg * self.mm + self.xcenter, y * self.deg * self.mm + self.ycenter))
+        return x * self.deg * self.mm + self.xcenter, y * self.deg * self.mm + self.ycenter
 
     # Add a field
     def addfield(self, center_x, center_y, position_angle, dwg, id):
