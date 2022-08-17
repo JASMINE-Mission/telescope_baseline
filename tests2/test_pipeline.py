@@ -13,6 +13,7 @@ from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 from astropy.wcs import WCS
+from pathlib import Path
 
 
 def test_simulation():
@@ -41,14 +42,15 @@ def test_simulation():
 
 
 def get_fits_file_name():
-    file = os.getcwd()
-    sep = file.split('\\')
-    file = ""
-    for i in range(len(sep)):
-        file = file + sep[i] + "\\"
-        if sep[i] == 'telescope_baseline':
-            break
-    file = file + "src\\telescope_baseline\\tools\\pipeline\\for_test.fits"
+    a = Path.cwd()
+    if 'telescope_baseline' not in str(a):
+        print("Invalid path" + str(a))
+        raise OSError()
+    while a.name != 'telescope_baseline':
+        print(a)
+        a = a.parent
+    print(a)
+    file = Path(a, 'src', 'telescope_baseline', 'tools', 'pipeline', 'for_test.fits')
     return file
 
 
