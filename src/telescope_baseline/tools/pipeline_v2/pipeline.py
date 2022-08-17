@@ -1,6 +1,7 @@
 from astropy.io import fits
 
 from telescope_baseline.tools.pipeline_v2.astrometriccatalogue import AstrometricCatalogue
+from telescope_baseline.tools.pipeline_v2.detector_image import DetectorImage
 from telescope_baseline.tools.pipeline_v2.detectorimagecatalogue import DetectorImageCatalogue
 from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
 from telescope_baseline.tools.pipeline_v2.ontheskyposition import OnTheSkyPosition
@@ -70,7 +71,7 @@ def position_at_certain_time(coord: SkyCoord, t: Time):
 
 class Pipeline:
     def simulation(self, a: AstrometricCatalogue, t: list[Time], wlist: list[WCSwId], pix_max: int, psf_w: float)\
-            -> DetectorImageCatalogue:
+            -> list[DetectorImageCatalogue]:
         otsps = self._simulation_astrometric_catalogue_2_on_the_sky_position(a, t)
 
         sii = []
@@ -79,20 +80,31 @@ class Pipeline:
             si = self._simulation_on_the_sky_position_2_stellar_images(i, otsp, pix_max, wlist)
             sii.append(si)
         # sii[orbit][exposure]: StellarImage
+        dic = []
         for i in range(len(sii)):
-            for j in range(len(sii[i])):
-                dp = sii[i][j].detector_posotions
-                a = np.random.uniform(0.0, 10.0, (pix_max, pix_max))
-                for s in range(len(dp)):
-                    for k in range(int(dp[s].mag)):
-                        xp = int(psf_w * np.random.randn() + dp[s].y + 0.5)
-                        yp = int(psf_w * np.random.randn() + dp[s].x + 0.5)
-                        if 0 <= xp < pix_max and 0 <= yp < pix_max:
-                            a[xp][yp] += 1
-                hdu = fits.PrimaryHDU()
-                hdu.data = a
-                hdu.writeto("tmp" + str(i) + "_" + str(j) + ".fits", overwrite=True)
-        return DetectorImageCatalogue()
+            si0 = sii[i]
+            di = []
+            for j in range(len(si0)):
+                si00 = si0[j]
+                di0 = self._simulation_stellar_image_2_detector_image(pix_max, psf_w, si00)
+                di.append(di0)
+            dic.append(DetectorImageCatalogue(di))
+        #        hdu.writeto("tmp" + str(i) + "_" + str(j) + ".fits", overwrite=True)
+        return dic
+
+    def _simulation_stellar_image_2_detector_image(self, pix_max, psf_w, si00):
+        dp = si00.detector_posotions
+        a = np.random.uniform(0.0, 10.0, (pix_max, pix_max))
+        for s in range(len(dp)):
+            for k in range(int(dp[s].mag)):
+                xp = int(psf_w * np.random.randn() + dp[s].y + 0.5)
+                yp = int(psf_w * np.random.randn() + dp[s].x + 0.5)
+                if 0 <= xp < pix_max and 0 <= yp < pix_max:
+                    a[xp][yp] += 1
+        hdu = fits.PrimaryHDU()
+        hdu.data = a
+        di0 = DetectorImage(hdu)
+        return di0
 
     def _simulation_on_the_sky_position_2_stellar_images(self, i, otsp, pix_max, wlist):
         sky_positions = otsp.sky_positions
