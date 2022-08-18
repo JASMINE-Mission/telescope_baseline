@@ -294,7 +294,11 @@ def compute_Hw_relation(Hw_l, Hw_u):
        Hw-H array
        fitting residuals
     """
-    data_spec = read_map_multi(read_spectra_all())
+    return _compute_Hw_relation(Hw_l, Hw_u, read_spectra_all())
+
+
+def _compute_Hw_relation(Hw_l, Hw_u, spectra_all):
+    data_spec = read_map_multi(spectra_all)
     fil_Hw = set_range_Hw_band(Hw_l, Hw_u)
     fil_J, fil_H = load_filter()
     p_Jo, p_Ho, p_Hwo = calc_zero_magnitude_spectra(fil_J, fil_H, fil_Hw)
@@ -309,7 +313,6 @@ def compute_Hw_relation(Hw_l, Hw_u):
               'std': sigma,
               'chi2': res.fun}
     print(result)
-
     return res, sigma, colors, ar_J_H, ar_Hw_H, residuals
 
 
