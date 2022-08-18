@@ -41,6 +41,7 @@ def read_map_multi(spectra_all):
     p = Pool(os.cpu_count())
     data_spec = p.map(load_stellar_spectra, spectra_all)
     p.close()
+    p.join()
     return data_spec
 
 
