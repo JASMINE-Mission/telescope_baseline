@@ -93,6 +93,7 @@ def calphoton_map_multi(data_spec, filter_func, Av):
 
     data_photon = p.map(cal_photon, data_array)
     p.close()
+    p.join()
     data_photon = np.array(data_photon, dtype='f8')
 
     return data_photon
