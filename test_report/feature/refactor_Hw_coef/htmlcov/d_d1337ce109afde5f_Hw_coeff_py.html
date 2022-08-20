@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="d_d1337ce109afde5f_convmag_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.4.4</a>,
-            created at 2022-08-20 08:45 +0000
+            created at 2022-08-20 09:23 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -202,7 +202,7 @@
     <p class="run"><span class="n"><a id="t118" href="#t118">118</a></span><span class="t">    <span class="key">return</span> <span class="nam">fltj</span><span class="op">,</span> <span class="nam">flth</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t"><span class="key">def</span> <span class="nam">set_range_Hw_band</span><span class="op">(</span><span class="nam">lower</span><span class="op">,</span> <span class="nam">upper</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t"><span class="key">def</span> <span class="nam">set_range_hw_band</span><span class="op">(</span><span class="nam">lower</span><span class="op">,</span> <span class="nam">upper</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">    <span class="str">"""set range of Hw band</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t"><span class="str">    Args:</span>&nbsp;</span><span class="r"></span></p>
@@ -386,7 +386,7 @@
     <p class="pln"><span class="n"><a id="t302" href="#t302">302</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t303" href="#t303">303</a></span><span class="t"><span class="key">def</span> <span class="nam">_compute_hw_relation</span><span class="op">(</span><span class="nam">hw_l</span><span class="op">,</span> <span class="nam">hw_u</span><span class="op">,</span> <span class="nam">spectra_all</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t304" href="#t304">304</a></span><span class="t">    <span class="nam">data_spec</span> <span class="op">=</span> <span class="nam">read_map_multi</span><span class="op">(</span><span class="nam">spectra_all</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t305" href="#t305">305</a></span><span class="t">    <span class="nam">fil_hw</span> <span class="op">=</span> <span class="nam">set_range_Hw_band</span><span class="op">(</span><span class="nam">hw_l</span><span class="op">,</span> <span class="nam">hw_u</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t305" href="#t305">305</a></span><span class="t">    <span class="nam">fil_hw</span> <span class="op">=</span> <span class="nam">set_range_hw_band</span><span class="op">(</span><span class="nam">hw_l</span><span class="op">,</span> <span class="nam">hw_u</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t306" href="#t306">306</a></span><span class="t">    <span class="nam">fil_j</span><span class="op">,</span> <span class="nam">fil_h</span> <span class="op">=</span> <span class="nam">load_filter</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t307" href="#t307">307</a></span><span class="t">    <span class="nam">p_jo</span><span class="op">,</span> <span class="nam">p_ho</span><span class="op">,</span> <span class="nam">p_hwo</span> <span class="op">=</span> <span class="nam">calc_zero_magnitude_spectra</span><span class="op">(</span><span class="nam">fil_j</span><span class="op">,</span> <span class="nam">fil_h</span><span class="op">,</span> <span class="nam">fil_hw</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t308" href="#t308">308</a></span><span class="t">    <span class="nam">ar_j_h</span><span class="op">,</span> <span class="nam">ar_hw_h</span><span class="op">,</span> <span class="nam">av_arr</span> <span class="op">=</span> <span class="nam">calc_color_arrays</span><span class="op">(</span><span class="nam">data_spec</span><span class="op">,</span> <span class="nam">fil_j</span><span class="op">,</span> <span class="nam">fil_h</span><span class="op">,</span> <span class="nam">fil_hw</span><span class="op">,</span> <span class="nam">p_jo</span><span class="op">,</span> <span class="nam">p_ho</span><span class="op">,</span> <span class="nam">p_hwo</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -473,7 +473,7 @@
             <a id="nextFileLink" class="nav" href="d_d1337ce109afde5f_convmag_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.4.4</a>,
-            created at 2022-08-20 08:45 +0000
+            created at 2022-08-20 09:23 +0000
         </p>
     </div>
 </footer>
