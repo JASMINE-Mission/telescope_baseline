@@ -25,7 +25,7 @@ def load_stellar_spectra(file_path):
        spectral data
     """
     ascii_data = pkgutil.get_data(
-        'telescope_baseline', 'data/spectra/'+file_path)
+        'telescope_baseline', 'data/spectra/' + file_path)
     return np.loadtxt(BytesIO(ascii_data), comments='#', dtype='f8').T
 
 
@@ -65,7 +65,7 @@ def cal_photon(input_arrays):
     spec_narrow = spectra_array[:, ((filter_func[1, 0] < spectra_array[0]) &
                                     (spectra_array[0] < filter_func[1, -1]))]
 
-    transmit_f = ff(spec_narrow[0])*spec_narrow[1]  # transmitted flux
+    transmit_f = ff(spec_narrow[0]) * spec_narrow[1]  # transmitted flux
     dx = np.diff(spec_narrow[0])
 
     extinction = 10 ** (-1 * a_lambda(av, spec_narrow[0, :-1]) / 2.5)
@@ -112,8 +112,8 @@ def load_filter():
     fl_h = pkgutil.get_data('telescope_baseline', 'data/filter/H_filter.dat')
     fltj = np.loadtxt(BytesIO(fl_j), comments='#', dtype='f8').T
     flth = np.loadtxt(BytesIO(fl_h), comments='#', dtype='f8').T
-    fltj[1] = fltj[1]*1e4  # mic -> angstrom
-    flth[1] = flth[1]*1e4
+    fltj[1] = fltj[1] * 1e4  # mic -> angstrom
+    flth[1] = flth[1] * 1e4
 
     return fltj, flth
 
@@ -132,7 +132,7 @@ def set_range_Hw_band(lower, upper):
     lw = lower
     up = upper
     nd = 150  # number of data
-    x = np.linspace(lw-1000, up+1000, nd)
+    x = np.linspace(lw - 1000, up + 1000, nd)
     y = np.where((lw <= x) & (x <= up), 1., 0.)
     index = np.linspace(1, nd, nd)
     hw = np.array((index, x, y))
@@ -158,6 +158,7 @@ def a_lambda(av, x):
 
     return coeff * ak
 
+
 def a_lambda_linear(av, x):
     """calculate A lambda with linear law.
 
@@ -175,7 +176,7 @@ def a_lambda_linear(av, x):
     aj = aj_av * av
     ak = ak_av * av
 
-    return ((x-12000) * ak + (20000 - x) * aj) / (20000 - 12000)
+    return ((x - 12000) * ak + (20000 - x) * aj) / (20000 - 12000)
 
 
 def quad_func(x, args):
@@ -255,9 +256,9 @@ def calc_color_arrays(data_spec, fil_j, fil_h, fil_hw, p_jo, p_ho, p_hwo):
         p_h = calphoton_map_multi(data_spec, fil_h, av)
         p_hw = calphoton_map_multi(data_spec, fil_hw, av)
 
-        rel_j = -2.5*(np.log10(p_j) - np.log10(p_jo))
-        rel_h = -2.5*(np.log10(p_h) - np.log10(p_ho))
-        rel_hw = -2.5*(np.log10(p_hw) - np.log10(p_hwo))
+        rel_j = -2.5 * (np.log10(p_j) - np.log10(p_jo))
+        rel_h = -2.5 * (np.log10(p_h) - np.log10(p_ho))
+        rel_hw = -2.5 * (np.log10(p_hw) - np.log10(p_hwo))
 
         j_h = rel_j - rel_h
         hw_h = rel_hw - rel_h
@@ -350,9 +351,9 @@ def plot_hwfit(hw_l, hw_u, res, sigma, colors, ar_j_h, ar_hw_h, residuals):
         ax0.scatter(ar_j_h[i], ar_hw_h[i], s=5)  # , label='Av = '+str(Av_arr[i]))
 
     ax0.plot(x_pl, y_pl, ls='--', c='black', lw=1)
-    ax0.text(x_pl[int((len(x_pl)*0.3))], y_pl[int((len(y_pl)*0.1))],
+    ax0.text(x_pl[int((len(x_pl) * 0.3))], y_pl[int((len(y_pl) * 0.1))],
              pl_txt1, fontsize=12)
-    ax0.text(x_pl[int((len(x_pl)*0.4))], y_pl[int((len(y_pl)*0.05))],
+    ax0.text(x_pl[int((len(x_pl) * 0.4))], y_pl[int((len(y_pl) * 0.05))],
              pl_txt2, fontsize=12)
 
     ax0.set_ylabel('$Hw - H$', fontsize=15)
@@ -375,7 +376,7 @@ if __name__ == '__main__':
         print(
             'usage) [Hw lower] [Hw upper]')
         print(
-            'ex) '+sys.argv[0]+' 9000 15000')
+            'ex) ' + sys.argv[0] + ' 9000 15000')
 
     res, sigma, colors, ar_j_h, ar_hw_h, residuals = compute_hw_relation(hw_l, hw_u)
     plot_hwfit(hw_l, hw_u, res, sigma, colors, ar_j_h, ar_hw_h, residuals)
