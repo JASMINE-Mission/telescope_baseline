@@ -118,7 +118,7 @@ def load_filter():
     return fltj, flth
 
 
-def set_range_Hw_band(lower, upper):
+def set_range_hw_band(lower, upper):
     """set range of Hw band
 
     Args:
@@ -302,7 +302,7 @@ def compute_hw_relation(hw_l, hw_u):
 
 def _compute_hw_relation(hw_l, hw_u, spectra_all):
     data_spec = read_map_multi(spectra_all)
-    fil_hw = set_range_Hw_band(hw_l, hw_u)
+    fil_hw = set_range_hw_band(hw_l, hw_u)
     fil_j, fil_h = load_filter()
     p_jo, p_ho, p_hwo = calc_zero_magnitude_spectra(fil_j, fil_h, fil_hw)
     ar_j_h, ar_hw_h, av_arr = calc_color_arrays(data_spec, fil_j, fil_h, fil_hw, p_jo, p_ho, p_hwo)
