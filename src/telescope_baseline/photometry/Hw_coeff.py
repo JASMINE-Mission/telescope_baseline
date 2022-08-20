@@ -336,8 +336,8 @@ def plot_hwfit(hw_l, hw_u, res, sigma, colors, ar_j_h, ar_hw_h, residuals):
     a_str = str('{:.5f}'.format(res.x[0]))
     b_str = str('{:.5f}'.format(res.x[1]))
     pl_txt1 = '$y$ = ' + a_str + ' $x^2$ + ' + b_str + ' $x$'
-    pl_txt2 = str('{:.2f}'.format(hw_l * 1e-4)) + '\u03bcm < $Hw$ < ' \
-              + str('{:.2f}'.format(hw_u * 1e-4) + '\u03bcm')
+    pl_txt2 = (str('{:.2f}'.format(hw_l * 1e-4)) + '\u03bcm < $Hw$ < ' +
+               str('{:.2f}'.format(hw_u * 1e-4) + '\u03bcm'))
 
     x_pl = np.linspace(min(colors[0]), max(colors[0]), 1000)
     y_pl = quad_func(x_pl, res.x)
