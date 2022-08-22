@@ -1,7 +1,9 @@
 import copy
 import os
 
+import astropy
 import pytest
+from astropy.io.fits.hdu import hdulist
 from astropy.time import Time
 
 from telescope_baseline.tools.pipeline_v2.astrometriccatalogue import AstrometricCatalogue
@@ -50,7 +52,8 @@ def get_fits_file_name():
         print(a)
         a = a.parent
     print(a)
-    file = Path(a, 'src', 'telescope_baseline', 'tools', 'pipeline', 'for_test.fits')
+    #    file = Path(a, 'src', 'telescope_baseline', 'tools', 'pipeline', 'for_test.fits')
+    file = Path(a, 'tests2', 'data', 'tmp0_0.fits')
     return file
 
 
@@ -60,10 +63,8 @@ def test_analysis():
     d = DetectorImageCatalogue([
         FitsStorage.load(file)
     ])
-    w = WCS(naxis=2)
-    w.wcs.crpix = [256, 256]  # Reference point in pixel
-    w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix
-    w.wcs.crval = [0, 0]  #
-    w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
-    a = c.analysis(d, w)
+    hdu = d.get_detector_images()[0].hdu
+    t = hdu.header['DATE-OBS']
+    w = astropy.wcs.WCS(hdu.header)
+    a = c.analysis(d, w, 9)
     assert(a != None)

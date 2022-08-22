@@ -1,19 +1,13 @@
 from astropy.wcs import WCS
 
 from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
-
-#windows_sizeいらないかも
 from telescope_baseline.tools.pipeline_v2.skyposition import SkyPosition
 
 
 class StellarImage:
-    def __init__(self, wcs: WCS, window_size: int = 9, detector_positions: list[OnDetectorPosition] = []):
+    def __init__(self, wcs: WCS, detector_positions: list[OnDetectorPosition] = []):
         self.__wcs = wcs
-        self.__window_size = window_size
         self.__detector_positions = detector_positions
-
-    def get_window_size(self):
-        return self.__window_size
 
     def get_sky_positions(self):
         ret = []

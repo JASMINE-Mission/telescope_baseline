@@ -1,4 +1,3 @@
-import numpy as np
 from astropy.io import fits
 from photutils.detection import find_peaks
 from astropy.table import Table
@@ -11,11 +10,15 @@ from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPo
 
 
 class DetectorImage:
-    def __init__(self, hbu=fits.PrimaryHDU()):
-        self.__hbu = hbu
+    def __init__(self, hdu=fits.PrimaryHDU()):
+        self.__hdu = hdu
+
+    @property
+    def hdu(self):
+        return self.__hdu
 
     def get_on_detector_positions(self, window_size:int) -> list[OnDetectorPosition] :
-        data = self.__hbu.data
+        data = self.__hdu.data
         peaks_tbl = find_peaks(data, threshold=200.)
         half_size = (window_size - 1) / 2
         x = peaks_tbl['x_peak']
