@@ -40,15 +40,19 @@ class Pipeline:
         dic = []
         # loop of orbit
         for o in sky_positions:
-            wl = []
             di = []
-            for w in w_list:
-                if w.orbit_id == o.orbit_id:
-                    wl.append(w)
+            wl = self._get_effective_wcs_list(o, w_list)
             if len(wl) > 0:
                 self._generate_one_hdu(di, dib, folder, o, sib, t, wl)
             dic.append(DetectorImageCatalogue(di))
         return dic
+
+    def _get_effective_wcs_list(self, o, w_list):
+        wl = []
+        for w in w_list:
+            if w.orbit_id == o.orbit_id:
+                wl.append(w)
+        return wl
 
     def _generate_one_hdu(self, di, dib, folder, o, sib, t, wl):
         # loop of exposure
