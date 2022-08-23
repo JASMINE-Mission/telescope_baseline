@@ -22,10 +22,22 @@ def position_at_certain_time(coord: SkyCoord, t: Time):
 
 
 class OnTheSkyPositionBuilder:
+    """Builder class for OnTheSkyPosition
+
+    """
     def __init__(self):
         pass
 
     def from_astrometric_catalogue_2_list(self, a: AstrometricCatalogue, t: list[Time]) -> list[OnTheSkyPosition]:
+        """method for build from AstrometricCatalogue to the list of OnTheSkyPosition
+
+        Args:
+            a: AstrometricCatalogue
+            t: list of Time
+
+        Returns:
+
+        """
         catalogue = a.get_catalogue()
         n = len(t)
         osp = []
@@ -41,7 +53,18 @@ class OnTheSkyPositionBuilder:
             osp.append(osp0)
         return osp
 
-    def from_stellar_image(self, sttelar_image: StellarImage) -> OnTheSkyPosition:
-        skypositions = sttelar_image.get_sky_positions()
+    def from_stellar_image(self, stellar_image_list: list[StellarImage]) -> OnTheSkyPosition:
+        """method for build from StellarImage(detector coordinate) class to OnTheSkyPosition
+
+        Args:
+            stellar_image_list:
+
+        Returns:
+
+        """
+        skypositions = []
+        for si in stellar_image_list:
+            skypositions.extend(si.get_sky_positions())
+        # TODO Get the ID of the star and optimize the SIP for the same star at the same position in the sky.
         return OnTheSkyPosition(skypositions)
 

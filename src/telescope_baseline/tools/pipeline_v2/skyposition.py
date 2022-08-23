@@ -1,6 +1,9 @@
 from astropy.time import Time
 
 class SkyPosition:
+    """Data class for the position in the sky coordinate for individual time
+
+    """
     def __init__(self, num, orbit_id, coord, mag, datetime: Time):
         """Constructor
 

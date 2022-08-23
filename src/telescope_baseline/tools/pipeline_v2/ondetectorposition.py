@@ -1,8 +1,20 @@
 from astropy.time import Time
 
 class OnDetectorPosition:
-    def __init__(self, n: int, x: float, y: float, mag: float, datetime: Time):
-        self.__exposure_id = n
+    """Data class for detector position of individual image.
+
+    """
+    def __init__(self, exposuer_id: int, x: float, y: float, mag: float, datetime: Time):
+        """ constructor
+
+        Args:
+            exposuer_id: exposure_id
+            x: x coordinate of position in detector coordinate
+            y: y coordinate of position in detector coordinate
+            mag: magnitude
+            datetime: exposuer date
+        """
+        self.__exposure_id = exposuer_id
         self.__x = x
         self.__y = y
         self.__mag = mag

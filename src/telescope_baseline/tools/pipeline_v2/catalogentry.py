@@ -2,12 +2,15 @@ from astropy.coordinates import SkyCoord
 import astropy.units as u
 
 class CatalogueEntry:
+    """Data class of astrometric parameters for an individual star
+
+    """
     def __init__(self, stellar_id, coord: SkyCoord, mag):
         """The constructor
 
         Args:
             stellar_id: id of the entry.
-            coord: astropy.coordinates.SkyCoord object
+            coord: astropy.coordinates.SkyCoord object which also contains proper motion and distnace.
             mag: magnitude of the star
 
         TODO: Need to consistent implementation of what frame we should use.

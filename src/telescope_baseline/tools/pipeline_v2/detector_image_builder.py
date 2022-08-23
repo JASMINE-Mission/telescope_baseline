@@ -5,12 +5,30 @@ from telescope_baseline.tools.pipeline_v2.stella_image import StellarImage
 
 
 class DetectorImageBuilder:
+    """Builder class for DetectorImage
+
+    """
     def __init__(self, nx: int, ny: int, psf_w: float):
+        """constructor
+
+        Args:
+            nx: array size of x direction
+            ny: array size of y direction
+            psf_w: psf width
+        """
         self.__nx = nx
         self.__ny = ny
         self.__psf_w = psf_w
 
     def from_stellar_image(self, si: StellarImage) -> DetectorImage:
+        """Build DetectorImage from StellarImage class
+
+        Args:
+            si: StellarImage
+
+        Returns:DetctorImage
+
+        """
         dp = si.detector_posotions
         a = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         for s in range(len(dp)):

@@ -47,20 +47,39 @@ def lsf_fit_function_for_astrometric_parameters(parameter, t, lon, lat):
 
 
 class AstrometricCatalogueBuilder:
+    """Builer class for AstrometricCatalogue
+
+    """
     def __init__(self):
         pass
 
-    def from_on_the_sky_position(self, otsp: OnTheSkyPosition):
-        t = []
-        londata = []
-        latdata = []
-        for i in range(len(otsp.sky_positions)):
-            sp = otsp.sky_positions[i]
-            t.append(sp.datetime)
-            print(sp.datetime)
-            londata.append(sp.coord.barycentricmeanecliptic.lon.rad)
-            latdata.append(sp.coord.barycentricmeanecliptic.lat.rad)
-        parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
-        # TODO: result should be the attributes of AstrometricCatalogue.
-        result = optimize.leastsq(lsf_fit_function_for_astrometric_parameters, parameter, args=(t, londata, latdata))
+    def from_on_the_sky_position(self, otsp: list[OnTheSkyPosition]):
+        """Class for build AstrometricCatalogue from the list of OnTheSkyPosition
+
+        Args:
+            otsp: list of OnTheSkyPosition
+
+        Returns:AstrometriCatalogue
+
+        """
+        sid = []
+        for o in otsp:
+            spl = o.sky_positions
+            for s in spl:
+                sid.append(s.stellar_id)
+        sid = list(set(sid))
+        result = []
+        for s in sid:
+            t = []
+            londata = []
+            latdata = []
+            for o in otsp:
+                for ss in o.sky_positions:
+                    if s == ss.stellar_id:
+                        t.append(ss.datetime)
+                        londata.append(ss.coord.barycentricmeanecliptic.lon.rad)
+                        latdata.append(ss.coord.barycentricmeanecliptic.lat.rad)
+            parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
+            result.append(optimize.leastsq(lsf_fit_function_for_astrometric_parameters, parameter,
+                                           args=(t, londata, latdata)))
         return AstrometricCatalogue(result)

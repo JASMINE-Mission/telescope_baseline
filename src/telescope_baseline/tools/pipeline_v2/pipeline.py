@@ -11,6 +11,9 @@ from astropy.time import Time
 
 
 class Pipeline:
+    """The class for pipeline
+
+    """
     def simulation(self, a: AstrometricCatalogue, t: list[Time], w_list: list[WCSwId], pix_max: int, psf_w: float)\
             -> list[DetectorImageCatalogue]:
         """pipeline of generate image from astrometric catalogue
@@ -35,6 +38,7 @@ class Pipeline:
 
         sky_positions = sky_positions_builder.from_astrometric_catalogue_2_list(a, t)
         dic = []
+        # loop of orbit
         for o in sky_positions:
             wl = []
             di = []
@@ -42,9 +46,10 @@ class Pipeline:
                 if w.orbit_id == o.orbit_id:
                     wl.append(w)
             if len(wl) > 0:
+                # loop of exposure
+                si = sib.from_on_tye_sky_position(o, wl)
                 for j in range(len(wl)):
-                    si = sib.from_on_tye_sky_position(o, wl)
-                    di.append(dib.from_stellar_image(si))
+                    di.append(dib.from_stellar_image(si[j]))
                     di[j].hdu.header.extend(wl[j].wcs.to_fits()[0].header)
                     di[j].hdu.header['DATE-OBS'] = str(t[o.orbit_id])
                     fname = "tmp" + str(o.orbit_id) + "_" + str(j) + ".fits"
@@ -69,7 +74,27 @@ class Pipeline:
         sky_positions_builder = OnTheSkyPositionBuilder()
         acb = AstrometricCatalogueBuilder()
 
-        stellar_image = sib.from_detector_image_catalogue(wcs, c)
-        sky_positions = sky_positions_builder.from_stellar_image(stellar_image)
-        # return acb.from_on_the_sky_position(sky_positions)
-        return Pipeline()
+        cat = c.get_detector_images()
+        cat.sort(key=lambda x: x.time)
+
+        di = []
+        dic_list = []
+        n = len(cat)
+        t0 = 1 / 50
+        for i in range(n):
+            if i == 0:
+                di.append(cat[i])
+            elif cat[i].time - cat[i-1].time < t0:
+                di.append(cat[i])
+            else:
+                dic_list.append(DetectorImageCatalogue(di))
+                di = [cat[i]]
+        dic_list.append(DetectorImageCatalogue(di))
+
+        # loop of orbit
+        sky_positions = []
+        for dic in dic_list:
+            stellar_image_list = sib.from_detector_image_catalogue(wcs, dic)
+            sky_positions.append(sky_positions_builder.from_stellar_image(stellar_image_list))
+            # TODO. should be implement from list to object / outside of the loop of dic.
+        return acb.from_on_the_sky_position(sky_positions)

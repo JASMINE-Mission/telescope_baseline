@@ -43,25 +43,27 @@ def test_simulation():
     assert(b != None)
 
 
-def get_fits_file_name():
+def get_fits_file_name(i:int, j:int):
     a = Path.cwd()
     if 'telescope_baseline' not in str(a):
         print("Invalid path" + str(a))
         raise OSError()
     while a.name != 'telescope_baseline':
-        print(a)
         a = a.parent
-    print(a)
-    #    file = Path(a, 'src', 'telescope_baseline', 'tools', 'pipeline', 'for_test.fits')
-    file = Path(a, 'tests2', 'data', 'tmp0_0.fits')
+    fname = 'tmp' + str(i) + '_' + str(j) + '.fits'
+    file = Path(a, 'tests2', 'data', fname)
     return file
 
 
 def test_analysis():
     c = Pipeline()
-    file = get_fits_file_name()
     d = DetectorImageCatalogue([
-        FitsStorage.load(file)
+        FitsStorage.load(get_fits_file_name(1, 0)),
+        FitsStorage.load(get_fits_file_name(2, 0)),
+        FitsStorage.load(get_fits_file_name(7, 0)),
+        FitsStorage.load(get_fits_file_name(3, 0)),
+        FitsStorage.load(get_fits_file_name(8, 0)),
+        FitsStorage.load(get_fits_file_name(9, 0))
     ])
     hdu = d.get_detector_images()[0].hdu
     t = hdu.header['DATE-OBS']

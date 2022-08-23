@@ -10,14 +10,37 @@ from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPo
 
 
 class DetectorImage:
+    """Data class for individual detector image.
+
+    Attributes:
+        hdu: hdu (header data unit) of fits.
+
+    """
     def __init__(self, hdu=fits.PrimaryHDU()):
+        """
+
+        Args:
+            hdu: header data unit for fits file
+        """
         self.__hdu = hdu
 
     @property
     def hdu(self):
         return self.__hdu
 
-    def get_on_detector_positions(self, window_size:int) -> list[OnDetectorPosition] :
+    @property
+    def time(self):
+        return Time(self.__hdu.header['DATE-OBS'])
+
+    def get_on_detector_positions(self, window_size: int) -> list[OnDetectorPosition]:
+        """Calculate image center position from image array data.
+
+        Args:
+            window_size: The size of window which is extracted from the image
+
+        Returns: list of positions in detector coordinate.
+
+        """
         data = self.__hdu.data
         peaks_tbl = find_peaks(data, threshold=200.)
         half_size = (window_size - 1) / 2
