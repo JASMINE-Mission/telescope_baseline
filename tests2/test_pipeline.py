@@ -1,9 +1,6 @@
 import copy
-import os
-
 import astropy
 import pytest
-from astropy.io.fits.hdu import hdulist
 from astropy.time import Time
 
 from telescope_baseline.tools.pipeline_v2.astrometriccatalogue import AstrometricCatalogue

@@ -4,7 +4,6 @@ from astropy.table import Table
 from astropy.nddata import NDData
 from photutils import extract_stars, EPSFBuilder
 from astropy.time import Time
-import uuid
 
 from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D

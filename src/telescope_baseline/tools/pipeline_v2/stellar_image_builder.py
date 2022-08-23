@@ -3,7 +3,6 @@ from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
 from telescope_baseline.tools.pipeline_v2.detectorimagecatalogue import DetectorImageCatalogue
 from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
-from telescope_baseline.tools.pipeline_v2.skyposition import SkyPosition
 from telescope_baseline.tools.pipeline_v2.stella_image import StellarImage
 from astropy.wcs import WCS
 

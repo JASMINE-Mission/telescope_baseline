@@ -1,5 +1,6 @@
 from astropy.time import Time
 
+
 class SkyPosition:
     """Data class for the position in the sky coordinate for individual time
 
