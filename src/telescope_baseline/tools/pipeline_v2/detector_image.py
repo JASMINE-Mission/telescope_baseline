@@ -7,6 +7,7 @@ from astropy.time import Time
 import uuid
 
 from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
+from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 
 
 class DetectorImage:
@@ -64,5 +65,5 @@ class DetectorImage:
             # TODO 明るさの計算はまだ（0にしてる）
             # TODO 時刻をHBUから取ってる来る処理がまだ！！
             position_list.append(
-                OnDetectorPosition(1, s.center[0], s.center[1], Time('2000-01-01 00:00:00.0'), mag=3000))
+                OnDetectorPosition(1, Position2D(s.center[0], s.center[1]), Time('2000-01-01 00:00:00.0'), mag=3000))
         return position_list

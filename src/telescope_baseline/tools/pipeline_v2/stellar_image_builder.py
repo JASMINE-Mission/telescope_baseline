@@ -1,4 +1,5 @@
 from telescope_baseline.tools.pipeline_v2.ontheskyposition import OnTheSkyPosition
+from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
 from telescope_baseline.tools.pipeline_v2.detectorimagecatalogue import DetectorImageCatalogue
 from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
@@ -70,5 +71,5 @@ class StellarImageBuilder:
         a = []
         for k in range(len(tmp)):
             if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
-                a.append(OnDetectorPosition(k, tmp[k][0], tmp[k][1], sky_positions[0].datetime, mag=3000))
+                a.append(OnDetectorPosition(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
         return a

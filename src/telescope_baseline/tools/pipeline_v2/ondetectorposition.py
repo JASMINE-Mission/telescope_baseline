@@ -1,22 +1,24 @@
 from astropy.time import Time
+from telescope_baseline.tools.pipeline_v2.position2d import Position2D
+
 
 class OnDetectorPosition:
     """Data class for detector position of individual image.
 
     """
-    def __init__(self, exposuer_id: int, x: float, y: float, datetime: Time, mag: float = 12.5):
+    def __init__(self, exposure_id: int, p: Position2D, datetime: Time, mag: float = 12.5):
         """ constructor
 
         Args:
-            exposuer_id: exposure_id
+            exposure_id: exposure_id
             x: x coordinate of position in detector coordinate
             y: y coordinate of position in detector coordinate
             mag: magnitude
             datetime: exposuer date
         """
-        self.__exposure_id = exposuer_id
-        self.__x = x
-        self.__y = y
+        self.__exposure_id = exposure_id
+        self.__x = p.x
+        self.__y = p.y
         self.__mag = mag
         self.__datetime = datetime
 
