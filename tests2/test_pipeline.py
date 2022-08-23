@@ -19,7 +19,6 @@ from pathlib import Path
 
 
 def test_simulation():
-    c = Pipeline()
     a = AstrometricCatalogue([
         CatalogueEntry(1,
                        SkyCoord(l=0., b=0., unit=('rad', 'rad'), frame='galactic', obstime='2000-01-01 00:00:00.0',
@@ -39,7 +38,8 @@ def test_simulation():
     wlist = []
     for i in range(len(t)):
         wlist.append(WCSwId(i, 1, copy.deepcopy(w)))
-    b = c.simulation(a, t, wlist, 1024)
+    c = Pipeline(t=t, w_list=wlist)
+    b = c.simulation(a, 1024, 1.0)
     assert(b != None)
 
 

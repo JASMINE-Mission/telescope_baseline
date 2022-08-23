@@ -24,7 +24,7 @@ class StellarImage:
             position = self.__detector_positions[i]
             sky = self.__wcs.pixel_to_world(position.x, position.y)
             # TODO: Consideration is needed how ids are set.
-            ret.append(SkyPosition(position.exposure_id, 0, sky, position.mag, position.datetime))
+            ret.append(SkyPosition(position.exposure_id, sky, position.mag, position.datetime))
         return ret
 
     @property

@@ -70,5 +70,5 @@ class StellarImageBuilder:
         a = []
         for k in range(len(tmp)):
             if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
-                a.append(OnDetectorPosition(k, tmp[k][0], tmp[k][1], sky_positions[0].datetime, 3000))
+                a.append(OnDetectorPosition(k, tmp[k][0], tmp[k][1], sky_positions[0].datetime, mag=3000))
         return a

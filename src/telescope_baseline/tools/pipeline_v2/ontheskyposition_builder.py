@@ -48,7 +48,7 @@ class OnTheSkyPositionBuilder:
                 c = catalogue[i]
                 l, b = position_at_certain_time(c.coord, time)
                 coord = SkyCoord(lat=b, lon=l, unit=('rad', 'rad'), frame='barycentricmeanecliptic')
-                sky_positions.append(SkyPosition(i, j, coord, c.mag, time))
+                sky_positions.append(SkyPosition(i, coord, c.mag, time))
             osp0 = OnTheSkyPosition(sky_positions, j)
             osp.append(osp0)
         return osp

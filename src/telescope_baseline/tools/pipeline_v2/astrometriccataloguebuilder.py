@@ -70,18 +70,22 @@ class AstrometricCatalogueBuilder:
         sid = list(set(sid))
         result = []
         for s in sid:
-            t = []
-            londata = []
-            latdata = []
-            for o in otsp:
-                tmpt, tmplon, tmplat = self._add_individual_observation(o, s)
-                t.extend(tmpt)
-                londata.extend(tmplon)
-                latdata.extend(tmplat)
+            latdata, londata, t = self._time_seriese_of_individual_star(otsp, s)
             parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
             result.append(optimize.leastsq(lsf_fit_function_for_astrometric_parameters, parameter,
                                            args=(t, londata, latdata)))
         return AstrometricCatalogue(result)
+
+    def _time_seriese_of_individual_star(self, otsp, s):
+        t = []
+        londata = []
+        latdata = []
+        for o in otsp:
+            tmpt, tmplon, tmplat = self._add_individual_observation(o, s)
+            t.extend(tmpt)
+            londata.extend(tmplon)
+            latdata.extend(tmplat)
+        return latdata, londata, t
 
     def _add_individual_observation(self, o, s):
         tmpt = []

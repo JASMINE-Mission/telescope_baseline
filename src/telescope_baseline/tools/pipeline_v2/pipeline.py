@@ -14,7 +14,13 @@ class Pipeline:
     """The class for pipeline
 
     """
-    def simulation(self, a: AstrometricCatalogue, t: list[Time], w_list: list[WCSwId], pix_max: int, psf_w: float = 1)\
+
+    def __init__(self, t: list[Time] = [], w_list: list[WCSwId] = []):
+        self.__t = t
+        self.__w_list = w_list
+        self.__folder = 'data'
+
+    def simulation(self, a: AstrometricCatalogue, pix_max: int, psf_w: float)\
             -> list[DetectorImageCatalogue]:
         """pipeline of generate image from astrometric catalogue
 
@@ -32,38 +38,38 @@ class Pipeline:
         sky_positions_builder = OnTheSkyPositionBuilder()
         sib = StellarImageBuilder(9, pix_max, pix_max)
         dib = DetectorImageBuilder(pix_max, pix_max, psf_w)
-        folder = 'data'
-        if not Path(folder).exists():
-            Path(folder).mkdir()
+        if not Path(self.__folder).exists():
+            Path(self.__folder).mkdir()
 
-        sky_positions = sky_positions_builder.from_astrometric_catalogue_2_list(a, t)
+        sky_positions = sky_positions_builder.from_astrometric_catalogue_2_list(a, self.__t)
         dic = []
         # loop of orbit
         for o in sky_positions:
-            di = []
-            wl = self._get_effective_wcs_list(o, w_list)
+            wl = self._get_effective_wcs_list(o)
             if len(wl) > 0:
-                self._generate_one_hdu(di, dib, folder, o, sib, t, wl)
+                di = self._generate_one_hdu(dib, o, sib, wl)
             dic.append(DetectorImageCatalogue(di))
         return dic
 
-    def _get_effective_wcs_list(self, o, w_list):
+    def _get_effective_wcs_list(self, o):
         wl = []
-        for w in w_list:
+        for w in self.__w_list:
             if w.orbit_id == o.orbit_id:
                 wl.append(w)
         return wl
 
-    def _generate_one_hdu(self, di, dib, folder, o, sib, t, wl):
+    def _generate_one_hdu(self, dib, o, sib, wl):
+        di = []
         # loop of exposure
         si = sib.from_on_tye_sky_position(o, wl)
         for j in range(len(wl)):
             di.append(dib.from_stellar_image(si[j]))
             di[j].hdu.header.extend(wl[j].wcs.to_fits()[0].header)
-            di[j].hdu.header['DATE-OBS'] = str(t[o.orbit_id])
+            di[j].hdu.header['DATE-OBS'] = str(self.__t[o.orbit_id])
             fname = "tmp" + str(o.orbit_id) + "_" + str(j) + ".fits"
-            fpathname = Path(folder, fname)
+            fpathname = Path(self.__folder, fname)
             di[j].hdu.writeto(str(fpathname), overwrite=True)
+        return di
 
     def analysis(self, c: DetectorImageCatalogue, wcs: WCS, window_size: int = 9) -> AstrometricCatalogue:
         """pipeline of solve astrometric catalogue from detector images.
