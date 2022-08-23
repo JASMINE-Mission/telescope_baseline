@@ -70,16 +70,20 @@ class AstrometricCatalogueBuilder:
         sid = list(set(sid))
         result = []
         for s in sid:
-            t = []
-            londata = []
-            latdata = []
-            for o in otsp:
-                for ss in o.sky_positions:
-                    if s == ss.stellar_id:
-                        t.append(ss.datetime)
-                        londata.append(ss.coord.barycentricmeanecliptic.lon.rad)
-                        latdata.append(ss.coord.barycentricmeanecliptic.lat.rad)
+            latdata, londata, t = self._motion_of_individual_star(otsp, s)
             parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
             result.append(optimize.leastsq(lsf_fit_function_for_astrometric_parameters, parameter,
                                            args=(t, londata, latdata)))
         return AstrometricCatalogue(result)
+
+    def _motion_of_individual_star(self, otsp, s):
+        t = []
+        londata = []
+        latdata = []
+        for o in otsp:
+            for ss in o.sky_positions:
+                if s == ss.stellar_id:
+                    t.append(ss.datetime)
+                    londata.append(ss.coord.barycentricmeanecliptic.lon.rad)
+                    latdata.append(ss.coord.barycentricmeanecliptic.lat.rad)
+        return latdata, londata, t

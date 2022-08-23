@@ -32,12 +32,15 @@ class DetectorImageBuilder:
         dp = si.detector_posotions
         a = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         for s in range(len(dp)):
-            for k in range(int(dp[s].mag)):
-                xp = int(self.__psf_w * np.random.randn() + dp[s].y + 0.5)
-                yp = int(self.__psf_w * np.random.randn() + dp[s].x + 0.5)
-                if 0 <= xp < self.__nx and 0 <= yp < self.__ny:
-                    a[xp][yp] += 1
+            self._generate_a_stellar_image(a, dp, s)
         hdu = fits.PrimaryHDU()
         hdu.data = a
         di = DetectorImage(hdu)
         return di
+
+    def _generate_a_stellar_image(self, a, dp, s):
+        for k in range(int(dp[s].mag)):
+            xp = int(self.__psf_w * np.random.randn() + dp[s].y + 0.5)
+            yp = int(self.__psf_w * np.random.randn() + dp[s].x + 0.5)
+            if 0 <= xp < self.__nx and 0 <= yp < self.__ny:
+                a[xp][yp] += 1

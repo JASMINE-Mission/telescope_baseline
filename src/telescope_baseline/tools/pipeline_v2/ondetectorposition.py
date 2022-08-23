@@ -4,7 +4,7 @@ class OnDetectorPosition:
     """Data class for detector position of individual image.
 
     """
-    def __init__(self, exposuer_id: int, x: float, y: float, mag: float, datetime: Time):
+    def __init__(self, exposuer_id: int, x: float, y: float, datetime: Time, mag: float):
         """ constructor
 
         Args:

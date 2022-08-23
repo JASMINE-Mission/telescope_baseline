@@ -62,9 +62,13 @@ class StellarImageBuilder:
             for s in sky_positions:
                 tmp.append([s.coord.galactic.l.deg, s.coord.galactic.b.deg])
             tmp = w.wcs.wcs_world2pix(tmp, 0)
-            a = []
-            for k in range(len(tmp)):
-                if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
-                    a.append(OnDetectorPosition(k, tmp[k][0], tmp[k][1], 3000, sky_positions[0].datetime))
+            a = self._store_list_of_detector_position(sky_positions, tmp)
             si.append(StellarImage(wl[0].wcs, detector_positions=a))
         return si
+
+    def _store_list_of_detector_position(self, sky_positions, tmp):
+        a = []
+        for k in range(len(tmp)):
+            if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
+                a.append(OnDetectorPosition(k, tmp[k][0], tmp[k][1], sky_positions[0].datetime, 3000))
+        return a

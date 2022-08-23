@@ -14,7 +14,7 @@ class Pipeline:
     """The class for pipeline
 
     """
-    def simulation(self, a: AstrometricCatalogue, t: list[Time], w_list: list[WCSwId], pix_max: int, psf_w: float)\
+    def simulation(self, a: AstrometricCatalogue, t: list[Time], w_list: list[WCSwId], pix_max: int, psf_w: float = 1)\
             -> list[DetectorImageCatalogue]:
         """pipeline of generate image from astrometric catalogue
 
@@ -46,17 +46,20 @@ class Pipeline:
                 if w.orbit_id == o.orbit_id:
                     wl.append(w)
             if len(wl) > 0:
-                # loop of exposure
-                si = sib.from_on_tye_sky_position(o, wl)
-                for j in range(len(wl)):
-                    di.append(dib.from_stellar_image(si[j]))
-                    di[j].hdu.header.extend(wl[j].wcs.to_fits()[0].header)
-                    di[j].hdu.header['DATE-OBS'] = str(t[o.orbit_id])
-                    fname = "tmp" + str(o.orbit_id) + "_" + str(j) + ".fits"
-                    fpathname = Path(folder, fname)
-                    di[j].hdu.writeto(str(fpathname), overwrite=True)
+                self._generate_one_hdu(di, dib, folder, o, sib, t, wl)
             dic.append(DetectorImageCatalogue(di))
         return dic
+
+    def _generate_one_hdu(self, di, dib, folder, o, sib, t, wl):
+        # loop of exposure
+        si = sib.from_on_tye_sky_position(o, wl)
+        for j in range(len(wl)):
+            di.append(dib.from_stellar_image(si[j]))
+            di[j].hdu.header.extend(wl[j].wcs.to_fits()[0].header)
+            di[j].hdu.header['DATE-OBS'] = str(t[o.orbit_id])
+            fname = "tmp" + str(o.orbit_id) + "_" + str(j) + ".fits"
+            fpathname = Path(folder, fname)
+            di[j].hdu.writeto(str(fpathname), overwrite=True)
 
     def analysis(self, c: DetectorImageCatalogue, wcs: WCS, window_size: int = 9) -> AstrometricCatalogue:
         """pipeline of solve astrometric catalogue from detector images.
@@ -77,14 +80,12 @@ class Pipeline:
         cat = c.get_detector_images()
         cat.sort(key=lambda x: x.time)
 
-        di = []
         dic_list = []
         n = len(cat)
         t0 = 1 / 50
-        for i in range(n):
-            if i == 0:
-                di.append(cat[i])
-            elif cat[i].time - cat[i-1].time < t0:
+        di = [cat[0]]
+        for i in range(1, n):
+            if cat[i].time - cat[i-1].time < t0:
                 di.append(cat[i])
             else:
                 dic_list.append(DetectorImageCatalogue(di))

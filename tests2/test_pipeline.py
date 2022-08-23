@@ -39,7 +39,7 @@ def test_simulation():
     wlist = []
     for i in range(len(t)):
         wlist.append(WCSwId(i, 1, copy.deepcopy(w)))
-    b = c.simulation(a, t, wlist, 1024, 1.0)
+    b = c.simulation(a, t, wlist, 1024)
     assert(b != None)
 
 
@@ -68,5 +68,5 @@ def test_analysis():
     hdu = d.get_detector_images()[0].hdu
     t = hdu.header['DATE-OBS']
     w = astropy.wcs.WCS(hdu.header)
-    a = c.analysis(d, w, 9)
+    a = c.analysis(d, w)
     assert(a != None)

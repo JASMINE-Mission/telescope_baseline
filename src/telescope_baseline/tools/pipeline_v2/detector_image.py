@@ -64,5 +64,5 @@ class DetectorImage:
             # TODO 明るさの計算はまだ（0にしてる）
             # TODO 時刻をHBUから取ってる来る処理がまだ！！
             position_list.append(
-                OnDetectorPosition(uuid.uuid4(), s.center[0], s.center[1], 0, Time('2000-01-01 00:00:00.0')))
+                OnDetectorPosition(1, s.center[0], s.center[1], Time('2000-01-01 00:00:00.0'), 3000))
         return position_list
