@@ -1,5 +1,7 @@
 import numpy as np
 from astropy.io import fits
+from astropy.time import Time
+
 from telescope_baseline.tools.pipeline_v2.detector_image import DetectorImage
 from telescope_baseline.tools.pipeline_v2.stella_image import StellarImage
 
@@ -31,10 +33,14 @@ class DetectorImageBuilder:
         """
         dp = si.detector_posotions
         a = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
+        t_max = Time('1960-01-01 00:00:00')
         for s in range(len(dp)):
+            if dp[s].datetime > t_max:
+                t_max = dp[s].datetime
             self._generate_a_stellar_image(a, dp, s)
         hdu = fits.PrimaryHDU()
         hdu.data = a
+        hdu.header['DATE-OBS'] = str(t_max)
         di = DetectorImage(hdu)
         return di
 
