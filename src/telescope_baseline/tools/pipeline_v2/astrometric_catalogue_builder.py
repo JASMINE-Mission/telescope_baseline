@@ -4,8 +4,8 @@ import numpy as np
 from astropy.coordinates import get_sun
 from scipy import optimize
 
-from telescope_baseline.tools.pipeline_v2.astrometriccatalogue import AstrometricCatalogue
-from telescope_baseline.tools.pipeline_v2.ontheskyposition import OnTheSkyPosition
+from telescope_baseline.tools.pipeline_v2.astrometric_catalogue import AstrometricCatalogue
+from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
 
 
 def lsf_fit_function_for_astrometric_parameters(parameter, t, lon, lat):
@@ -53,7 +53,7 @@ class AstrometricCatalogueBuilder:
     def __init__(self):
         pass
 
-    def from_on_the_sky_position(self, otsp: list[OnTheSkyPosition]):
+    def from_on_the_sky_position(self, otsp: list[MapOnTheSky]):
         """Class for build AstrometricCatalogue from the list of OnTheSkyPosition
 
         Args:

@@ -3,9 +3,9 @@ import astropy
 import pytest
 from astropy.time import Time
 
-from telescope_baseline.tools.pipeline_v2.astrometriccatalogue import AstrometricCatalogue
-from telescope_baseline.tools.pipeline_v2.catalogentry import CatalogueEntry
-from telescope_baseline.tools.pipeline_v2.detectorimagecatalogue import DetectorImageCatalogue
+from telescope_baseline.tools.pipeline_v2.astrometric_catalogue import AstrometricCatalogue
+from telescope_baseline.tools.pipeline_v2.catalog_entry import CatalogueEntry
+from telescope_baseline.tools.pipeline_v2.detector_image_catalogue import DetectorImageCatalogue
 from telescope_baseline.tools.pipeline_v2.pipeline import Pipeline
 from telescope_baseline.tools.pipeline_v2.fitsstorage import FitsStorage
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId

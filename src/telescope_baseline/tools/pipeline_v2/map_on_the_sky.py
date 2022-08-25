@@ -1,11 +1,11 @@
-from telescope_baseline.tools.pipeline_v2.skyposition import SkyPosition
+from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 
 
-class OnTheSkyPosition:
+class MapOnTheSky:
     """Data holder class of SkyPosition for every orbit.
 
     """
-    def __init__(self, sky_positions: list[SkyPosition] = [], orbit_id: int = -1):
+    def __init__(self, sky_positions: list[PositionOnTheSky] = [], orbit_id: int = -1):
         """constructor
 
         Args:

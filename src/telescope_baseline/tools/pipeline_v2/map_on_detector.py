@@ -1,14 +1,14 @@
 from astropy.wcs import WCS
 
-from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
-from telescope_baseline.tools.pipeline_v2.skyposition import SkyPosition
+from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOnDetector
+from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 
 
-class StellarImage:
+class MapOnDetector:
     """Data Holder class for OnDetectorPosition.
 
     """
-    def __init__(self, wcs: WCS, detector_positions: list[OnDetectorPosition] = []):
+    def __init__(self, wcs: WCS, detector_positions: list[PositionOnDetector] = []):
         """constructor
 
         Args:
@@ -24,7 +24,7 @@ class StellarImage:
             position = self.__detector_positions[i]
             sky = self.__wcs.pixel_to_world(position.x, position.y)
             # TODO: Consideration is needed how ids are set.
-            ret.append(SkyPosition(position.exposure_id, sky, position.mag, position.datetime))
+            ret.append(PositionOnTheSky(position.exposure_id, sky, position.mag, position.datetime))
         return ret
 
     @property

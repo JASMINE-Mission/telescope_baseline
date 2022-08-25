@@ -1,10 +1,10 @@
 import math
 from astropy.coordinates import get_sun, SkyCoord
 from astropy.time import Time
-from telescope_baseline.tools.pipeline_v2.astrometriccatalogue import AstrometricCatalogue
-from telescope_baseline.tools.pipeline_v2.ontheskyposition import OnTheSkyPosition
-from telescope_baseline.tools.pipeline_v2.skyposition import SkyPosition
-from telescope_baseline.tools.pipeline_v2.stella_image import StellarImage
+from telescope_baseline.tools.pipeline_v2.astrometric_catalogue import AstrometricCatalogue
+from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
+from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
+from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
 
 
 def position_at_certain_time(coord: SkyCoord, t: Time):
@@ -21,14 +21,14 @@ def position_at_certain_time(coord: SkyCoord, t: Time):
     return lont, latt
 
 
-class OnTheSkyPositionBuilder:
+class MapOnTheSkyBuilder:
     """Builder class for OnTheSkyPosition
 
     """
     def __init__(self):
         pass
 
-    def from_astrometric_catalogue_2_list(self, a: AstrometricCatalogue, t: list[Time]) -> list[OnTheSkyPosition]:
+    def from_astrometric_catalogue_2_list(self, a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
         """method for build from AstrometricCatalogue to the list of OnTheSkyPosition
 
         Args:
@@ -48,12 +48,12 @@ class OnTheSkyPositionBuilder:
                 c = catalogue[i]
                 l, b = position_at_certain_time(c.coord, time)
                 coord = SkyCoord(lat=b, lon=l, unit=('rad', 'rad'), frame='barycentricmeanecliptic')
-                sky_positions.append(SkyPosition(i, coord, c.mag, time))
-            osp0 = OnTheSkyPosition(sky_positions, j)
+                sky_positions.append(PositionOnTheSky(i, coord, c.mag, time))
+            osp0 = MapOnTheSky(sky_positions, j)
             osp.append(osp0)
         return osp
 
-    def from_stellar_image(self, stellar_image_list: list[StellarImage]) -> OnTheSkyPosition:
+    def from_stellar_image(self, stellar_image_list: list[MapOnDetector]) -> MapOnTheSky:
         """method for build from StellarImage(detector coordinate) class to OnTheSkyPosition
 
         Args:
@@ -66,5 +66,5 @@ class OnTheSkyPositionBuilder:
         for si in stellar_image_list:
             skypositions.extend(si.get_sky_positions())
         # TODO Get the ID of the star and optimize the SIP for the same star at the same position in the sky.
-        return OnTheSkyPosition(skypositions)
+        return MapOnTheSky(skypositions)
 

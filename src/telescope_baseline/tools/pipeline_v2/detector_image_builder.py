@@ -3,7 +3,7 @@ from astropy.io import fits
 from astropy.time import Time
 
 from telescope_baseline.tools.pipeline_v2.detector_image import DetectorImage
-from telescope_baseline.tools.pipeline_v2.stella_image import StellarImage
+from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
 
 
 class DetectorImageBuilder:
@@ -22,7 +22,7 @@ class DetectorImageBuilder:
         self.__ny = ny
         self.__psf_w = psf_w
 
-    def from_stellar_image(self, si: StellarImage) -> DetectorImage:
+    def from_stellar_image(self, si: MapOnDetector) -> DetectorImage:
         """Build DetectorImage from StellarImage class
 
         Args:

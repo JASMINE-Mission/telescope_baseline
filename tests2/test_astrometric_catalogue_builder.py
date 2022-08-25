@@ -2,9 +2,9 @@ import pytest
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
 
-from telescope_baseline.tools.pipeline_v2.astrometriccataloguebuilder import AstrometricCatalogueBuilder
-from telescope_baseline.tools.pipeline_v2.ontheskyposition import OnTheSkyPosition
-from telescope_baseline.tools.pipeline_v2.skyposition import SkyPosition
+from telescope_baseline.tools.pipeline_v2.astrometric_catalogue_builder import AstrometricCatalogueBuilder
+from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
+from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 
 
 def test_from_on_the_sky_position():
@@ -23,9 +23,9 @@ def test_from_on_the_sky_position():
     builder = AstrometricCatalogueBuilder()
     o = []
     for i in range(len(t)):
-        s = SkyPosition(1, SkyCoord(lon=londata[i], lat=latdata[i], unit=('rad', 'rad'),
-                                    frame='barycentricmeanecliptic'), 3000, t[i])
-        o.append(OnTheSkyPosition([s]))
+        s = PositionOnTheSky(1, SkyCoord(lon=londata[i], lat=latdata[i], unit=('rad', 'rad'),
+                                         frame='barycentricmeanecliptic'), 3000, t[i])
+        o.append(MapOnTheSky([s]))
     a = builder.from_on_the_sky_position(o)
     print("Hello")
     coord = a.get_catalogue()[0]

@@ -5,7 +5,7 @@ from astropy.nddata import NDData
 from photutils import extract_stars, EPSFBuilder
 from astropy.time import Time
 
-from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
+from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOnDetector
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 
 
@@ -32,7 +32,7 @@ class DetectorImage:
     def time(self):
         return Time(self.__hdu.header['DATE-OBS'])
 
-    def get_on_detector_positions(self, window_size: int) -> list[OnDetectorPosition]:
+    def get_on_detector_positions(self, window_size: int) -> list[PositionOnDetector]:
         """Calculate image center position from image array data.
 
         Args:
@@ -64,5 +64,5 @@ class DetectorImage:
             # TODO 明るさの計算はまだ（0にしてる）
             # TODO 時刻をHBUから取ってる来る処理がまだ！！
             position_list.append(
-                OnDetectorPosition(1, Position2D(s.center[0], s.center[1]), Time('2000-01-01 00:00:00.0'), mag=3000))
+                PositionOnDetector(1, Position2D(s.center[0], s.center[1]), Time('2000-01-01 00:00:00.0'), mag=3000))
         return position_list

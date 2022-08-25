@@ -1,4 +1,4 @@
-from telescope_baseline.tools.pipeline_v2.catalogentry import CatalogueEntry
+from telescope_baseline.tools.pipeline_v2.catalog_entry import CatalogueEntry
 
 
 class AstrometricCatalogue:

@@ -1,9 +1,9 @@
-from telescope_baseline.tools.pipeline_v2.astrometriccatalogue import AstrometricCatalogue
-from telescope_baseline.tools.pipeline_v2.astrometriccataloguebuilder import AstrometricCatalogueBuilder
+from telescope_baseline.tools.pipeline_v2.astrometric_catalogue import AstrometricCatalogue
+from telescope_baseline.tools.pipeline_v2.astrometric_catalogue_builder import AstrometricCatalogueBuilder
 from telescope_baseline.tools.pipeline_v2.detector_image_builder import DetectorImageBuilder
-from telescope_baseline.tools.pipeline_v2.detectorimagecatalogue import DetectorImageCatalogue
-from telescope_baseline.tools.pipeline_v2.ontheskyposition_builder import OnTheSkyPositionBuilder
-from telescope_baseline.tools.pipeline_v2.stellar_image_builder import StellarImageBuilder
+from telescope_baseline.tools.pipeline_v2.detector_image_catalogue import DetectorImageCatalogue
+from telescope_baseline.tools.pipeline_v2.map_on_the_sky_builder import MapOnTheSkyBuilder
+from telescope_baseline.tools.pipeline_v2.map_on_detector_builder import MapOnDetectorBuilder
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
 from pathlib import Path
 from astropy.wcs import WCS
@@ -35,8 +35,8 @@ class Pipeline:
             A DetectorImageCatalogue object which contains DetectorImage objects of whole mission.
 
         """
-        sky_positions_builder = OnTheSkyPositionBuilder()
-        sib = StellarImageBuilder(9, pix_max, pix_max)
+        sky_positions_builder = MapOnTheSkyBuilder()
+        sib = MapOnDetectorBuilder(9, pix_max, pix_max)
         dib = DetectorImageBuilder(pix_max, pix_max, psf_w)
         if not Path(self.__folder).exists():
             Path(self.__folder).mkdir()
@@ -83,8 +83,8 @@ class Pipeline:
             AstrometricCatalogue which contains list of 5 parameters of whole stars.
         """
         # TODO: wcs is not constant whole the mission.
-        sib = StellarImageBuilder(window_size, 1024, 1024)
-        sky_positions_builder = OnTheSkyPositionBuilder()
+        sib = MapOnDetectorBuilder(window_size, 1024, 1024)
+        sky_positions_builder = MapOnTheSkyBuilder()
         acb = AstrometricCatalogueBuilder()
 
         cat = c.get_detector_images()

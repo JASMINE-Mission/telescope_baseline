@@ -1,13 +1,13 @@
-from telescope_baseline.tools.pipeline_v2.ontheskyposition import OnTheSkyPosition
+from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
-from telescope_baseline.tools.pipeline_v2.detectorimagecatalogue import DetectorImageCatalogue
-from telescope_baseline.tools.pipeline_v2.ondetectorposition import OnDetectorPosition
-from telescope_baseline.tools.pipeline_v2.stella_image import StellarImage
+from telescope_baseline.tools.pipeline_v2.detector_image_catalogue import DetectorImageCatalogue
+from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOnDetector
+from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
 from astropy.wcs import WCS
 
 
-class StellarImageBuilder:
+class MapOnDetectorBuilder:
     """Builder class for Stellarimage class
 
     """
@@ -24,7 +24,7 @@ class StellarImageBuilder:
         self.__ny = ny
         pass
 
-    def from_detector_image_catalogue(self, wcs: WCS, c: DetectorImageCatalogue) -> list[StellarImage]:
+    def from_detector_image_catalogue(self, wcs: WCS, c: DetectorImageCatalogue) -> list[MapOnDetector]:
         """method for build from DetectorImageCatalogue to the list of StellarImage
 
         Args:
@@ -39,10 +39,10 @@ class StellarImageBuilder:
         """
         sil = []
         for di in c.get_detector_images():
-            sil.append(StellarImage(wcs, di.get_on_detector_positions(self.__window_size)))
+            sil.append(MapOnDetector(wcs, di.get_on_detector_positions(self.__window_size)))
         return sil
 
-    def from_on_tye_sky_position(self, o: OnTheSkyPosition, wl: list[WCSwId]) -> list[StellarImage]:
+    def from_on_tye_sky_position(self, o: MapOnTheSky, wl: list[WCSwId]) -> list[MapOnDetector]:
         """method for building from OnTheSkyPOsition to the list of StellarImage
 
         Args:
@@ -63,12 +63,12 @@ class StellarImageBuilder:
                 tmp.append([s.coord.galactic.l.deg, s.coord.galactic.b.deg])
             tmp = w.wcs.wcs_world2pix(tmp, 0)
             a = self._store_list_of_detector_position(sky_positions, tmp)
-            si.append(StellarImage(wl[0].wcs, detector_positions=a))
+            si.append(MapOnDetector(wl[0].wcs, detector_positions=a))
         return si
 
     def _store_list_of_detector_position(self, sky_positions, tmp):
         a = []
         for k in range(len(tmp)):
             if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
-                a.append(OnDetectorPosition(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
+                a.append(PositionOnDetector(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
         return a

@@ -2,7 +2,7 @@ from astropy.time import Time
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 
 
-class OnDetectorPosition:
+class PositionOnDetector:
     """Data class for detector position of individual image.
 
     """
