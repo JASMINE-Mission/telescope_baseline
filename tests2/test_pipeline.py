@@ -7,7 +7,7 @@ from telescope_baseline.tools.pipeline_v2.astrometric_catalogue import Astrometr
 from telescope_baseline.tools.pipeline_v2.catalog_entry import CatalogueEntry
 from telescope_baseline.tools.pipeline_v2.detector_image_catalogue import DetectorImageCatalogue
 from telescope_baseline.tools.pipeline_v2.pipeline import Pipeline
-from telescope_baseline.tools.pipeline_v2.fitsstorage import FitsStorage
+from telescope_baseline.tools.pipeline_v2.detectorimagestorage import DetectorImageStorage
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
 from astropy.coordinates import SkyCoord
 import astropy.units as u
@@ -55,12 +55,12 @@ def get_fits_file_name(i:int, j:int):
 def test_analysis():
     c = Pipeline()
     d = DetectorImageCatalogue([
-        FitsStorage.load(get_fits_file_name(1, 0)),
-        FitsStorage.load(get_fits_file_name(2, 0)),
-        FitsStorage.load(get_fits_file_name(7, 0)),
-        FitsStorage.load(get_fits_file_name(3, 0)),
-        FitsStorage.load(get_fits_file_name(8, 0)),
-        FitsStorage.load(get_fits_file_name(9, 0))
+        DetectorImageStorage.load(get_fits_file_name(1, 0)),
+        DetectorImageStorage.load(get_fits_file_name(2, 0)),
+        DetectorImageStorage.load(get_fits_file_name(7, 0)),
+        DetectorImageStorage.load(get_fits_file_name(3, 0)),
+        DetectorImageStorage.load(get_fits_file_name(8, 0)),
+        DetectorImageStorage.load(get_fits_file_name(9, 0))
     ])
     hdu = d.get_detector_images()[0].hdu
     t = hdu.header['DATE-OBS']
