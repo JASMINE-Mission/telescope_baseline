@@ -1,3 +1,4 @@
+from astropy.coordinates import SkyCoord
 from astropy.time import Time
 
 
@@ -5,7 +6,7 @@ class PositionOnTheSky:
     """Data class for the position in the sky coordinate for individual time
 
     """
-    def __init__(self, stellar_id, coord, mag: float, datetime: Time):
+    def __init__(self, stellar_id: int, coord: SkyCoord, mag: float, datetime: Time):
         """Constructor
 
         Args:

@@ -52,7 +52,7 @@ class MapOnDetectorBuilder:
         Returns:
 
         """
-        sky_positions = o.sky_positions
+        sky_positions = o.positions_on_the_sky
         si = []
         for w in wl:
             if "GLON" not in w.wcs.wcs.ctype[0]:
@@ -63,7 +63,7 @@ class MapOnDetectorBuilder:
                 tmp.append([s.coord.galactic.l.deg, s.coord.galactic.b.deg])
             tmp = w.wcs.wcs_world2pix(tmp, 0)
             a = self._store_list_of_detector_position(sky_positions, tmp)
-            si.append(MapOnDetector(wl[0].wcs, detector_positions=a))
+            si.append(MapOnDetector(wl[0].wcs, positions_on_detector=a))
         return si
 
     def _store_list_of_detector_position(self, sky_positions, tmp):

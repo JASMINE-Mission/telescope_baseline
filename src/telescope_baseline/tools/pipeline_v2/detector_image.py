@@ -32,6 +32,14 @@ class DetectorImage:
     def time(self):
         return Time(self.__hdu.header['DATE-OBS'])
 
+    @staticmethod
+    def load(filename: str):
+        ft = fits.open(filename)
+        return DetectorImage(ft[0])
+
+    def save(self, filename: str) -> None:
+        self.__hdu.writeto(filename, overwrite=True)
+
     def get_on_detector_positions(self, window_size: int) -> list[PositionOnDetector]:
         """Calculate image center position from image array data.
 

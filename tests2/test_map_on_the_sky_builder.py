@@ -29,7 +29,7 @@ def test_from_astrometric_catalogue_2_list():
     a = AstrometricCatalogue([CatalogueEntry(1, c, 3000)])
     t = [Time('2000-06-01 00:00:00')]
     o = builder.from_astrometric_catalogue_2_list(a, t)
-    c0 = o[0].sky_positions[0].coord
+    c0 = o[0].positions_on_the_sky[0].coord
     assert -4e-5 < c0.galactic.b.deg < 0
     assert 0.0001 < c0.galactic.l.deg < 0.00016
 
@@ -44,7 +44,7 @@ def test_from_stellar_image():
     o = PositionOnDetector(1, Position2D(64., 64.), '2000-01-01 00:00:00', 3000)
     s = MapOnDetector(w, [o])
     o = builder.from_stellar_image([s])
-    oc = o.sky_positions[0].coord.galactic
-    assert o.sky_positions[0].datetime == '2000-01-01 00:00:00'
+    oc = o.positions_on_the_sky[0].coord.galactic
+    assert o.positions_on_the_sky[0].datetime == '2000-01-01 00:00:00'
     assert 0.001 < oc.l.deg < 0.0025
     assert 0.001 < oc.b.deg < 0.0025
