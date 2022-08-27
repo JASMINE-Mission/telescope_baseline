@@ -64,7 +64,7 @@ class AstrometricCatalogueBuilder:
         """
         sid = []
         for o in otsp:
-            spl = o.sky_positions
+            spl = o.positions_on_the_sky
             for s in spl:
                 sid.append(s.stellar_id)
         sid = list(set(sid))
@@ -91,7 +91,7 @@ class AstrometricCatalogueBuilder:
         tmpt = []
         tmplon = []
         tmplat = []
-        for ss in o.sky_positions:
+        for ss in o.positions_on_the_sky:
             if s == ss.stellar_id:
                 tmpt.append(ss.datetime)
                 tmplon.append(ss.coord.barycentricmeanecliptic.lon.rad)
