@@ -28,7 +28,8 @@ class MapOnTheSkyBuilder:
     def __init__(self):
         pass
 
-    def from_astrometric_catalogue_2_list(self, a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
+    @staticmethod
+    def from_astrometric_catalogue_2_list(a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
         """method for build from AstrometricCatalogue to the list of OnTheSkyPosition
 
         Args:
@@ -53,7 +54,8 @@ class MapOnTheSkyBuilder:
             osp.append(osp0)
         return osp
 
-    def from_stellar_image(self, stellar_image_list: list[MapOnDetector]) -> MapOnTheSky:
+    @staticmethod
+    def from_stellar_image(stellar_image_list: list[MapOnDetector]) -> MapOnTheSky:
         """method for build from StellarImage(detector coordinate) class to OnTheSkyPosition
 
         Args:
@@ -67,4 +69,3 @@ class MapOnTheSkyBuilder:
             skypositions.extend(si.get_sky_positions())
         # TODO Get the ID of the star and optimize the SIP for the same star at the same position in the sky.
         return MapOnTheSky(skypositions)
-

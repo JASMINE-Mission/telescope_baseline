@@ -20,8 +20,7 @@ def test_save():
     a.save(f_name)
     file = open(f_name, 'r', newline='')
     f = csv.reader(file, delimiter=',')
-    for r in f:
-        pass
+    r = next(iter(f))
     assert int(r[0]) == 1
     assert abs(float(r[1]) - 266.4049882865447) < 0.01
     assert abs(float(r[2]) + 28.936177761791473) < 0.01

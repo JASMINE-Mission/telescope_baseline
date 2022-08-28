@@ -11,7 +11,6 @@ class PositionOnTheSky:
 
         Args:
             stellar_id: stellar ID
-            orbit_id: orbit ID
             coord: coordinate
             mag: magnitude
         """

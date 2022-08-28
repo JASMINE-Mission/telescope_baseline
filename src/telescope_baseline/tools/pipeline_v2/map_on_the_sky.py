@@ -1,6 +1,7 @@
 import csv
 
 from astropy.coordinates import SkyCoord
+from astropy.time import Time
 
 from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 
@@ -38,7 +39,7 @@ class MapOnTheSky:
             else:
                 tmp.append(PositionOnTheSky(int(row[0]),
                                             SkyCoord(ra=float(row[1]), dec=float(row[2]), unit=('rad', 'rad'),
-                                                     frame='icrs'), float(row[3]), row[4]))
+                                                     frame='icrs'), float(row[3]), Time(row[4])))
         return MapOnTheSky(tmp, orbit_id)
 
     def save(self, file_name: str):

@@ -1,5 +1,6 @@
 import csv
 
+from astropy.time import Time
 from astropy.wcs import WCS
 
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D
@@ -40,7 +41,8 @@ class MapOnDetector:
         file = open(file_name, 'r', newline='')
         f = csv.reader(file, delimiter=',')
         for row in f:
-            tmp.append(PositionOnDetector(int(row[0]), Position2D(float(row[1]), float(row[2])), row[4], float(row[3])))
+            tmp.append(PositionOnDetector(int(row[0]), Position2D(float(row[1]), float(row[2])), Time(row[4]),
+                                          float(row[3])))
         return tmp
 
     def save(self, file_name: str):

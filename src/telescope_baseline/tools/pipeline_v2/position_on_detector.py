@@ -11,8 +11,7 @@ class PositionOnDetector:
 
         Args:
             exposure_id: exposure_id
-            x: x coordinate of position in detector coordinate
-            y: y coordinate of position in detector coordinate
+            p: 2D position in detector coordinate
             mag: magnitude
             datetime: exposuer date
         """
@@ -41,4 +40,3 @@ class PositionOnDetector:
     @property
     def datetime(self):
         return self.__datetime
-

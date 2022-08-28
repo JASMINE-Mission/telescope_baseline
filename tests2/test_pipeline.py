@@ -37,7 +37,7 @@ def test_simulation():
         wlist.append(WCSwId(i, 1, copy.deepcopy(w)))
     c = Pipeline(t=t, w_list=wlist)
     b = c.simulation(a, 1024, 1.0)
-    assert(b != None)
+    assert(b is not None)
 
 
 def get_tests_file_name(fname: str, folder='data'):
@@ -58,15 +58,15 @@ def get_tests_file_name(fname: str, folder='data'):
 def test_analysis():
     c = Pipeline()
     d = DetectorImageCatalogue([
-        DetectorImage.load(get_tests_file_name('tmp1_0.fits')),
-        DetectorImage.load(get_tests_file_name('tmp2_0.fits')),
-        DetectorImage.load(get_tests_file_name('tmp7_0.fits')),
-        DetectorImage.load(get_tests_file_name('tmp3_0.fits')),
-        DetectorImage.load(get_tests_file_name('tmp8_0.fits')),
-        DetectorImage.load(get_tests_file_name('tmp9_0.fits'))
+        DetectorImage.load(str(get_tests_file_name('tmp1_0.fits'))),
+        DetectorImage.load(str(get_tests_file_name('tmp2_0.fits'))),
+        DetectorImage.load(str(get_tests_file_name('tmp7_0.fits'))),
+        DetectorImage.load(str(get_tests_file_name('tmp3_0.fits'))),
+        DetectorImage.load(str(get_tests_file_name('tmp8_0.fits'))),
+        DetectorImage.load(str(get_tests_file_name('tmp9_0.fits')))
     ])
     hdu = d.get_detector_images()[0].hdu
     t = hdu.header['DATE-OBS']
     w = astropy.wcs.WCS(hdu.header)
     a = c.analysis(d, w)
-    assert(a != None)
+    assert(a is not None)

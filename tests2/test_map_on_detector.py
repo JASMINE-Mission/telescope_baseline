@@ -18,7 +18,7 @@ def mod():
     w.wcs.crval = [0, 0]  #
     w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
     m = MapOnDetector(w, [
-        PositionOnDetector(1, Position2D(0.0, 0.0), '2000-01-01 00:00:00', 12.5),
+        PositionOnDetector(1, Position2D(0.0, 0.0), Time('2000-01-01 00:00:00'), 12.5),
     ])
     return m
 
@@ -28,13 +28,12 @@ def test_save(mod):
     mod.save(f_name)
     file = open(f_name, 'r', newline='')
     f = csv.reader(file, delimiter=',')
-    for p in f:
-        pass
+    p = next(iter(f))
     assert int(p[0]) == 1
     assert float(p[1]) == 0.0
     assert float(p[2]) == 0.0
     assert float(p[3]) == 12.5
-    assert p[4] == '2000-01-01 00:00:00'
+    assert p[4] == '2000-01-01 00:00:00.000'
 
 
 def test_load():

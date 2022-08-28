@@ -13,20 +13,22 @@ from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
 
 
-def test_position_at_certain_time():
+@pytest.fixture
+def sc():
+    return SkyCoord(l=0, b=0, unit=('deg', 'deg'), frame="galactic", distance=1 * u.pc,
+                    obstime=Time('2000-01-01 00:00:00'), pm_l_cosb=1000 * u.mas / u.yr, pm_b=500 * u.mas / u.yr)
+
+
+def test_position_at_certain_time(sc):
     t = Time('2000-06-01 00:00:00')
-    c = SkyCoord(l=0, b=0, unit=('deg', 'deg'), frame="galactic", distance=1 * u.pc,
-                 obstime=Time('2000-01-01 00:00:00'), pm_l_cosb=1000 * u.mas / u.yr, pm_b=500 * u.mas / u.yr)
-    lon, lat = position_at_certain_time(c, t)
+    lon, lat = position_at_certain_time(sc, t)
     assert 4.647 < lon < 4.667
     assert -0.101 < lat < -0.091
 
 
-def test_from_astrometric_catalogue_2_list():
+def test_from_astrometric_catalogue_2_list(sc):
     builder = MapOnTheSkyBuilder()
-    c = SkyCoord(l=0, b=0, unit=('deg', 'deg'), frame="galactic", distance=1 * u.pc,
-                 obstime=Time('2000-01-01 00:00:00'), pm_l_cosb=1000 * u.mas / u.yr, pm_b=500 * u.mas / u.yr)
-    a = AstrometricCatalogue([CatalogueEntry(1, c, 3000)])
+    a = AstrometricCatalogue([CatalogueEntry(1, sc, 3000)])
     t = [Time('2000-06-01 00:00:00')]
     o = builder.from_astrometric_catalogue_2_list(a, t)
     c0 = o[0].positions_on_the_sky[0].coord
@@ -41,7 +43,7 @@ def test_from_stellar_image():
     w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix
     w.wcs.crval = [0, 0]  #
     w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
-    o = PositionOnDetector(1, Position2D(64., 64.), '2000-01-01 00:00:00', 3000)
+    o = PositionOnDetector(1, Position2D(64., 64.), Time('2000-01-01 00:00:00'), 3000)
     s = MapOnDetector(w, [o])
     o = builder.from_stellar_image([s])
     oc = o.positions_on_the_sky[0].coord.galactic

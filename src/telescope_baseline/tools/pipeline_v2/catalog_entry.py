@@ -1,6 +1,7 @@
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 
+
 class CatalogueEntry:
     """Data class of astrometric parameters for an individual star
 

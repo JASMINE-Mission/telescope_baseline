@@ -26,8 +26,6 @@ class Pipeline:
 
         Args:
             a: AstrometricCatalogue which contains list of 5 parameters of whole stars.
-            t: array of Time.  Each element corresponds to orbit.
-            w_list: array of WCSwId. WCSwId contains WCS object, orbit ID and exposure ID.
             pix_max: Maximum pixel number.
             psf_w: PSF width in pixel unit.
 
