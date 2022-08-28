@@ -31,7 +31,7 @@ class MapOnDetector:
         return ret
 
     @property
-    def detector_posotions(self):
+    def positions_on_detector(self):
         return self.__positions_on_detector
 
     @staticmethod

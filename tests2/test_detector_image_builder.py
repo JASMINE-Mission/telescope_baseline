@@ -1,4 +1,6 @@
+import numpy as np
 import pytest
+from astropy.time import Time
 from astropy.wcs import WCS
 
 from build.lib.telescope_baseline.tools.pipeline_v2.position2d import Position2D
@@ -20,3 +22,13 @@ def test_from_stellar_image():
     assert 63.5 < aa[0].x < 64.5
     assert 63.5 < aa[0].y < 64.5
 
+
+def test_generate_stellar_image(monkeypatch):
+    monkeypatch.setattr(np.random, 'randn', lambda: 0)
+    dib = DetectorImageBuilder(128, 128, 1.0)
+    a = np.zeros((128, 128))
+    si = [PositionOnDetector(1, Position2D(50.0, 50.0), Time('2000-01-01 00:00:00'), 10)]
+    dib._generate_a_stellar_image(a, si, 0)
+    assert a[50][50] == 10.0
+    assert a[50][51] == 0
+    assert a[49][50] == 0

@@ -31,7 +31,7 @@ class DetectorImageBuilder:
         Returns:DetctorImage
 
         """
-        dp = si.detector_posotions
+        dp = si.positions_on_detector
         a = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         t_max = Time('1960-01-01 00:00:00')
         for s in range(len(dp)):

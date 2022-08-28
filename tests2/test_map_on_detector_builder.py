@@ -26,8 +26,8 @@ def test_from_detector_image_catalogue():
     co = si[0].get_sky_positions()[0].coord.galactic
     assert 359.97 < co.l.deg < 359.98
     assert -0.03 < co.b.deg < -0.02
-    assert 63.5 < si[0].detector_posotions[0].x < 64.5
-    assert 63.5 < si[0].detector_posotions[0].y < 64.5
+    assert 63.5 < si[0].positions_on_detector[0].x < 64.5
+    assert 63.5 < si[0].positions_on_detector[0].y < 64.5
 
 def test_from_on_tye_sky_position():
     builder = MapOnDetectorBuilder(9, 256, 256)
@@ -40,6 +40,9 @@ def test_from_on_tye_sky_position():
     w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
     wl = [WCSwId(1, 1, w)]
     si = builder.from_on_tye_sky_position(o, wl)
-    a = si[0].detector_posotions #  127.0, 126.99999999
+    a = si[0].positions_on_detector #  127.0, 126.99999999
     assert 126.5 < a[0].x < 127.5
     assert 126.5 < a[0].y < 127.5
+
+
+# TODO: implments test for store_list_of_detector_position method

@@ -18,7 +18,7 @@ class Pipeline:
     def __init__(self, t: list[Time] = [], w_list: list[WCSwId] = []):
         self.__t = t
         self.__w_list = w_list
-        self.__folder = 'data'
+        self.__folder = 'tmp'
 
     def simulation(self, a: AstrometricCatalogue, pix_max: int, psf_w: float)\
             -> list[DetectorImageCatalogue]:
