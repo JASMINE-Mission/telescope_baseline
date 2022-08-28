@@ -49,7 +49,7 @@ def test_load():
 def test_get_sky_positions(mod):
     p = mod.get_sky_positions()
     assert len(p) == 1
-    assert str(p[0].datetime) == '2000-01-01 00:00:00'
+    assert str(p[0].datetime) == '2000-01-01 00:00:00.000'
     assert abs(p[0].mag - 12.5) < 0.1
     assert p[0].stellar_id == 1
     assert abs(p[0].coord.galactic.b.deg + 0.0334) < 0.0001
