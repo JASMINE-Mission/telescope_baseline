@@ -71,4 +71,5 @@ class MapOnDetectorBuilder:
         for k in range(len(tmp)):
             if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
                 a.append(PositionOnDetector(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
+                # index k is needed here
         return a

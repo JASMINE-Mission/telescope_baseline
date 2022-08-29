@@ -49,8 +49,8 @@ class MapOnTheSkyBuilder:
                 c = catalogue[i]
                 l, b = position_at_certain_time(c.coord, time)
                 coord = SkyCoord(lat=b, lon=l, unit=('rad', 'rad'), frame='barycentricmeanecliptic')
-                sky_positions.append(PositionOnTheSky(i, coord, c.mag, time))
-            osp0 = MapOnTheSky(sky_positions, j)
+                sky_positions.append(PositionOnTheSky(i, coord, c.mag, time))  # index i is needed here
+            osp0 = MapOnTheSky(sky_positions, j)  # index j is needed here
             osp.append(osp0)
         return osp
 

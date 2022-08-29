@@ -24,8 +24,7 @@ class MapOnDetector:
 
     def get_sky_positions(self):
         ret = []
-        for i in range(len(self.__positions_on_detector)):
-            position = self.__positions_on_detector[i]
+        for position in self.__positions_on_detector:
             sky = self.__wcs.pixel_to_world(position.x, position.y)
             # TODO: Consideration is needed how ids are set.
             ret.append(PositionOnTheSky(position.exposure_id, sky, position.mag, position.datetime))

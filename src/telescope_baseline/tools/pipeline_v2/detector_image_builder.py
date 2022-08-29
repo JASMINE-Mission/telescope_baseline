@@ -37,7 +37,7 @@ class DetectorImageBuilder:
         for s in range(len(dp)):
             if dp[s].datetime > t_max:
                 t_max = dp[s].datetime
-            self._generate_a_stellar_image(a, dp, s)
+            self._generate_a_stellar_image(a, dp, s)  # index s is needed here
         hdu = fits.PrimaryHDU()
         hdu.data = a
         hdu.header['DATE-OBS'] = str(t_max)
