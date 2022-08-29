@@ -32,7 +32,7 @@ class AstrometricCatalogue:
         with open(file_name, 'w', newline='') as data_file:
             write = csv.writer(data_file)
             for e in self.__catalogue_entries:
-                write.writerow([e.stellar_id, e.ra, e.dec, e.pm_ra, e.pm_dec, e.distance, e.coord.obstime, e.mag])
+                write.writerow([e.stellar_id, e.ra, e.dec, e.pm_ra_cosdec, e.pm_dec, e.distance, e.coord.obstime, e.mag])
 
     @staticmethod
     def load(file_name: str):
@@ -40,10 +40,9 @@ class AstrometricCatalogue:
         file = open(file_name, 'r', newline='')
         f = csv.reader(file, delimiter=',')
         for row in f:
-            print(row)
             tmp.append(CatalogueEntry(int(row[0]),
-                                      SkyCoord(ra=float(row[1]), dec=float(row[2]), unit=('deg', 'deg'), obstime=row[6],
+                                      SkyCoord(ra=float(row[1]), dec=float(row[2]), unit=('deg', 'deg'),
                                                pm_ra_cosdec=float(row[3]) * u.mas/u.yr,
                                                pm_dec=float(row[4]) * u.mas/u.yr, distance=float(row[5])*u.pc,
-                                               frame='icrs'), float(row[7])))
+                                               obstime=row[6], frame='icrs'), float(row[7])))
         return AstrometricCatalogue(tmp)

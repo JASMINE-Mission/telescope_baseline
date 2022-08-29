@@ -46,7 +46,7 @@ class CatalogueEntry:
         return self.__coord.distance / u.pc
 
     @property
-    def pm_ra(self):
+    def pm_ra_cosdec(self):
         return self.__coord.icrs.pm_ra_cosdec * u.yr / u.mas
 
     @property

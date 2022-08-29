@@ -129,6 +129,6 @@ class AstrometricCatalogue(SimNode):
         for i in range(len(self.__catalogue)):
             f.write(str(self.__catalogue[i].id) + "," + str(self.__catalogue[i].ra) + "," +
                     str(self.__catalogue[i].dec) + "," + str(self.__catalogue[i].parallax / u.mas) + "," +
-                    str(self.__catalogue[i].pm_ra * u.yr / u.mas) + "," +
+                    str(self.__catalogue[i].pm_ra_cosdec * u.yr / u.mas) + "," +
                     str(self.__catalogue[i].pm_dec * u.yr / u.mas) + "\n")
         f.close()

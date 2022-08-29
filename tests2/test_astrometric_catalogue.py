@@ -38,7 +38,7 @@ def test_load():
     assert c[0].stellar_id == 1
     assert abs(c[0].ra - 266.4049882865447) < 0.01
     assert abs(c[0].dec + 28.936177761791473) < 0.01
-    assert abs(c[0].pm_ra + 3.325090692327255) < 0.01
+    assert abs(c[0].pm_ra_cosdec + 3.325090692327255) < 0.01
     assert abs(c[0].pm_dec - 13.745681936077188) < 0.01
     assert abs(c[0].distance - 1.0) < 0.1
     assert str(c[0].coord.obstime) == '2000-01-01 00:00:00.000'
