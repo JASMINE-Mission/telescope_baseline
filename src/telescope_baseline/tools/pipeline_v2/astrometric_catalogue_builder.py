@@ -29,9 +29,9 @@ def lsf_fit_function_for_astrometric_parameters(parameter, t, lon, lat):
     para = parameter[4]
     ls = []
     ty = []
-    for i in range(len(t)):
-        ls.append(get_sun(t[i]).geocentricmeanecliptic.lon.rad)
-        ty.append(t[i].jyear)
+    for time in t:
+        ls.append(get_sun(time).geocentricmeanecliptic.lon.rad)
+        ty.append(time.jyear)
     ls = np.array(ls)
     ty = np.array(ty)
     tc = (np.max(ty) + np.min(ty)) / 2
@@ -40,9 +40,9 @@ def lsf_fit_function_for_astrometric_parameters(parameter, t, lon, lat):
     latt = np.ndarray((np.size(ty)))
     residual = np.ndarray((len(ty)))
     for i in range(len(ty)):
-        lont[i] = lon0 + (para * math.sin(ls[i] - lon0) + pm_lon_coslat * ty[i]) / math.cos(lat0)
-        latt[i] = lat0 + (pm_lat * ty[i] - para * math.sin(lat0) * math.cos(ls[i] - lon0))
-        residual[i] = (lon[i] - lont[i]) ** 2 + (lat[i] - latt[i]) ** 2
+        lont = lon0 + (para * math.sin(ls[i] - lon0) + pm_lon_coslat * ty[i]) / math.cos(lat0)
+        latt = lat0 + (pm_lat * ty[i] - para * math.sin(lat0) * math.cos(ls[i] - lon0))
+        residual[i] = (lon[i] - lont) ** 2 + (lat[i] - latt) ** 2
     return residual
 
 
@@ -53,7 +53,8 @@ class AstrometricCatalogueBuilder:
     def __init__(self):
         pass
 
-    def from_on_the_sky_position(self, otsp: list[MapOnTheSky]):
+    @staticmethod
+    def from_on_the_sky_position(otsp: list[MapOnTheSky]):
         """Class for build AstrometricCatalogue from the list of OnTheSkyPosition
 
         Args:
@@ -63,6 +64,7 @@ class AstrometricCatalogueBuilder:
 
         """
         sid = []
+        # TODO. to optimize loop.  Use dictionary etc.
         for o in otsp:
             spl = o.positions_on_the_sky
             for s in spl:
@@ -70,24 +72,27 @@ class AstrometricCatalogueBuilder:
         sid = list(set(sid))
         result = []
         for s in sid:
-            latdata, londata, t = self._time_seriese_of_individual_star(otsp, s)
+            latdata, londata, t = AstrometricCatalogueBuilder._time_seriese_of_individual_star(otsp, s)
+            # TODO. Input appropriate initial value for least square.
             parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
             result.append(optimize.leastsq(lsf_fit_function_for_astrometric_parameters, parameter,
                                            args=(t, londata, latdata)))
         return AstrometricCatalogue(result)
 
-    def _time_seriese_of_individual_star(self, otsp, s):
+    @staticmethod
+    def _time_seriese_of_individual_star(otsp, s):
         t = []
         londata = []
         latdata = []
         for o in otsp:
-            tmpt, tmplon, tmplat = self._add_individual_observation(o, s)
+            tmpt, tmplon, tmplat = AstrometricCatalogueBuilder._add_individual_observation(o, s)
             t.extend(tmpt)
             londata.extend(tmplon)
             latdata.extend(tmplat)
         return latdata, londata, t
 
-    def _add_individual_observation(self, o, s):
+    @staticmethod
+    def _add_individual_observation(o, s):
         tmpt = []
         tmplon = []
         tmplat = []
