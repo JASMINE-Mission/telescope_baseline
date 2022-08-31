@@ -3,11 +3,12 @@ import astropy
 import pytest
 from astropy.time import Time
 
+from telescope_baseline.tools.pipeline_v2.analysis import Analysis
 from telescope_baseline.tools.pipeline_v2.astrometric_catalogue import AstrometricCatalogue
 from telescope_baseline.tools.pipeline_v2.catalog_entry import CatalogueEntry
 from telescope_baseline.tools.pipeline_v2.detector_image import DetectorImage
 from telescope_baseline.tools.pipeline_v2.detector_image_catalogue import DetectorImageCatalogue
-from telescope_baseline.tools.pipeline_v2.pipeline import Pipeline
+from telescope_baseline.tools.pipeline_v2.simulation import Simulation
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
 from astropy.coordinates import SkyCoord
 import astropy.units as u
@@ -35,8 +36,8 @@ def test_simulation():
     wlist = []
     for i in range(len(t)):
         wlist.append(WCSwId(i, 1, copy.deepcopy(w)))
-    c = Pipeline(t=t, w_list=wlist)
-    b = c.simulation(a, 1024, 1.0)
+    c = Simulation(t=t, w_list=wlist)
+    b = c.do(a, 1024, 1.0)
     assert(b is not None)
 
 
@@ -56,7 +57,7 @@ def get_tests_file_name(fname: str, folder='data'):
 
 
 def test_analysis():
-    c = Pipeline()
+    c = Analysis()
     d = DetectorImageCatalogue([
         DetectorImage.load(str(get_tests_file_name('tmp1_0.fits'))),
         DetectorImage.load(str(get_tests_file_name('tmp2_0.fits'))),
@@ -68,5 +69,5 @@ def test_analysis():
     hdu = d.get_detector_images()[0].hdu
     t = hdu.header['DATE-OBS']
     w = astropy.wcs.WCS(hdu.header)
-    a = c.analysis(d, w)
+    a = c.do(d, w)
     assert(a is not None)
