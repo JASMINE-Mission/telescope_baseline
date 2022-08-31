@@ -26,6 +26,8 @@ class DetectorImageCatalogue:
     @staticmethod
     def load(foldername: str):
         p = Path(foldername)
+        if not p.exists():
+            raise NotADirectoryError()
         d = []
         for s in p.glob('*.fits'):
             d.append(DetectorImage.load(str(s)))
@@ -34,7 +36,7 @@ class DetectorImageCatalogue:
     def save(self, foldername: str):
         p = Path(foldername)
         if not p.exists():
-            raise FileNotFoundError()
+            p.mkdir(parents=True)
         i = 0
         for d in self.__detector_images:
             filename = 'tmp_{:0=4}'.format(i) + '.fits'
