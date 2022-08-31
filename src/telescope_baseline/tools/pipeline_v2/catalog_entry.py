@@ -6,7 +6,7 @@ class CatalogueEntry:
     """Data class of astrometric parameters for an individual star
 
     """
-    def __init__(self, stellar_id, coord: SkyCoord, mag):
+    def __init__(self, stellar_id: int, coord: SkyCoord, mag: float):
         """The constructor
 
         Args:

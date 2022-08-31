@@ -12,6 +12,7 @@ class AstrometricCatalogue:
         catalogue_entries: list of CatalogueEntry which is 5 parameter list for one star.
 
     """
+
     def __init__(self, catalogue_entries: list[CatalogueEntry] = []):
         """Constructor
 
@@ -32,7 +33,9 @@ class AstrometricCatalogue:
         with open(file_name, 'w', newline='') as data_file:
             write = csv.writer(data_file)
             for e in self.__catalogue_entries:
-                write.writerow([e.stellar_id, e.ra, e.dec, e.pm_ra_cosdec, e.pm_dec, e.distance, e.coord.obstime, e.mag])
+                write.writerow([e.stellar_id, e.coord.icrs.ra.deg, e.coord.icrs.dec.deg,
+                                e.coord.icrs.pm_ra_cosdec * u.yr / u.mas, e.coord.icrs.pm_dec * u.yr / u.mas,
+                                e.coord.distance / u.pc, e.coord.obstime, e.mag])
 
     @staticmethod
     def load(file_name: str):
@@ -40,9 +43,9 @@ class AstrometricCatalogue:
         file = open(file_name, 'r', newline='')
         f = csv.reader(file, delimiter=',')
         for row in f:
-            tmp.append(CatalogueEntry(int(row[0]),
-                                      SkyCoord(ra=float(row[1]), dec=float(row[2]), unit=('deg', 'deg'),
-                                               pm_ra_cosdec=float(row[3]) * u.mas/u.yr,
-                                               pm_dec=float(row[4]) * u.mas/u.yr, distance=float(row[5])*u.pc,
-                                               obstime=row[6], frame='icrs'), float(row[7])))
+            tmp.append(CatalogueEntry(stellar_id=int(row[0]),
+                                      coord=SkyCoord(ra=float(row[1]), dec=float(row[2]), unit=('deg', 'deg'),
+                                                     pm_ra_cosdec=float(row[3]) * u.mas / u.yr,
+                                                     pm_dec=float(row[4]) * u.mas / u.yr, distance=float(row[5]) * u.pc,
+                                                     obstime=row[6], frame='icrs'), mag=float(row[7])))
         return AstrometricCatalogue(tmp)
