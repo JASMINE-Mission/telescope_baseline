@@ -5,6 +5,7 @@ from astropy.time import Time
 from astropy.wcs import WCS
 
 from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
+from telescope_baseline.tools.pipeline_v2.map_on_the_sky_builder import MapOnTheSkyBuilder
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOnDetector
 from tests2.test_pipeline import get_tests_file_name
@@ -47,7 +48,7 @@ def test_load():
 
 
 def test_get_sky_positions(mod):
-    p = mod.get_sky_positions()
+    p = MapOnTheSkyBuilder.get_sky_positions(mod)
     assert len(p) == 1
     assert str(p[0].datetime) == '2000-01-01 00:00:00.000'
     assert abs(p[0].mag - 12.5) < 0.1

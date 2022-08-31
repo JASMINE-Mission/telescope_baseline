@@ -6,7 +6,11 @@ from astropy.wcs import WCS
 
 from telescope_baseline.tools.pipeline_v2.detector_image import DetectorImage
 from telescope_baseline.tools.pipeline_v2.detector_image_catalogue import DetectorImageCatalogue
+from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
 from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
+from telescope_baseline.tools.pipeline_v2.map_on_the_sky_builder import MapOnTheSkyBuilder
+from telescope_baseline.tools.pipeline_v2.position2d import Position2D
+from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOnDetector
 from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 from telescope_baseline.tools.pipeline_v2.map_on_detector_builder import MapOnDetectorBuilder
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
@@ -21,9 +25,10 @@ def test_from_detector_image_catalogue():
     w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix
     w.wcs.crval = [0, 0]  #
     w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
+    mo = MapOnDetector(w, [PositionOnDetector(1, Position2D(64.0, 64.0), Time('2000-01-01 00:00:00'), 12.5)])
     builder = MapOnDetectorBuilder(9, 128, 128)
     si = builder.from_detector_image_catalogue(w, c)
-    co = si[0].get_sky_positions()[0].coord.galactic
+    co = MapOnTheSkyBuilder.get_sky_positions(mo)[0].coord.galactic
     assert 359.97 < co.l.deg < 359.98
     assert -0.03 < co.b.deg < -0.02
     assert 63.5 < si[0].positions_on_detector[0].x < 64.5

@@ -27,8 +27,8 @@ def test_generate_stellar_image(monkeypatch):
     monkeypatch.setattr(np.random, 'randn', lambda: 0)
     dib = DetectorImageBuilder(128, 128, 1.0)
     a = np.zeros((128, 128))
-    si = [PositionOnDetector(1, Position2D(50.0, 50.0), Time('2000-01-01 00:00:00'), 10)]
-    dib._generate_a_stellar_image(a, si, 0)
+    si = PositionOnDetector(1, Position2D(50.0, 50.0), Time('2000-01-01 00:00:00'), 10)
+    dib._generate_a_stellar_image(a, si)
     assert a[50][50] == 10.0
     assert a[50][51] == 0
     assert a[49][50] == 0

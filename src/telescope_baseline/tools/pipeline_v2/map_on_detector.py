@@ -5,7 +5,6 @@ from astropy.wcs import WCS
 
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOnDetector
-from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 
 
 class MapOnDetector:
@@ -22,17 +21,13 @@ class MapOnDetector:
         self.__wcs = wcs
         self.__positions_on_detector = positions_on_detector
 
-    def get_sky_positions(self):
-        ret = []
-        for position in self.__positions_on_detector:
-            sky = self.__wcs.pixel_to_world(position.x, position.y)
-            # TODO: Consideration is needed how ids are set.
-            ret.append(PositionOnTheSky(position.exposure_id, sky, position.mag, position.datetime))
-        return ret
-
     @property
     def positions_on_detector(self):
         return self.__positions_on_detector
+
+    @property
+    def wcs(self):
+        return self.__wcs
 
     @staticmethod
     def load(file_name: str):

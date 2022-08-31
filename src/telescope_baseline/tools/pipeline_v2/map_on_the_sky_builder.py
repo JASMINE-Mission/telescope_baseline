@@ -29,6 +29,15 @@ class MapOnTheSkyBuilder:
         pass
 
     @staticmethod
+    def get_sky_positions(mod: MapOnDetector):
+        ret = []
+        for position in mod.positions_on_detector:
+            sky = mod.wcs.pixel_to_world(position.x, position.y)
+            # TODO: Consideration is needed how ids are set.
+            ret.append(PositionOnTheSky(position.exposure_id, sky, position.mag, position.datetime))
+        return ret
+
+    @staticmethod
     def from_astrometric_catalogue_2_list(a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
         """method for build from AstrometricCatalogue to the list of OnTheSkyPosition
 
@@ -66,6 +75,6 @@ class MapOnTheSkyBuilder:
         """
         skypositions = []
         for si in stellar_image_list:
-            skypositions.extend(si.get_sky_positions())
+            skypositions.extend(MapOnTheSkyBuilder.get_sky_positions(si))
         # TODO Get the ID of the star and optimize the SIP for the same star at the same position in the sky.
         return MapOnTheSky(skypositions)
