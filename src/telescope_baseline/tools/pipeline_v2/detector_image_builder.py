@@ -34,19 +34,19 @@ class DetectorImageBuilder:
         dp = si.positions_on_detector
         a = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         t_max = Time('1960-01-01 00:00:00')
-        for s in range(len(dp)):
-            if dp[s].datetime > t_max:
-                t_max = dp[s].datetime
-            self._generate_a_stellar_image(a, dp, s)  # index s is needed here
+        for dps in dp:
+            if dps.datetime > t_max:
+                t_max = dps.datetime
+            self._generate_a_stellar_image(a, dps)
         hdu = fits.PrimaryHDU()
         hdu.data = a
         hdu.header['DATE-OBS'] = str(t_max)
         di = DetectorImage(hdu)
         return di
 
-    def _generate_a_stellar_image(self, a, dp, s):
-        for k in range(int(dp[s].mag)):
-            xp = int(self.__psf_w * np.random.randn() + dp[s].y + 0.5)
-            yp = int(self.__psf_w * np.random.randn() + dp[s].x + 0.5)
+    def _generate_a_stellar_image(self, a, dps):
+        for k in range(int(dps.mag)):
+            xp = int(self.__psf_w * np.random.randn() + dps.y + 0.5)
+            yp = int(self.__psf_w * np.random.randn() + dps.x + 0.5)
             if 0 <= xp < self.__nx and 0 <= yp < self.__ny:
                 a[xp][yp] += 1
