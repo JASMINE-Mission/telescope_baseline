@@ -79,6 +79,33 @@ class AstrometricCatalogueBuilder:
                                            args=(t, londata, latdata)))
         return AstrometricCatalogue(result)
 
+
+    @staticmethod
+    def _update_dic(dic, position_on_the_sky):
+        tupple = ([], [], [])
+        if position_on_the_sky.stellar_id in dic:
+            tupple = dic[position_on_the_sky.stellar_id]
+        else:
+            dic[position_on_the_sky.stellar_id] = tupple
+        tupple[0].append(position_on_the_sky.datetime)
+        tupple[1].append(position_on_the_sky.coord.barycentricmeanecliptic.lon.rad)
+        tupple[2].append(position_on_the_sky.coord.barycentricmeanecliptic.lat.rad)
+
+
+    @staticmethod
+    def from_on_the_sky_position_2(otsp: list[MapOnTheSky]):
+        dic = {}
+        for map_on_the_sky in otsp:
+            for position_on_the_sky in map_on_the_sky.positions_on_the_sky:
+                AstrometricCatalogueBuilder._update_dic(dic, position_on_the_sky)
+        result = []
+        for t, londata, latdata in dic.values():
+            # TODO. Input appropriate initial value for least square.
+            parameter = [np.radians(266), np.radians(-5), 0., 0., np.radians(1 / 3600)]
+            result.append(optimize.leastsq(lsf_fit_function_for_astrometric_parameters, parameter,
+                                           args=(t, londata, latdata)))
+        return AstrometricCatalogue(result)
+
     @staticmethod
     def _time_seriese_of_individual_star(otsp, s):
         t = []

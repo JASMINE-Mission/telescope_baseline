@@ -6,6 +6,7 @@ from telescope_baseline.tools.pipeline_v2.astrometric_catalogue_builder import A
 from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
 from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 
+import time
 
 def test_from_on_the_sky_position():
     t = [Time('2000-01-01 00:00:00.0'), Time('2000-02-01 00:00:00.0'), Time('2000-03-01 00:00:00.0'),
@@ -22,11 +23,23 @@ def test_from_on_the_sky_position():
                -0.09662669894287566]
     builder = AstrometricCatalogueBuilder()
     o = []
+    print(int(time.time()))
     for i in range(len(t)):
         s = PositionOnTheSky(1, SkyCoord(lon=londata[i], lat=latdata[i], unit=('rad', 'rad'),
                                          frame='barycentricmeanecliptic'), 3000, t[i])
         o.append(MapOnTheSky([s]))
+    print(int(time.time()))
     a = builder.from_on_the_sky_position(o)
+    print(int(time.time()))
+    a2 = builder.from_on_the_sky_position_2(o)
+    print(int(time.time()))
+
+    assert len(a.get_catalogue()) == len(a2.get_catalogue())
+    assert len(a.get_catalogue()[0]) == len(a2.get_catalogue()[0])
+    for i in range(len(a.get_catalogue()[0][0])):
+        assert a.get_catalogue()[0][0][i] == a2.get_catalogue()[0][0][i]
+    assert a.get_catalogue()[0][1] == a2.get_catalogue()[0][1]
+
     print("Hello")
     coord = a.get_catalogue()[0]
     assert 4.657 < coord[0][0] < 4.658
@@ -34,3 +47,4 @@ def test_from_on_the_sky_position():
     assert -3.9e-8 < coord[0][2] < -3.8e-8
     assert -3.7e-10 < coord[0][3] < -3.6e-10
     assert 4.8e-6 < coord[0][4] < 4.9e-6
+
