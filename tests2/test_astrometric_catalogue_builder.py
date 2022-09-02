@@ -23,25 +23,13 @@ def test_from_on_the_sky_position():
                -0.09662669894287566]
     builder = AstrometricCatalogueBuilder()
     o = []
-    print(int(time.time()))
     for i in range(len(t)):
         s = PositionOnTheSky(1, SkyCoord(lon=londata[i], lat=latdata[i], unit=('rad', 'rad'),
                                          frame='barycentricmeanecliptic'), 3000, t[i])
         o.append(MapOnTheSky([s]))
-    print(int(time.time()))
-    a = builder.from_on_the_sky_position(o)
-    print(int(time.time()))
     a2 = builder.from_on_the_sky_position_2(o)
-    print(int(time.time()))
 
-    assert len(a.get_catalogue()) == len(a2.get_catalogue())
-    assert len(a.get_catalogue()[0]) == len(a2.get_catalogue()[0])
-    for i in range(len(a.get_catalogue()[0][0])):
-        assert a.get_catalogue()[0][0][i] == a2.get_catalogue()[0][0][i]
-    assert a.get_catalogue()[0][1] == a2.get_catalogue()[0][1]
-
-    print("Hello")
-    coord = a.get_catalogue()[0]
+    coord = a2.get_catalogue()[0]
     assert 4.657 < coord[0][0] < 4.658
     assert -0.1 < coord[0][1] < -0.09
     assert -3.9e-8 < coord[0][2] < -3.8e-8
