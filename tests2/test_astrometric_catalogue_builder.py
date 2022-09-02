@@ -6,6 +6,7 @@ from telescope_baseline.tools.pipeline_v2.astrometric_catalogue_builder import A
 from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
 from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 
+import time
 
 def test_from_on_the_sky_position():
     t = [Time('2000-01-01 00:00:00.0'), Time('2000-02-01 00:00:00.0'), Time('2000-03-01 00:00:00.0'),
@@ -26,11 +27,12 @@ def test_from_on_the_sky_position():
         s = PositionOnTheSky(1, SkyCoord(lon=londata[i], lat=latdata[i], unit=('rad', 'rad'),
                                          frame='barycentricmeanecliptic'), 3000, t[i])
         o.append(MapOnTheSky([s]))
-    a = builder.from_on_the_sky_position(o)
-    print("Hello")
-    coord = a.get_catalogue()[0]
+    a2 = builder.from_on_the_sky_position_2(o)
+
+    coord = a2.get_catalogue()[0]
     assert 4.657 < coord[0][0] < 4.658
     assert -0.1 < coord[0][1] < -0.09
     assert -3.9e-8 < coord[0][2] < -3.8e-8
     assert -3.7e-10 < coord[0][3] < -3.6e-10
     assert 4.8e-6 < coord[0][4] < 4.9e-6
+
