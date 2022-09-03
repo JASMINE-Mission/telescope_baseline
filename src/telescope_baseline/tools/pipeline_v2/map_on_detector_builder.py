@@ -56,8 +56,7 @@ class MapOnDetectorBuilder:
         si = []
         for w in wl:
             if "GLON" not in w.wcs.wcs.ctype[0]:
-                print("Coordinate system " + w.wcs.wcs.ctype[0] + " is not supported")
-                raise ValueError
+                raise ValueError("Coordinate system " + w.wcs.wcs.ctype[0] + " is not supported")
             tmp = []
             for s in sky_positions:
                 tmp.append([s.coord.galactic.l.deg, s.coord.galactic.b.deg])

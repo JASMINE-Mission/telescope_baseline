@@ -52,4 +52,18 @@ def test_from_on_tye_sky_position():
     assert 126.5 < a[0].y < 127.5
 
 
+def test_from_on_tye_sky_position_value_error():
+    builder = MapOnDetectorBuilder(9, 256, 256)
+    s = PositionOnTheSky(1, SkyCoord(l=0, b=0, unit=('deg', 'deg'), frame='galactic'), 3000,
+                         Time('2000-01-01 00:00:00'))
+    o = MapOnTheSky([s])
+    w = WCS(naxis=2)
+    w.wcs.ctype = ["ICRS-TAN", "ICRS-TAN"]
+    wl = [WCSwId(1, 1, w)]
+    with pytest.raises(Exception) as e:
+        si = builder.from_on_tye_sky_position(o, wl)
+    assert str(e.value) == 'Coordinate system ICRS-TAN is not supported'
+
+
+
 # TODO: implments test for store_list_of_detector_position method
