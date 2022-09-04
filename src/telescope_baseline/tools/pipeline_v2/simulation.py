@@ -15,12 +15,12 @@ class Simulation:
 
     """
 
-    def __init__(self, t: list[Time] = [], w_list: list[WCSwId] = []):
+    def __init__(self, t: list[Time] = [], w_list: list[WCSwId] = [], folder: str = 'tmp'):
         self.__t = t
         self.__w_list = w_list
-        self.__folder = 'tmp'
+        self.__folder = folder
 
-    def do(self, a: AstrometricCatalogue, pix_max: int, psf_w: float)\
+    def do(self, a: AstrometricCatalogue, pix_max: int, psf_w: float) \
             -> list[DetectorImageCatalogue]:
         """pipeline of generate image from astrometric catalogue
 
