@@ -12,7 +12,7 @@ ENV LC_ALL ja_JP.UTF-8
 ENV TZ JST-9
 ENV TERM xterm
 
-RUN python -m pip install --upgrade pip setuptools
+RUN python -m pip install --upgrade pip setuptools sphinx
 COPY ./requirements.txt /tmp
 WORKDIR /tmp
 RUN python -m pip install -r requirements.txt

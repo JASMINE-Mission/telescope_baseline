@@ -1,10 +1,11 @@
-name: pytest
+name: docgen
 
 on:
-  push
+  push:
+    branches: [ "main", "develop" ]
 
 jobs:
-  pytest:
+  docgen:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,9 +18,7 @@ jobs:
     - name: get dependencies
       uses: ./.github/actions/get_dependencies
 
-    - name: test
+    - name: documentation build
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      uses: ./.github/actions/test
-
+      uses: ./.github/actions/docgen

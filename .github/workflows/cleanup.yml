@@ -1,0 +1,33 @@
+name: cleanup
+
+on:
+  delete
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout Pages branch
+      uses: actions/checkout@v3
+      with:
+        ref: gh-pages
+
+    - name: Cleanup per branch information
+      env:
+        BRANCH: ${{ github.event.ref}}
+      run: |
+        echo $BRANCH
+        echo ${BRANCH#refs/heads/}
+        mkdir -p tmp/${BRANCH#refs/heads/}
+        ls -al tmp
+        rm -rf test_report/${BRANCH#refs/heads/}
+      shell: bash
+
+    - name: push pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ env.GITHUB_TOKEN }}
+        publish_dir: ./pages

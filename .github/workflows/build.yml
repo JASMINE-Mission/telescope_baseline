@@ -1,12 +1,13 @@
-name: linter
+name: build
 
 on:
   push:
+    branches: [ "main", "develop" ]
   pull_request:
     branches: [ "main", "develop" ]
 
 jobs:
-  linter:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,8 +17,5 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: get dependencies
-      uses: ./.github/actions/get_dependencies
-
-    - name: linter
-      uses: ./.github/actions/linter
+    - name: build
+      uses: ./.github/actions/build
