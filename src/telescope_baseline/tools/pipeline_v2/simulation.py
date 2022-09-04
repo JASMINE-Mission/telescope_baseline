@@ -36,8 +36,7 @@ class Simulation:
         sky_positions_builder = MapOnTheSkyBuilder()
         sib = MapOnDetectorBuilder(9, pix_max, pix_max)
         dib = DetectorImageBuilder(pix_max, pix_max, psf_w)
-        if not Path(self.__folder).exists():
-            Path(self.__folder).mkdir()
+        Path(self.__folder).mkdir(parents=True, exist_ok=True)
 
         sky_positions = sky_positions_builder.from_astrometric_catalogue_2_list(a, self.__t)
         dic = []
