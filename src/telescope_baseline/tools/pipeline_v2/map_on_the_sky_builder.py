@@ -59,7 +59,7 @@ class MapOnTheSkyBuilder:
                 l, b = position_at_certain_time(c.coord, time)
                 coord = SkyCoord(lat=b, lon=l, unit=('rad', 'rad'), frame='barycentricmeanecliptic')
                 sky_positions.append(PositionOnTheSky(i, coord, c.mag, time))  # index i is needed here
-            osp0 = MapOnTheSky(sky_positions, j)  # index j is needed here
+            osp0 = MapOnTheSky(j, sky_positions)  # index j is needed here
             osp.append(osp0)
         return osp
 
@@ -77,4 +77,4 @@ class MapOnTheSkyBuilder:
         for si in stellar_image_list:
             skypositions.extend(MapOnTheSkyBuilder.get_sky_positions(si))
         # TODO Get the ID of the star and optimize the SIP for the same star at the same position in the sky.
-        return MapOnTheSky(skypositions)
+        return MapOnTheSky(positions_on_the_sky=skypositions)

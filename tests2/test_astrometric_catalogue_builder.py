@@ -26,7 +26,7 @@ def test_from_on_the_sky_position():
     for i in range(len(t)):
         s = PositionOnTheSky(1, SkyCoord(lon=londata[i], lat=latdata[i], unit=('rad', 'rad'),
                                          frame='barycentricmeanecliptic'), 3000, t[i])
-        o.append(MapOnTheSky([s]))
+        o.append(MapOnTheSky(positions_on_the_sky=[s]))
     a2 = builder.from_on_the_sky_position_2(o)
 
     coord = a2.get_catalogue()[0]

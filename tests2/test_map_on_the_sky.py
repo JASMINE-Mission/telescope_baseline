@@ -13,7 +13,7 @@ from tests2.test_pipeline import get_tests_file_name
 def mos():
     coord = SkyCoord(l=0, b=0, frame='galactic', unit=('rad', 'rad'))
     p = PositionOnTheSky(1, coord, 12.5, Time('2000-01-01 00:00:00'))
-    m = MapOnTheSky([p])
+    m = MapOnTheSky(positions_on_the_sky=[p])
     return m
 
 

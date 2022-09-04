@@ -19,7 +19,7 @@ from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
 def map_on_the_sky():
     s = PositionOnTheSky(1, SkyCoord(l=0, b=0, unit=('deg', 'deg'), frame='galactic'), 3000,
                          Time('2000-01-01 00:00:00'))
-    return MapOnTheSky([s])
+    return MapOnTheSky(positions_on_the_sky=[s])
 
 
 def test_from_detector_image_catalogue():

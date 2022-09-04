@@ -10,7 +10,7 @@ class MapOnTheSky:
     """Data holder class of SkyPosition for every orbit.
 
     """
-    def __init__(self, positions_on_the_sky: list[PositionOnTheSky] = [], orbit_id: int = -1):
+    def __init__(self, orbit_id: int = -1, positions_on_the_sky: list[PositionOnTheSky] = []):
         """constructor
 
         Args:
@@ -40,7 +40,7 @@ class MapOnTheSky:
                 tmp.append(PositionOnTheSky(int(row[0]),
                                             SkyCoord(ra=float(row[1]), dec=float(row[2]), unit=('rad', 'rad'),
                                                      frame='icrs'), float(row[3]), Time(row[4])))
-        return MapOnTheSky(tmp, orbit_id)
+        return MapOnTheSky(orbit_id, tmp)
 
     def save(self, file_name: str):
         with open(file_name, 'w', newline='') as data_file:
