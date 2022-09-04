@@ -1,9 +1,10 @@
 from pathlib import Path
 
 import pytest
+import tempfile
 
 from telescope_baseline.tools.pipeline_v2.detector_image_catalogue import DetectorImageCatalogue
-from tests2.test_pipeline import get_tests_file_name
+from test_pipeline import get_tests_file_name
 
 
 def test_load():
@@ -16,4 +17,16 @@ def test_load():
     with pytest.raises(NotADirectoryError) as e:
         _ = DetectorImageCatalogue.load(folder2)
 
-# TODO. test for save ?
+
+def test_save():
+    f = Path(get_tests_file_name('tmp0_0.fits'))
+    folder = f.parent
+    loaded = DetectorImageCatalogue.load(folder)
+    sut_len = len(loaded.get_detector_images())
+    assert sut_len == 7
+    with tempfile.TemporaryDirectory() as dname:
+        print(dname)
+        path = Path(dname, 'fits')  # 
+        loaded.save(path)
+        loaded2 = DetectorImageCatalogue.load(path)
+        assert len(loaded2.get_detector_images()) == sut_len

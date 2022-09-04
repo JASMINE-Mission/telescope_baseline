@@ -43,16 +43,16 @@ def test_simulation():
 
 def get_tests_file_name(fname: str, folder='data'):
     a = Path.cwd()
+    tests_dir = 'tests2'    # change it when test dir move
     if 'telescope_baseline' not in str(a):
-        print("Invalid path" + str(a))
-        raise OSError()
+        return Path(a, tests_dir, folder, fname)
     while a.name != 'telescope_baseline':
         a = a.parent
     if folder != 'data':
-        tmp_path = Path(a, 'tests2', folder)
+        tmp_path = Path(a, tests_dir, folder)
         if not tmp_path.exists():
             tmp_path.mkdir()
-    file = Path(a, 'tests2', folder, fname)
+    file = Path(a, tests_dir, folder, fname)
     return file
 
 
