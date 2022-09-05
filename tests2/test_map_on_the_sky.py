@@ -17,15 +17,24 @@ def mos():
     return m
 
 
-def test_save(mos):
+@pytest.fixture
+def file(mos):
     f_name = str(get_tests_file_name('a.csv', folder="tmp"))
     mos.save(f_name)
-    file = open(f_name, 'r', newline='')
-    f = csv.reader(file, delimiter=',')
-    for r in f:
+    return open(f_name, 'r', newline='')
+
+
+def test_save1(file):
+    csv_line = csv.reader(file, delimiter=',')
+    for r in csv_line:
         if len(r) == 1:
             assert int(r[0]) == -1
-        else:
+
+
+def test_save2(file):
+    csv_line = csv.reader(file, delimiter=',')
+    for r in csv_line:
+        if len(r) != 1:
             assert int(r[0]) == 1
             assert abs(float(r[1]) - 4.649644189337132) < 0.001
             assert abs(float(r[2]) + 0.5050315748856247) < 0.001
@@ -49,6 +58,9 @@ def test_load1():
 def test_load2(position_on_the_sky):
     assert position_on_the_sky.stellar_id == 1
     assert abs(position_on_the_sky.coord.icrs.ra.rad - 4.649644189337132) < 0.01
+
+
+def test_load3(position_on_the_sky):
     assert abs(position_on_the_sky.coord.icrs.dec.rad + 0.5050315748856247) < 0.01
     assert abs(position_on_the_sky.mag - 12.5) < 0.1
     assert str(position_on_the_sky.datetime) == '2000-01-01 00:00:00.000'

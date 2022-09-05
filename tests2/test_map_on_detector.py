@@ -34,14 +34,21 @@ def test_save(csv_read):
     assert csv_read[4] == '2000-01-01 00:00:00.000'
 
 
-def test_load():
+@pytest.fixture
+def map_on_detector():
     f_name = str(get_tests_file_name('detector.csv'))
-    m = MapOnDetector.load(f_name)[0]
-    assert m.x == 0.0
-    assert m.y == 0.0
-    assert m.mag == 12.5
-    assert m.exposure_id == 1
-    assert m.datetime == '2000-01-01 00:00:00'
+    return MapOnDetector.load(f_name)[0]
+
+
+def test_load1(map_on_detector):
+    assert map_on_detector.x == 0.0
+    assert map_on_detector.y == 0.0
+
+
+def test_load2(map_on_detector):
+    assert map_on_detector.mag == 12.5
+    assert map_on_detector.exposure_id == 1
+    assert map_on_detector.datetime == '2000-01-01 00:00:00'
 
 
 @pytest.fixture
