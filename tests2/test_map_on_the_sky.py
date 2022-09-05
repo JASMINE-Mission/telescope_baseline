@@ -37,7 +37,20 @@ def test_save2(file):
         if len(r) != 1:
             assert int(r[0]) == 1
             assert abs(float(r[1]) - 4.649644189337132) < 0.001
+
+
+def test_save3(file):
+    csv_line = csv.reader(file, delimiter=',')
+    for r in csv_line:
+        if len(r) != 1:
             assert abs(float(r[2]) + 0.5050315748856247) < 0.001
+            assert abs(float(r[3]) - 12.5) < 0.1
+
+
+def test_save4(file):
+    csv_line = csv.reader(file, delimiter=',')
+    for r in csv_line:
+        if len(r) != 1:
             assert abs(float(r[3]) - 12.5) < 0.1
             assert r[4] == '2000-01-01 00:00:00.000'
 

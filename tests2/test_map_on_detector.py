@@ -26,10 +26,13 @@ def csv_read(mod):
     return next(iter(f))
 
 
-def test_save(csv_read):
+def test_save1(csv_read):
     assert int(csv_read[0]) == 1
     assert float(csv_read[1]) == 0.0
     assert float(csv_read[2]) == 0.0
+
+
+def test_save2(csv_read):
     assert float(csv_read[3]) == 12.5
     assert csv_read[4] == '2000-01-01 00:00:00.000'
 
