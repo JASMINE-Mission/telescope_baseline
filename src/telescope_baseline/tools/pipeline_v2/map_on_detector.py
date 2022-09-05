@@ -1,7 +1,6 @@
 import csv
 
 from astropy.time import Time
-from astropy.wcs import WCS
 
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOnDetector
@@ -11,23 +10,17 @@ class MapOnDetector:
     """Data Holder class for OnDetectorPosition.
 
     """
-    def __init__(self, wcs: WCS, positions_on_detector: list[PositionOnDetector] = []):
+    def __init__(self, positions_on_detector: list[PositionOnDetector] = []):
         """constructor
 
         Args:
-            wcs: world coordinate system instance
             positions_on_detector: the position on the detector coordinate.
         """
-        self.__wcs = wcs
         self.__positions_on_detector = positions_on_detector
 
     @property
     def positions_on_detector(self):
         return self.__positions_on_detector
-
-    @property
-    def wcs(self):
-        return self.__wcs
 
     @staticmethod
     def load(file_name: str):

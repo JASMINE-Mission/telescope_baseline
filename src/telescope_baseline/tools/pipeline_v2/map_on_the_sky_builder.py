@@ -1,6 +1,8 @@
 import math
 from astropy.coordinates import get_sun, SkyCoord
 from astropy.time import Time
+from astropy.wcs import WCS
+
 from telescope_baseline.tools.pipeline_v2.astrometric_catalogue import AstrometricCatalogue
 from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
 from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
@@ -25,14 +27,13 @@ class MapOnTheSkyBuilder:
     """Builder class for OnTheSkyPosition
 
     """
-    def __init__(self):
-        pass
+    def __init__(self, wcs: WCS):
+        self.__wcs = wcs
 
-    @staticmethod
-    def get_sky_positions(mod: MapOnDetector):
+    def get_sky_positions(self, mod: MapOnDetector):
         ret = []
         for position in mod.positions_on_detector:
-            sky = mod.wcs.pixel_to_world(position.x, position.y)
+            sky = self.__wcs.pixel_to_world(position.x, position.y)
             # TODO: Consideration is needed how ids are set.
             ret.append(PositionOnTheSky(position.exposure_id, sky, position.mag, position.datetime))
         return ret
@@ -63,8 +64,7 @@ class MapOnTheSkyBuilder:
             osp.append(osp0)
         return osp
 
-    @staticmethod
-    def from_stellar_image(stellar_image_list: list[MapOnDetector]) -> MapOnTheSky:
+    def from_stellar_image(self, stellar_image_list: list[MapOnDetector]) -> MapOnTheSky:
         """method for build from StellarImage(detector coordinate) class to OnTheSkyPosition
 
         Args:
@@ -75,6 +75,6 @@ class MapOnTheSkyBuilder:
         """
         skypositions = []
         for si in stellar_image_list:
-            skypositions.extend(MapOnTheSkyBuilder.get_sky_positions(si))
+            skypositions.extend(self.get_sky_positions(si))
         # TODO Get the ID of the star and optimize the SIP for the same star at the same position in the sky.
         return MapOnTheSky(positions_on_the_sky=skypositions)

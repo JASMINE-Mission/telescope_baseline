@@ -24,7 +24,7 @@ class Analysis:
         """
         # TODO: wcs is not constant whole the mission.
         sib = MapOnDetectorBuilder(window_size, 1024, 1024)
-        sky_positions_builder = MapOnTheSkyBuilder()
+        sky_positions_builder = MapOnTheSkyBuilder(wcs)
         acb = AstrometricCatalogueBuilder()
 
         cat = c.get_detector_images()

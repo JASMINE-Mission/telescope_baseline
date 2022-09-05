@@ -13,14 +13,7 @@ from tests2.test_pipeline import get_tests_file_name
 
 @pytest.fixture
 def mod():
-    w = WCS(naxis=2)
-    w.wcs.crpix = [256, 256]  # Reference point in pixel
-    w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix
-    w.wcs.crval = [0, 0]  #
-    w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
-    m = MapOnDetector(w, [
-        PositionOnDetector(1, Position2D(0.0, 0.0), Time('2000-01-01 00:00:00'), 12.5),
-    ])
+    m = MapOnDetector([PositionOnDetector(1, Position2D(0.0, 0.0), Time('2000-01-01 00:00:00'), 12.5),])
     return m
 
 
@@ -48,7 +41,13 @@ def test_load():
 
 
 def test_get_sky_positions(mod):
-    p = MapOnTheSkyBuilder.get_sky_positions(mod)
+    w = WCS(naxis=2)
+    w.wcs.crpix = [256, 256]  # Reference point in pixel
+    w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix
+    w.wcs.crval = [0, 0]  #
+    w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
+    builder = MapOnTheSkyBuilder(w)
+    p = builder.get_sky_positions(mod)
     assert len(p) == 1
     assert str(p[0].datetime) == '2000-01-01 00:00:00.000'
     assert abs(p[0].mag - 12.5) < 0.1

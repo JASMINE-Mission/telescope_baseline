@@ -10,9 +10,8 @@ from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
 
 
 def test_from_stellar_image():
-    w = WCS(naxis=2)
     o = PositionOnDetector(1, Position2D(64., 64.), Time('2000-01-01 00:00:00'), 3000)
-    s = MapOnDetector(w, [o])
+    s = MapOnDetector([o])
     dib = DetectorImageBuilder(128, 128, 1.0)
     di = dib.from_stellar_image(s)
     aa = di.get_on_detector_positions(9)

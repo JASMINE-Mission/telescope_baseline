@@ -39,7 +39,7 @@ class MapOnDetectorBuilder:
         """
         sil = []
         for di in c.get_detector_images():
-            sil.append(MapOnDetector(wcs, di.get_on_detector_positions(self.__window_size)))
+            sil.append(MapOnDetector(di.get_on_detector_positions(self.__window_size)))
         return sil
 
     def from_on_tye_sky_position(self, o: MapOnTheSky, wl: list[WCSwId]) -> list[MapOnDetector]:
@@ -62,7 +62,7 @@ class MapOnDetectorBuilder:
                 tmp.append([s.coord.galactic.l.deg, s.coord.galactic.b.deg])
             tmp = w.wcs.wcs_world2pix(tmp, 0)
             a = self._store_list_of_detector_position(sky_positions, tmp)
-            si.append(MapOnDetector(wl[0].wcs, positions_on_detector=a))
+            si.append(MapOnDetector(positions_on_detector=a))
         return si
 
     def _store_list_of_detector_position(self, sky_positions, tmp):

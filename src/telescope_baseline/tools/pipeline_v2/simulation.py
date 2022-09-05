@@ -33,7 +33,7 @@ class Simulation:
             A DetectorImageCatalogue object which contains DetectorImage objects of whole mission.
 
         """
-        sky_positions_builder = MapOnTheSkyBuilder()
+        sky_positions_builder = MapOnTheSkyBuilder(self.__w_list[0].wcs)
         sib = MapOnDetectorBuilder(9, pix_max, pix_max)
         dib = DetectorImageBuilder(pix_max, pix_max, psf_w)
         Path(self.__folder).mkdir(parents=True, exist_ok=True)

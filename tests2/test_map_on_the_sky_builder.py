@@ -27,7 +27,8 @@ def test_position_at_certain_time(sky_coordinate):
 
 
 def test_from_astrometric_catalogue_2_list(sky_coordinate):
-    builder = MapOnTheSkyBuilder()
+    w = WCS(naxis=2)
+    builder = MapOnTheSkyBuilder(w)
     a = AstrometricCatalogue([CatalogueEntry(1, sky_coordinate, 3000)])
     t = [Time('2000-06-01 00:00:00')]
     o = builder.from_astrometric_catalogue_2_list(a, t)
@@ -37,14 +38,14 @@ def test_from_astrometric_catalogue_2_list(sky_coordinate):
 
 
 def test_from_stellar_image():
-    builder = MapOnTheSkyBuilder()
     w = WCS(naxis=2)
     w.wcs.crpix = [50, 50]  # Reference point in pixel
     w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix
     w.wcs.crval = [0, 0]  #
     w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
+    builder = MapOnTheSkyBuilder(w)
     o = PositionOnDetector(1, Position2D(64., 64.), Time('2000-01-01 00:00:00'), 3000)
-    s = MapOnDetector(w, [o])
+    s = MapOnDetector([o])
     o = builder.from_stellar_image([s])
     oc = o.positions_on_the_sky[0].coord.galactic
     assert o.positions_on_the_sky[0].datetime == '2000-01-01 00:00:00'

@@ -31,10 +31,11 @@ def test_from_detector_image_catalogue():
     w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix
     w.wcs.crval = [0, 0]  #
     w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
-    mo = MapOnDetector(w, [PositionOnDetector(1, Position2D(64.0, 64.0), Time('2000-01-01 00:00:00'), 12.5)])
+    mo = MapOnDetector([PositionOnDetector(1, Position2D(64.0, 64.0), Time('2000-01-01 00:00:00'), 12.5)])
     builder = MapOnDetectorBuilder(9, 128, 128)
+    sbuilder = MapOnTheSkyBuilder(w)
     si = builder.from_detector_image_catalogue(w, c)
-    co = MapOnTheSkyBuilder.get_sky_positions(mo)[0].coord.galactic
+    co = sbuilder.get_sky_positions(mo)[0].coord.galactic
     assert 359.97 < co.l.deg < 359.98
     assert -0.03 < co.b.deg < -0.02
     assert 63.5 < si[0].positions_on_detector[0].x < 64.5
