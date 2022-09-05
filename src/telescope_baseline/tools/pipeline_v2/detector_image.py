@@ -35,4 +35,3 @@ class DetectorImage:
 
     def save(self, filename: str) -> None:
         self.__hdu.writeto(filename, overwrite=True)
-
