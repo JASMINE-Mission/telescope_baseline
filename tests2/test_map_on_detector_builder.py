@@ -14,6 +14,7 @@ from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOn
 from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 from telescope_baseline.tools.pipeline_v2.map_on_detector_builder import MapOnDetectorBuilder
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
+from tests2.test_pipeline import get_tests_file_name
 
 
 @pytest.fixture
@@ -68,3 +69,11 @@ def test_from_on_tye_sky_position_value_error(map_on_the_sky):
 
 
 # TODO: implments test for store_list_of_detector_position method
+
+def test_position():
+    builder = MapOnDetectorBuilder(9, 256, 256)
+    detector_image = DetectorImage.load(get_tests_file_name('tmp0_0.fits'))
+    li = builder.get_on_detector_positions(detector_image, 9)
+    assert len(li) == 1
+    assert abs(li[0].x - 255) < 1.0
+    assert abs(li[0].y - 255) < 1.0

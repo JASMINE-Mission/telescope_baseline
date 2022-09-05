@@ -15,10 +15,3 @@ def test_load(detector_image):
 
 def test_time(detector_image):
     assert detector_image.time == '2000-01-01 00:00:00.000'
-
-
-def test_position(detector_image):
-    li = detector_image.get_on_detector_positions(9)
-    assert len(li) == 1
-    assert abs(li[0].x - 255) < 1.0
-    assert abs(li[0].y - 255) < 1.0

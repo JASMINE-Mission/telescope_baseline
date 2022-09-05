@@ -4,6 +4,7 @@ from astropy.time import Time
 
 from build.lib.telescope_baseline.tools.pipeline_v2.position2d import Position2D
 from telescope_baseline.tools.pipeline_v2.detector_image_builder import DetectorImageBuilder
+from telescope_baseline.tools.pipeline_v2.map_on_detector_builder import MapOnDetectorBuilder
 from telescope_baseline.tools.pipeline_v2.position_on_detector import PositionOnDetector
 from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
 
@@ -23,7 +24,8 @@ def test_from_stellar_image1(detector_image):
 
 
 def test_from_stellar_image2(detector_image):
-    aa = detector_image.get_on_detector_positions(9)
+    builder = MapOnDetectorBuilder(9, 256, 256)
+    aa = builder.get_on_detector_positions(detector_image, 9)
     assert 63.5 < aa[0].x < 64.5
     assert 63.5 < aa[0].y < 64.5
 
