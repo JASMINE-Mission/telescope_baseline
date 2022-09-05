@@ -15,6 +15,7 @@ from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnT
 from telescope_baseline.tools.pipeline_v2.map_on_detector_builder import MapOnDetectorBuilder
 from telescope_baseline.tools.pipeline_v2.wcswid import WCSwId
 
+
 @pytest.fixture
 def map_on_the_sky():
     s = PositionOnTheSky(1, SkyCoord(l=0, b=0, unit=('deg', 'deg'), frame='galactic'), 3000,

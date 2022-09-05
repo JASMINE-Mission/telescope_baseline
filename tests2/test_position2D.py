@@ -1,5 +1,3 @@
-import pytest
-
 from telescope_baseline.tools.pipeline_v2.position2d import Position2D
 
 

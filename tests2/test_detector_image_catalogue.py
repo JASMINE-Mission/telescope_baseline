@@ -1,6 +1,3 @@
-import gc
-import os
-import shutil
 from pathlib import Path
 
 import pytest
@@ -29,6 +26,6 @@ def test_save():
     assert sut_len == 7
     with tempfile.TemporaryDirectory() as dname:
         print(dname)
-        path = Path(dname, 'fits')  # 
+        path = Path(dname, 'fits')
         loaded.save(path)
         assert len(list(path.iterdir())) == sut_len

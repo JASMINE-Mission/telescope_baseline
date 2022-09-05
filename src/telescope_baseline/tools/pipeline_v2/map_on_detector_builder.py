@@ -68,7 +68,9 @@ class MapOnDetectorBuilder:
     def _store_list_of_detector_position(self, sky_positions, tmp):
         a = []
         for k in range(len(tmp)):
-            if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
-                a.append(PositionOnDetector(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
-                # index k is needed here
+            self._check_range_of_position(a, k, sky_positions, tmp)
         return a
+
+    def _check_range_of_position(self, a, k, sky_positions, tmp):
+        if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
+            a.append(PositionOnDetector(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))

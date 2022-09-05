@@ -33,16 +33,25 @@ def test_save(mos):
             assert r[4] == '2000-01-01 00:00:00.000'
 
 
-def test_load():
+@pytest.fixture
+def position_on_the_sky():
     f_name = str(get_tests_file_name('sky.csv'))
     m = MapOnTheSky.load(f_name)
-    p = m.positions_on_the_sky[0]
+    return m.positions_on_the_sky[0]
+
+
+def test_load1():
+    f_name = str(get_tests_file_name('sky.csv'))
+    m = MapOnTheSky.load(f_name)
     assert m.orbit_id == -1
-    assert p.stellar_id == 1
-    assert abs(p.coord.icrs.ra.rad - 4.649644189337132) < 0.01
-    assert abs(p.coord.icrs.dec.rad + 0.5050315748856247) < 0.01
-    assert abs(p.mag - 12.5) < 0.1
-    assert str(p.datetime) == '2000-01-01 00:00:00.000'
+
+
+def test_load2(position_on_the_sky):
+    assert position_on_the_sky.stellar_id == 1
+    assert abs(position_on_the_sky.coord.icrs.ra.rad - 4.649644189337132) < 0.01
+    assert abs(position_on_the_sky.coord.icrs.dec.rad + 0.5050315748856247) < 0.01
+    assert abs(position_on_the_sky.mag - 12.5) < 0.1
+    assert str(position_on_the_sky.datetime) == '2000-01-01 00:00:00.000'
 
 
 def test_position_on_the_sky(mos):

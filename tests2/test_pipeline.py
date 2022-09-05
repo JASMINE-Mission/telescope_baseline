@@ -1,6 +1,5 @@
 import copy
 import astropy
-import pytest
 from astropy.time import Time
 
 from telescope_baseline.tools.pipeline_v2.analysis import Analysis
