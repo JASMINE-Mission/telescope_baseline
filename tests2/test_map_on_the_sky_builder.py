@@ -14,21 +14,21 @@ from telescope_baseline.tools.pipeline_v2.map_on_detector import MapOnDetector
 
 
 @pytest.fixture
-def sc():
+def sky_coordinate():
     return SkyCoord(l=0, b=0, unit=('deg', 'deg'), frame="galactic", distance=1 * u.pc,
                     obstime=Time('2000-01-01 00:00:00'), pm_l_cosb=1000 * u.mas / u.yr, pm_b=500 * u.mas / u.yr)
 
 
-def test_position_at_certain_time(sc):
+def test_position_at_certain_time(sky_coordinate):
     t = Time('2000-06-01 00:00:00')
-    lon, lat = position_at_certain_time(sc, t)
+    lon, lat = position_at_certain_time(sky_coordinate, t)
     assert 4.647 < lon < 4.667
     assert -0.101 < lat < -0.091
 
 
-def test_from_astrometric_catalogue_2_list(sc):
+def test_from_astrometric_catalogue_2_list(sky_coordinate):
     builder = MapOnTheSkyBuilder()
-    a = AstrometricCatalogue([CatalogueEntry(1, sc, 3000)])
+    a = AstrometricCatalogue([CatalogueEntry(1, sky_coordinate, 3000)])
     t = [Time('2000-06-01 00:00:00')]
     o = builder.from_astrometric_catalogue_2_list(a, t)
     c0 = o[0].positions_on_the_sky[0].coord

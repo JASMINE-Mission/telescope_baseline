@@ -79,7 +79,6 @@ class AstrometricCatalogueBuilder:
                                            args=(t, londata, latdata)))
         return AstrometricCatalogue(result)
 
-
     @staticmethod
     def _update_dic(dic, position_on_the_sky):
         tupple = ([], [], [])
@@ -90,7 +89,6 @@ class AstrometricCatalogueBuilder:
         tupple[0].append(position_on_the_sky.datetime)
         tupple[1].append(position_on_the_sky.coord.barycentricmeanecliptic.lon.rad)
         tupple[2].append(position_on_the_sky.coord.barycentricmeanecliptic.lat.rad)
-
 
     @staticmethod
     def from_on_the_sky_position_2(otsp: list[MapOnTheSky]):

@@ -65,5 +65,4 @@ def test_from_on_tye_sky_position_value_error(map_on_the_sky):
     assert str(e.value) == 'Coordinate system ICRS-TAN is not supported'
 
 
-
 # TODO: implments test for store_list_of_detector_position method

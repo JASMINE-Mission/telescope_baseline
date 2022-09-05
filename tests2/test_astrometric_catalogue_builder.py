@@ -6,7 +6,6 @@ from telescope_baseline.tools.pipeline_v2.astrometric_catalogue_builder import A
 from telescope_baseline.tools.pipeline_v2.map_on_the_sky import MapOnTheSky
 from telescope_baseline.tools.pipeline_v2.position_on_the_sky import PositionOnTheSky
 
-import time
 
 def test_from_on_the_sky_position():
     t = [Time('2000-01-01 00:00:00.0'), Time('2000-02-01 00:00:00.0'), Time('2000-03-01 00:00:00.0'),
