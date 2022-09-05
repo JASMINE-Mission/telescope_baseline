@@ -38,8 +38,7 @@ class MapOnTheSkyBuilder:
             ret.append(PositionOnTheSky(position.exposure_id, sky, position.mag, position.datetime))
         return ret
 
-    @staticmethod
-    def from_astrometric_catalogue_2_list(a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
+    def from_astrometric_catalogue_2_list(self, a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
         """method for build from AstrometricCatalogue to the list of OnTheSkyPosition
 
         Args:

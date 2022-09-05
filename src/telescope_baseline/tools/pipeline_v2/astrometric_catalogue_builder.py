@@ -53,8 +53,7 @@ class AstrometricCatalogueBuilder:
     def __init__(self):
         pass
 
-    @staticmethod
-    def from_on_the_sky_position(otsp: list[MapOnTheSky]):
+    def from_on_the_sky_position(self, otsp: list[MapOnTheSky]):
         """Class for build AstrometricCatalogue from the list of OnTheSkyPosition
 
         Args:
