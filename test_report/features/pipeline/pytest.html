@@ -243,7 +243,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>pytest.html</h1>
-    <p>Report generated on 06-Sep-2022 at 00:29:33 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
+    <p>Report generated on 06-Sep-2022 at 00:40:33 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -265,8 +265,8 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <td>Python</td>
         <td>3.9.13</td></tr></table>
     <h2>Summary</h2>
-    <p>0 tests ran in 5.38 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">0 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">1 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <p>61 tests ran in 52.80 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">59 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">2 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
       <thead id="results-table-head">
@@ -277,12 +277,564 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
           <th class="sortable links" col="links">Links</th></tr>
         <tr hidden="true" id="not-found-message">
           <th colspan="4">No results found. Try to check the filters</th></tr></thead>
-      <tbody class="error results-table-row">
+      <tbody class="failed results-table-row">
         <tr>
-          <td class="col-result">Error</td>
-          <td class="col-name">tests/pipeline/test_detector_image_builder.py::collect</td>
-          <td class="col-duration"></td>
+          <td class="col-result">Failed</td>
+          <td class="col-name">tests/pipeline/test_astrometric_catalogue_builder.py::test_from_on_the_sky_position1</td>
+          <td class="col-duration">14.40</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log">ImportError while importing test module &#x27;/home/runner/work/telescope_baseline/telescope_baseline/tests/pipeline/test_detector_image_builder.py&#x27;.<br/>Hint: make sure your test modules/packages have valid Python names.<br/>Traceback:<br/>/opt/hostedtoolcache/Python/3.9.13/x64/lib/python3.9/importlib/__init__.py:127: in import_module<br/>    return _bootstrap._gcd_import(name[level:], package, level)<br/>../tests/pipeline/test_detector_image_builder.py:4: in &lt;module&gt;<br/>    from build.lib.telescope_baseline.tools.pipeline_v2.position2d import Position2D<br/><span class="error">E   ModuleNotFoundError: No module named &#x27;build&#x27;</span><br/></div></td></tr></tbody></table></body></html>
+            <div class="log">coord = (array([ 4.65722820e+00, -9.66271246e-02, -5.23360252e-08,  8.08765348e-09,<br/>        4.83816019e-06]), 2)<br/><br/>    def test_from_on_the_sky_position1(coord):<br/>        assert 4.657 &lt; coord[0][0] &lt; 4.658<br/>        assert -0.1 &lt; coord[0][1] &lt; -0.09<br/>&gt;       assert -3.9e-8 &lt; coord[0][2] &lt; -3.8e-8<br/><span class="error">E       assert -3.9e-08 &lt; -5.233602521596628e-08</span><br/><br/>../tests/pipeline/test_astrometric_catalogue_builder.py:36: AssertionError<br/></div></td></tr></tbody>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">tests/pipeline/test_astrometric_catalogue_builder.py::test_from_on_the_sky_position2</td>
+          <td class="col-duration">13.80</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">coord = (array([ 4.65722820e+00, -9.66271246e-02, -5.23360252e-08,  8.08765348e-09,<br/>        4.83816019e-06]), 2)<br/><br/>    def test_from_on_the_sky_position2(coord):<br/>&gt;       assert -3.7e-10 &lt; coord[0][3] &lt; -3.6e-10<br/><span class="error">E       assert 8.087653480553907e-09 &lt; -3.6e-10</span><br/><br/>../tests/pipeline/test_astrometric_catalogue_builder.py:40: AssertionError<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/dataclass/efficiency_test.py::test_from_json</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/dataclass/efficiency_test.py::test_evaluate</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/dataclass/efficiency_test.py::test_weighted_mean</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mapping/test_aperture.py::test_cos_angle_from_normal_vectorAB</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mapping/test_aperture.py::test_vec2ring</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mapping/test_aperture.py::test_inout_convex_on_sphere</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mapping/test_aperture.py::test_inout_convex_on_sphere_map</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mapping/test_aperture.py::test_inout_detector</td>
+          <td class="col-duration">0.40</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mapping/test_read_catalog.py::test_inout_detector</td>
+          <td class="col-duration">0.27</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mission/test_mission.py::test_singleton</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mission/test_mission.py::test_singleton_2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mission/test_mission.py::test_efficiency</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mission/test_mission.py::test_troughput</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mission/test_mission.py::test_period</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/mission/test_mission.py::test_inclination</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/photometry/Hw_coeff_test.py::test_compute_Hw_relation</td>
+          <td class="col-duration">5.29</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>{&#x27;x0&#x27;: -0.045044123390038465, &#x27;x1&#x27;: 0.9475591602162277, &#x27;std&#x27;: 0.134993681964187, &#x27;chi2&#x27;: 3.304572506299581}
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/photometry/convmag_test.py::test_get_flux</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/photometry/convmag_test.py::test_get_mag</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_astrometric_catalogue.py::test_save1</td>
+          <td class="col-duration">0.12</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_astrometric_catalogue.py::test_save2</td>
+          <td class="col-duration">0.11</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_astrometric_catalogue.py::test_load1</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_astrometric_catalogue.py::test_load2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image.py::test_load</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image.py::test_time</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_from_stellar_image1</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_from_stellar_image2</td>
+          <td class="col-duration">0.12</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 41.83it/s]
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_generate_stellar_image</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image_catalogue.py::test_load</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image_catalogue.py::test_save</td>
+          <td class="col-duration">0.10</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>/tmp/tmpnd8p_6bu
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector.py::test_save1</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector.py::test_save2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector.py::test_load1</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector.py::test_load2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector.py::test_get_sky_positions1</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector.py::test_get_sky_positions2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector.py::test_positions_on_detector</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector_builder.py::test_from_detector_image_catalogue</td>
+          <td class="col-duration">0.07</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 43.57it/s]
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector_builder.py::test_from_on_tye_sky_position</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector_builder.py::test_from_on_tye_sky_position_value_error</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_detector_builder.py::test_position</td>
+          <td class="col-duration">0.15</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 31.93it/s]
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_save1</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_save2</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_save3</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_save4</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_load1</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_load2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_load3</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_position_on_the_sky</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky.py::test_orbit_id</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky_builder.py::test_position_at_certain_time</td>
+          <td class="col-duration">0.15</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky_builder.py::test_from_astrometric_catalogue_2_list</td>
+          <td class="col-duration">0.16</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_map_on_the_sky_builder.py::test_from_stellar_image</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_pipeline.py::test_simulation</td>
+          <td class="col-duration">2.74</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_pipeline.py::test_analysis</td>
+          <td class="col-duration">8.86</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 32.35it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 35.96it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 33.73it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 32.81it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 32.19it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 36.54it/s]
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_position2D.py::test_pos</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_position_on_detector.py::test_pos</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_position_on_detector.py::test_pos2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_position_on_the_sky.py::test_pos1</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_position_on_the_sky.py::test_pos2</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody></table></body></html>
