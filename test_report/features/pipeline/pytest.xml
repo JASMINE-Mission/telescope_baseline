@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="5.518" timestamp="2022-09-06T00:18:32.187964" hostname="fv-az220-175"><testcase classname="" name="tests.pipeline.test_detector_image_builder" time="0.000"><error message="collection failure">ImportError while importing test module '/home/runner/work/telescope_baseline/telescope_baseline/tests/pipeline/test_detector_image_builder.py'.
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="5.378" timestamp="2022-09-06T00:29:27.872241" hostname="fv-az570-602"><testcase classname="" name="tests.pipeline.test_detector_image_builder" time="0.000"><error message="collection failure">ImportError while importing test module '/home/runner/work/telescope_baseline/telescope_baseline/tests/pipeline/test_detector_image_builder.py'.
 Hint: make sure your test modules/packages have valid Python names.
 Traceback:
 /opt/hostedtoolcache/Python/3.9.13/x64/lib/python3.9/importlib/__init__.py:127: in import_module
