@@ -5,7 +5,6 @@ from telescope_baseline.tools.pipeline.astrometric_catalogue_builder import Astr
 from telescope_baseline.tools.pipeline.map_on_the_sky import MapOnTheSky
 from telescope_baseline.tools.pipeline.position_on_the_sky import PositionOnTheSky
 
-
 @pytest.fixture
 def coord():
     t = [Time('2000-01-01 00:00:00.0'), Time('2000-02-01 00:00:00.0'), Time('2000-03-01 00:00:00.0'),
