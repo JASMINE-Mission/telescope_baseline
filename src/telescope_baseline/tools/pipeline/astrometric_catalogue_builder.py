@@ -51,7 +51,6 @@ class AstrometricCatalogueBuilder:
     def __init__(self):
         pass
 
-
     @staticmethod
     def _update_dic(dic, position_on_the_sky):
         tupple = ([], [], [])

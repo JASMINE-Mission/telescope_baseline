@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 from astropy.time import Time
-from build.lib.telescope_baseline.tools.pipeline_v2.position2d import Position2D
+from telescope_baseline.tools.pipeline.position2d import Position2D
 from telescope_baseline.tools.pipeline.detector_image_builder import DetectorImageBuilder
 from telescope_baseline.tools.pipeline.map_on_detector_builder import MapOnDetectorBuilder
 from telescope_baseline.tools.pipeline.position_on_detector import PositionOnDetector
