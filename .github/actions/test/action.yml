@@ -7,11 +7,9 @@ runs:
       id: pytest
       continue-on-error: true
       run: |
+        export PYTHONPATH=./src:./tests:$PYTHONPATH
         python -m pip install pytest pytest-html pytest-cov
-        pushd src
-        cp ../.coveragerc .
-        python -m pytest ../tests --junitxml=../test_report/$BRANCH/pytest.xml --html=../test_report/$BRANCH/pytest.html --cov=. --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
-        popd
+        python -m pytest tests --junitxml=test_report/$BRANCH/pytest.xml --html=test_report/$BRANCH/pytest.html --cov=src --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
       shell: bash
 
     - name: checkout Pages branch
@@ -25,10 +23,10 @@ runs:
         BRANCH: ${{ github.ref_name}}
         REPOSITORY: ${{ github.repository}}
       run: |
-        rm src/htmlcov/.gitignore
+        rm htmlcov/.gitignore
         rm -rf pages/test_report/$BRANCH
         cp -r test_report/* pages/test_report
-        mv src/htmlcov pages/test_report/$BRANCH/
+        mv htmlcov pages/test_report/$BRANCH/
         pushd pages/test_report
         echo "<html><head><title>JASMINE Testing Report</title></head><body><h1>JASMINE TESTING REPORT</h1><ul>" > index.html
         find . -name pytest.html | xargs -Ixxx dirname xxx | awk '{print substr($0, 3)}' | xargs -Ixxx echo "<li><a href=\"https://github.com/$REPOSITORY/actions/workflows/pytest.yml?query=branch:xxx\"><img src=\"https://github.com/$REPOSITORY/actions/workflows/pytest.yml/badge.svg?branch=xxx\" alt=\"pytest\" style=\"max-width: 100%;\"></a>xxx<a href=\"xxx/pytest.html\">(Test Report)</a><a href=\"xxx/htmlcov/index.html\">(Test Coverage Report)</a></li>" >> index.html
@@ -50,7 +48,7 @@ runs:
         CC_TEST_REPORTER_ID: ${{ env.CC_TEST_REPORTER_ID }}
       with:
         debug: false
-        coverageLocations: src/coverage.xml:coverage.py
+        coverageLocations: coverage.xml:coverage.py
 
     - name: Notice Error
       if: ${{ steps.pytest.outcome == 'failure' }}
