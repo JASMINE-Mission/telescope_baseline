@@ -8,5 +8,19 @@ on:
 jobs:
   slowtest:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "execution slow test!!!!"
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9
+
+    - name: get dependencies
+      uses: ./.github/actions/get_dependencies
+
+    - name: test
+      env:
+        TEST_DIR: slowtests
+        TEST_ONLY: true
+      uses: ./.github/actions/test
