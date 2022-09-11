@@ -1,0 +1,11 @@
+name: slowtest
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  slowtest:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "execution slow test!!!!"
