@@ -54,6 +54,17 @@ runs:
         debug: false
         coverageLocations: coverage.xml:coverage.py
 
+    - name: Notice Slack
+      if: ${{ steps.pytest.outcome == 'failure' }}
+      uses: slackapi/slack-github-action@v1.21.0
+      with:
+        payload: |
+          {
+            "text": "TEST FAILED!!!!"
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL}}
+
     - name: Notice Error
       if: ${{ steps.pytest.outcome == 'failure' }}
       run: exit 1

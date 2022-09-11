@@ -1,6 +1,7 @@
 name: slowtest
 
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: '0 13 * * *'  # UTC 13:00 -> JST(22:00)
@@ -21,6 +22,7 @@ jobs:
 
     - name: test
       env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         TEST_DIR: slowtests
         TEST_ONLY: true
       uses: ./.github/actions/test
