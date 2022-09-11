@@ -36,6 +36,7 @@ runs:
       shell: bash
 
     - name: Publish Test Report
+      if: ${{ env.TEST_ONLY != 'true'}}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ env.GITHUB_TOKEN }}
