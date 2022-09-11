@@ -4,12 +4,13 @@ runs:
     - name: Test with pytest
       env:
         BRANCH: ${{ github.ref_name}}
+        TEST_DIR: ${{ env.TEST_DIR}}
       id: pytest
       continue-on-error: true
       run: |
-        export PYTHONPATH=./src:./tests:$PYTHONPATH
+        export PYTHONPATH=./src:./tests:./$TEST_DIR:$PYTHONPATH
         python -m pip install pytest pytest-html pytest-cov
-        python -m pytest tests --junitxml=test_report/$BRANCH/pytest.xml --html=test_report/$BRANCH/pytest.html --cov=src --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
+        python -m pytest $TEST_DIR --junitxml=test_report/$BRANCH/pytest.xml --html=test_report/$BRANCH/pytest.html --cov=src --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
       shell: bash
 
     - name: checkout Pages branch
