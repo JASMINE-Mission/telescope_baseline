@@ -14,12 +14,14 @@ runs:
       shell: bash
 
     - name: checkout Pages branch
+      if: ${{ env.TEST_ONLY != 'true'}}
       uses: actions/checkout@v3
       with:
         ref: gh-pages
         path: pages
 
     - name: Generate Test Report Index
+      if: ${{ env.TEST_ONLY != 'true'}}
       env:
         BRANCH: ${{ github.ref_name}}
         REPOSITORY: ${{ github.repository}}
@@ -44,7 +46,7 @@ runs:
         keep_files: true
 
     - name: Send Coverage Report to CodeClimate
-      if: ${{ steps.pytest.outcome == 'success'}}
+      if: ${{ steps.pytest.outcome == 'success' && env.TEST_ONLY != 'true'}}
       uses: paambaati/codeclimate-action@v3.0.0
       env:
         CC_TEST_REPORTER_ID: ${{ env.CC_TEST_REPORTER_ID }}
