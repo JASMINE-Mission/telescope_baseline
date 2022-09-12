@@ -60,9 +60,7 @@ runs:
       with:
         payload: |
           {
-            "text": |
-              ${{ github.ref_name}}で${{ env.TEST_DIR}}配下のテストが全件パスしませんでした。
-              詳細はGithub上のActionsページで直近のエラーとなっているActionを参照ください。
+            "text": "${{ github.ref_name}}で${{ env.TEST_DIR}}配下のテストが全件パスしませんでした。\n詳細はGithub上のActionsページで直近のエラーとなっているActionを参照ください。"
           }
       env:
         SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL}}
