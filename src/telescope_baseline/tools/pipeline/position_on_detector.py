@@ -38,5 +38,10 @@ class PositionOnDetector:
         return self.__mag
 
     @property
+    def n_photon(self):
+        # TODO: conversion should be implemented
+        return self.__mag
+
+    @property
     def datetime(self):
         return self.__datetime
