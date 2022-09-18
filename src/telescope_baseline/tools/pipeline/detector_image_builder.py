@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 from astropy.io import fits
 from astropy.time import Time
@@ -48,7 +50,10 @@ class DetectorImageBuilder:
         return self.mag
 
     def _generate_a_stellar_image(self, a, dps):
-        for k in range(int(dps.n_photon)):
+        n = dps.n_photons + np.random.randn() * math.sqrt(dps.n_photons)
+        if n < 0:
+            n = 0
+        for k in range(int(n)):
             xp = int(self.__psf_w * np.random.randn() + dps.y + 0.5)
             yp = int(self.__psf_w * np.random.randn() + dps.x + 0.5)
             if 0 <= xp < self.__nx and 0 <= yp < self.__ny:
