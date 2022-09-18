@@ -82,8 +82,8 @@ class MapOnDetectorBuilder:
         if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
             a.append(PositionOnDetector(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
 
-    def get_positions_on_detector(self, detector_image: DetectorImage, window_size: int, oversampling=4, maxiters=3,
-                                  progress_bar=True) -> list[PositionOnDetector]:
+    def get_positions_on_detector(self, detector_image: DetectorImage, window_size: int, oversampling=4, maxiters=3)\
+            -> list[PositionOnDetector]:
         """Calculate image center position from image array data.
 
         Args:
@@ -105,7 +105,7 @@ class MapOnDetectorBuilder:
         nddata = NDData(data=data)
         e_psf_stars = extract_stars(nddata, stars_tbl, size=window_size)
         # TODO need to convert A/D value to photon count
-        e_psf_builder = EPSFBuilder(oversampling=oversampling, maxiters=maxiters, progress_bar=progress_bar)
+        e_psf_builder = EPSFBuilder(oversampling=oversampling, maxiters=maxiters, progress_bar=True)
         es = e_psf_stars
         e_psf_model, e_psf_stars = e_psf_builder(es)
         # TODO need to implement cross-match

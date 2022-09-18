@@ -38,7 +38,8 @@ def lsf_fit_function_for_astrometric_parameters(parameter, t, lon, lat):
     time_julian_year = time_julian_year - time_center
     residual = np.ndarray((len(time_julian_year)))
     for i in range(len(time_julian_year)):
-        lont = lon0 + (para * math.sin(solar_longitude[i] - lon0) + pm_lon_coslat * time_julian_year[i]) / math.cos(lat0)
+        lont = lon0 + (para * math.sin(solar_longitude[i] - lon0) + pm_lon_coslat * time_julian_year[i])\
+               / math.cos(lat0)
         latt = lat0 + (pm_lat * time_julian_year[i] - para * math.sin(lat0) * math.cos(solar_longitude[i] - lon0))
         residual[i] = (lon[i] - lont) ** 2 + (lat[i] - latt) ** 2
     return residual
