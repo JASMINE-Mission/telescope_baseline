@@ -243,7 +243,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>pytest.html</h1>
-    <p>Report generated on 18-Sep-2022 at 12:00:17 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
+    <p>Report generated on 18-Sep-2022 at 12:14:57 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -265,8 +265,8 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <td>Python</td>
         <td>3.9.13</td></tr></table>
     <h2>Summary</h2>
-    <p>58 tests ran in 32.88 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">56 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">2 failed</span>, <input checked="true" class="filter" data-test-result="error" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">2 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <p>60 tests ran in 32.62 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">60 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
       <thead id="results-table-head">
@@ -277,42 +277,6 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
           <th class="sortable links" col="links">Links</th></tr>
         <tr hidden="true" id="not-found-message">
           <th colspan="4">No results found. Try to check the filters</th></tr></thead>
-      <tbody class="error results-table-row">
-        <tr>
-          <td class="col-result">Error</td>
-          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_from_stellar_image1::setup</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log">@pytest.fixture<br/>    def detector_image():<br/>        o = PositionOnDetector(1, Position2D(64., 64.), Time(&#x27;2000-01-01 00:00:00&#x27;), 3000)<br/>        s = MapOnDetector([o])<br/>        dib = DetectorImageBuilder(128, 128, 1.0)<br/>&gt;       return dib.from_map_on_detector(s)<br/><br/>../tests/pipeline/test_detector_image_builder.py:16: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>telescope_baseline/tools/pipeline/detector_image_builder.py:41: in from_map_on_detector<br/>    self._generate_a_stellar_image(data_array, dps)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;telescope_baseline.tools.pipeline.detector_image_builder.DetectorImageBuilder object at 0x7ff123ca2d30&gt;<br/>a = array([[4.69121344, 9.14683403, 2.15415818, ..., 9.01905985, 6.73194877,<br/>        8.59298833],<br/>       [9.41079025, 8.94...63,<br/>        5.41596987],<br/>       [7.16596779, 7.79653871, 6.44152493, ..., 7.38712438, 0.10493116,<br/>        1.69717474]])<br/>dps = &lt;telescope_baseline.tools.pipeline.position_on_detector.PositionOnDetector object at 0x7ff123ca2dc0&gt;<br/><br/>    def _generate_a_stellar_image(self, a, dps):<br/>&gt;       n = dps.n_photons + np.random.randn() * math.sqrt(dps.n_photons)<br/><span class="error">E       AttributeError: &#x27;PositionOnDetector&#x27; object has no attribute &#x27;n_photons&#x27;</span><br/><br/>telescope_baseline/tools/pipeline/detector_image_builder.py:53: AttributeError<br/></div></td></tr></tbody>
-      <tbody class="error results-table-row">
-        <tr>
-          <td class="col-result">Error</td>
-          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_from_stellar_image2::setup</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log">@pytest.fixture<br/>    def detector_image():<br/>        o = PositionOnDetector(1, Position2D(64., 64.), Time(&#x27;2000-01-01 00:00:00&#x27;), 3000)<br/>        s = MapOnDetector([o])<br/>        dib = DetectorImageBuilder(128, 128, 1.0)<br/>&gt;       return dib.from_map_on_detector(s)<br/><br/>../tests/pipeline/test_detector_image_builder.py:16: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>telescope_baseline/tools/pipeline/detector_image_builder.py:41: in from_map_on_detector<br/>    self._generate_a_stellar_image(data_array, dps)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;telescope_baseline.tools.pipeline.detector_image_builder.DetectorImageBuilder object at 0x7ff123c84f70&gt;<br/>a = array([[5.27013463, 2.34508725, 5.37667922, ..., 5.49534991, 0.24686346,<br/>        7.59713175],<br/>       [8.18272737, 1.37...61,<br/>        5.02520959],<br/>       [1.40651089, 2.63583111, 3.44537266, ..., 1.65772213, 8.52802298,<br/>        5.4921186 ]])<br/>dps = &lt;telescope_baseline.tools.pipeline.position_on_detector.PositionOnDetector object at 0x7ff123ca4df0&gt;<br/><br/>    def _generate_a_stellar_image(self, a, dps):<br/>&gt;       n = dps.n_photons + np.random.randn() * math.sqrt(dps.n_photons)<br/><span class="error">E       AttributeError: &#x27;PositionOnDetector&#x27; object has no attribute &#x27;n_photons&#x27;</span><br/><br/>telescope_baseline/tools/pipeline/detector_image_builder.py:53: AttributeError<br/></div></td></tr></tbody>
-      <tbody class="failed results-table-row">
-        <tr>
-          <td class="col-result">Failed</td>
-          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_generate_stellar_image</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ff123e11250&gt;<br/><br/>    def test_generate_stellar_image(monkeypatch):<br/>        monkeypatch.setattr(np.random, &#x27;randn&#x27;, lambda: 0)<br/>        dib = DetectorImageBuilder(128, 128, 1.0)<br/>        a = np.zeros((128, 128))<br/>        si = PositionOnDetector(1, Position2D(50.0, 50.0), Time(&#x27;2000-01-01 00:00:00&#x27;), 10)<br/>&gt;       dib._generate_a_stellar_image(a, si)<br/><br/>../tests/pipeline/test_detector_image_builder.py:37: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;telescope_baseline.tools.pipeline.detector_image_builder.DetectorImageBuilder object at 0x7ff123c81c10&gt;<br/>a = array([[0., 0., 0., ..., 0., 0., 0.],<br/>       [0., 0., 0., ..., 0., 0., 0.],<br/>       [0., 0., 0., ..., 0., 0., 0.],<br/>       ...,<br/>       [0., 0., 0., ..., 0., 0., 0.],<br/>       [0., 0., 0., ..., 0., 0., 0.],<br/>       [0., 0., 0., ..., 0., 0., 0.]])<br/>dps = &lt;telescope_baseline.tools.pipeline.position_on_detector.PositionOnDetector object at 0x7ff123c81a00&gt;<br/><br/>    def _generate_a_stellar_image(self, a, dps):<br/>&gt;       n = dps.n_photons + np.random.randn() * math.sqrt(dps.n_photons)<br/><span class="error">E       AttributeError: &#x27;PositionOnDetector&#x27; object has no attribute &#x27;n_photons&#x27;</span><br/><br/>telescope_baseline/tools/pipeline/detector_image_builder.py:53: AttributeError<br/></div></td></tr></tbody>
-      <tbody class="failed results-table-row">
-        <tr>
-          <td class="col-result">Failed</td>
-          <td class="col-name">tests/pipeline/test_pipeline.py::test_simulation</td>
-          <td class="col-duration">1.83</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log">def test_simulation():<br/>        a = AstrometricCatalogue([<br/>            CatalogueEntry(1,<br/>                           SkyCoord(l=0., b=0., unit=(&#x27;rad&#x27;, &#x27;rad&#x27;), frame=&#x27;galactic&#x27;, obstime=&#x27;2000-01-01 00:00:00.0&#x27;,<br/>                                    distance=1.0 * u.pc, pm_l_cosb=10 * u.mas / u.yr, pm_b=10 * u.mas / u.yr),<br/>                           12.5),<br/>        ])<br/>        t = [Time(&#x27;2000-01-01 00:00:00.0&#x27;), Time(&#x27;2000-02-01 00:00:00.0&#x27;), Time(&#x27;2000-03-01 00:00:00.0&#x27;),<br/>             Time(&#x27;2000-04-01 00:00:00.0&#x27;), Time(&#x27;2000-05-01 00:00:00.0&#x27;), Time(&#x27;2000-06-01 00:00:00.0&#x27;),<br/>             Time(&#x27;2000-07-01 00:00:00.0&#x27;), Time(&#x27;2000-08-01 00:00:00.0&#x27;), Time(&#x27;2000-09-01 00:00:00.0&#x27;),<br/>             Time(&#x27;2000-10-01 00:00:00.0&#x27;), Time(&#x27;2000-11-01 00:00:00.0&#x27;), Time(&#x27;2000-12-01 00:00:00.0&#x27;),<br/>             Time(&#x27;2001-01-01 00:00:00.0&#x27;)]<br/>        w = WCS(naxis=2)<br/>        w.wcs.crpix = [256, 256]  # Reference point in pixel<br/>        w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix<br/>        w.wcs.crval = [0, 0]  #<br/>        w.wcs.ctype = [&quot;GLON-TAN&quot;, &quot;GLAT-TAN&quot;]<br/>        wlist = []<br/>        for i in range(len(t)):<br/>            wlist.append(WCSwId(i, 1, copy.deepcopy(w)))<br/>        c = Simulation(t=t, w_list=wlist)<br/>&gt;       b = c.do(a, 1024, 1.0)<br/><br/>../tests/pipeline/test_pipeline.py:38: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>telescope_baseline/tools/pipeline/simulation.py:45: in do<br/>    di = self._generate_one_hdu(dib, o, sib, wl)<br/>telescope_baseline/tools/pipeline/simulation.py:61: in _generate_one_hdu<br/>    di.append(dib.from_map_on_detector(si[j]))<br/>telescope_baseline/tools/pipeline/detector_image_builder.py:41: in from_map_on_detector<br/>    self._generate_a_stellar_image(data_array, dps)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;telescope_baseline.tools.pipeline.detector_image_builder.DetectorImageBuilder object at 0x7ff123ca2460&gt;<br/>a = array([[5.01149605, 4.61372127, 6.69030395, ..., 8.17249227, 9.73852039,<br/>        5.68081159],<br/>       [8.5209191 , 0.37...85,<br/>        7.54150031],<br/>       [3.78855295, 5.01737431, 6.40637111, ..., 8.28867462, 7.40510973,<br/>        0.04971186]])<br/>dps = &lt;telescope_baseline.tools.pipeline.position_on_detector.PositionOnDetector object at 0x7ff122318af0&gt;<br/><br/>    def _generate_a_stellar_image(self, a, dps):<br/>&gt;       n = dps.n_photons + np.random.randn() * math.sqrt(dps.n_photons)<br/><span class="error">E       AttributeError: &#x27;PositionOnDetector&#x27; object has no attribute &#x27;n_photons&#x27;</span><br/><br/>telescope_baseline/tools/pipeline/detector_image_builder.py:53: AttributeError<br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
@@ -380,7 +344,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/mapping/test_aperture.py::test_inout_detector</td>
-          <td class="col-duration">0.33</td>
+          <td class="col-duration">0.32</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -453,7 +417,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/photometry/Hw_coeff_test.py::test_compute_Hw_relation</td>
-          <td class="col-duration">4.57</td>
+          <td class="col-duration">4.46</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -481,7 +445,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/pipeline/test_astrometric_catalogue.py::test_save1</td>
-          <td class="col-duration">0.11</td>
+          <td class="col-duration">0.10</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -490,7 +454,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/pipeline/test_astrometric_catalogue.py::test_save2</td>
-          <td class="col-duration">0.09</td>
+          <td class="col-duration">0.10</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -517,7 +481,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/pipeline/test_astrometric_catalogue_builder.py::test_from_on_the_sky_position1</td>
-          <td class="col-duration">12.73</td>
+          <td class="col-duration">12.40</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -543,6 +507,34 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_from_stellar_image1</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_from_stellar_image2</td>
+          <td class="col-duration">0.10</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 46.74it/s]
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_detector_image_builder.py::test_generate_stellar_image</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
           <td class="col-name">tests/pipeline/test_detector_image_catalogue.py::test_load</td>
           <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
@@ -557,7 +549,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>/tmp/tmprdiwf0ep
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>/tmp/tmp5nw4kxiz
 <br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
@@ -626,11 +618,11 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/pipeline/test_map_on_detector_builder.py::test_from_detector_image_catalogue</td>
-          <td class="col-duration">0.09</td>
+          <td class="col-duration">0.06</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 49.72it/s]
+            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 52.02it/s]
 <br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
@@ -654,11 +646,11 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/pipeline/test_map_on_detector_builder.py::test_position</td>
-          <td class="col-duration">0.14</td>
+          <td class="col-duration">0.13</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 36.59it/s]
+            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 38.46it/s]
 <br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
@@ -771,17 +763,26 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-name">tests/pipeline/test_pipeline.py::test_analysis</td>
-          <td class="col-duration">7.74</td>
+          <td class="col-name">tests/pipeline/test_pipeline.py::test_simulation</td>
+          <td class="col-duration">2.35</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 34.19it/s]
-EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 38.68it/s]
-EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 37.06it/s]
-EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 34.62it/s]
-EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 28.57it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 28.50it/s]
-EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 35.98it/s]
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/pipeline/test_pipeline.py::test_analysis</td>
+          <td class="col-duration">7.50</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stderr call------------------------------ <br/>EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 39.10it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 42.52it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 41.40it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 36.94it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 39.08it/s]
+EPSFBuilder (3 maxiters):   0%|          | 0/3 [00:00&lt;?, ?it/s]EPSFBuilder (3 maxiters): 100%|██████████| 3/3 [00:00&lt;00:00, 43.00it/s]
 <br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
