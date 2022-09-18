@@ -1,1 +1,125 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="60" time="38.724" timestamp="2022-09-06T00:59:55.993728" hostname="fv-az191-190"><testcase classname="tests.dataclass.efficiency_test" name="test_from_json" time="0.002" /><testcase classname="tests.dataclass.efficiency_test" name="test_evaluate" time="0.001" /><testcase classname="tests.dataclass.efficiency_test" name="test_weighted_mean" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_cos_angle_from_normal_vectorAB" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_vec2ring" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_inout_convex_on_sphere" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_inout_convex_on_sphere_map" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_inout_detector" time="0.389" /><testcase classname="tests.mapping.test_read_catalog" name="test_inout_detector" time="0.272" /><testcase classname="tests.mission.test_mission" name="test_singleton" time="0.002" /><testcase classname="tests.mission.test_mission" name="test_singleton_2" time="0.001" /><testcase classname="tests.mission.test_mission" name="test_efficiency" time="0.001" /><testcase classname="tests.mission.test_mission" name="test_troughput" time="0.001" /><testcase classname="tests.mission.test_mission" name="test_period" time="0.001" /><testcase classname="tests.mission.test_mission" name="test_inclination" time="0.001" /><testcase classname="tests.photometry.Hw_coeff_test" name="test_compute_Hw_relation" time="5.196" /><testcase classname="tests.photometry.convmag_test" name="test_get_flux" time="0.007" /><testcase classname="tests.photometry.convmag_test" name="test_get_mag" time="0.004" /><testcase classname="tests.pipeline.test_astrometric_catalogue" name="test_save1" time="0.122" /><testcase classname="tests.pipeline.test_astrometric_catalogue" name="test_save2" time="0.117" /><testcase classname="tests.pipeline.test_astrometric_catalogue" name="test_load1" time="0.010" /><testcase classname="tests.pipeline.test_astrometric_catalogue" name="test_load2" time="0.010" /><testcase classname="tests.pipeline.test_astrometric_catalogue_builder" name="test_from_on_the_sky_position1" time="14.203" /><testcase classname="tests.pipeline.test_detector_image" name="test_load" time="0.003" /><testcase classname="tests.pipeline.test_detector_image" name="test_time" time="0.003" /><testcase classname="tests.pipeline.test_detector_image_builder" name="test_from_stellar_image1" time="0.020" /><testcase classname="tests.pipeline.test_detector_image_builder" name="test_from_stellar_image2" time="0.129" /><testcase classname="tests.pipeline.test_detector_image_builder" name="test_generate_stellar_image" time="0.002" /><testcase classname="tests.pipeline.test_detector_image_catalogue" name="test_load" time="0.013" /><testcase classname="tests.pipeline.test_detector_image_catalogue" name="test_save" time="0.104" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_save1" time="0.002" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_save2" time="0.002" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_load1" time="0.001" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_load2" time="0.002" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_get_sky_positions1" time="0.005" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_get_sky_positions2" time="0.004" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_positions_on_detector" time="0.001" /><testcase classname="tests.pipeline.test_map_on_detector_builder" name="test_from_detector_image_catalogue" time="0.079" /><testcase classname="tests.pipeline.test_map_on_detector_builder" name="test_from_on_tye_sky_position" time="0.003" /><testcase classname="tests.pipeline.test_map_on_detector_builder" name="test_from_on_tye_sky_position_value_error" time="0.002" /><testcase classname="tests.pipeline.test_map_on_detector_builder" name="test_position" time="0.170" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_save1" time="0.010" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_save2" time="0.010" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_save3" time="0.011" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_save4" time="0.010" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_load1" time="0.002" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_load2" time="0.003" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_load3" time="0.003" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_position_on_the_sky" time="0.002" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_orbit_id" time="0.002" /><testcase classname="tests.pipeline.test_map_on_the_sky_builder" name="test_position_at_certain_time" time="0.158" /><testcase classname="tests.pipeline.test_map_on_the_sky_builder" name="test_from_astrometric_catalogue_2_list" time="0.167" /><testcase classname="tests.pipeline.test_map_on_the_sky_builder" name="test_from_stellar_image" time="0.004" /><testcase classname="tests.pipeline.test_pipeline" name="test_simulation" time="2.737" /><testcase classname="tests.pipeline.test_pipeline" name="test_analysis" time="8.718" /><testcase classname="tests.pipeline.test_position2D" name="test_pos" time="0.001" /><testcase classname="tests.pipeline.test_position_on_detector" name="test_pos" time="0.002" /><testcase classname="tests.pipeline.test_position_on_detector" name="test_pos2" time="0.001" /><testcase classname="tests.pipeline.test_position_on_the_sky" name="test_pos1" time="0.002" /><testcase classname="tests.pipeline.test_position_on_the_sky" name="test_pos2" time="0.003" /></testsuite></testsuites>
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="2" failures="2" skipped="0" tests="60" time="35.432" timestamp="2022-09-18T10:51:14.145534" hostname="fv-az397-2"><testcase classname="tests.dataclass.efficiency_test" name="test_from_json" time="0.002" /><testcase classname="tests.dataclass.efficiency_test" name="test_evaluate" time="0.001" /><testcase classname="tests.dataclass.efficiency_test" name="test_weighted_mean" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_cos_angle_from_normal_vectorAB" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_vec2ring" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_inout_convex_on_sphere" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_inout_convex_on_sphere_map" time="0.001" /><testcase classname="tests.mapping.test_aperture" name="test_inout_detector" time="0.368" /><testcase classname="tests.mapping.test_read_catalog" name="test_inout_detector" time="0.259" /><testcase classname="tests.mission.test_mission" name="test_singleton" time="0.002" /><testcase classname="tests.mission.test_mission" name="test_singleton_2" time="0.001" /><testcase classname="tests.mission.test_mission" name="test_efficiency" time="0.001" /><testcase classname="tests.mission.test_mission" name="test_troughput" time="0.001" /><testcase classname="tests.mission.test_mission" name="test_period" time="0.001" /><testcase classname="tests.mission.test_mission" name="test_inclination" time="0.001" /><testcase classname="tests.photometry.Hw_coeff_test" name="test_compute_Hw_relation" time="5.162" /><testcase classname="tests.photometry.convmag_test" name="test_get_flux" time="0.007" /><testcase classname="tests.photometry.convmag_test" name="test_get_mag" time="0.004" /><testcase classname="tests.pipeline.test_astrometric_catalogue" name="test_save1" time="0.115" /><testcase classname="tests.pipeline.test_astrometric_catalogue" name="test_save2" time="0.116" /><testcase classname="tests.pipeline.test_astrometric_catalogue" name="test_load1" time="0.010" /><testcase classname="tests.pipeline.test_astrometric_catalogue" name="test_load2" time="0.010" /><testcase classname="tests.pipeline.test_astrometric_catalogue_builder" name="test_from_on_the_sky_position1" time="13.427" /><testcase classname="tests.pipeline.test_detector_image" name="test_load" time="0.003" /><testcase classname="tests.pipeline.test_detector_image" name="test_time" time="0.003" /><testcase classname="tests.pipeline.test_detector_image_builder" name="test_from_stellar_image1" time="0.002"><error message="failed on setup with &quot;AttributeError: 'PositionOnDetector' object has no attribute 'get_nphoton'&quot;">@pytest.fixture
+    def detector_image():
+        o = PositionOnDetector(1, Position2D(64., 64.), Time('2000-01-01 00:00:00'), 3000)
+        s = MapOnDetector([o])
+        dib = DetectorImageBuilder(128, 128, 1.0)
+&gt;       return dib.from_map_on_detector(s)
+
+../tests/pipeline/test_detector_image_builder.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+telescope_baseline/tools/pipeline/detector_image_builder.py:39: in from_map_on_detector
+    self._generate_a_stellar_image(data_array, dps)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;telescope_baseline.tools.pipeline.detector_image_builder.DetectorImageBuilder object at 0x7fbf00291610&gt;
+a = array([[8.41647423, 2.62798188, 8.99941784, ..., 9.6637159 , 3.11666463,
+        4.26766973],
+       [9.84557605, 8.02...4 ,
+        1.18530823],
+       [2.28134479, 4.99222165, 9.26418934, ..., 4.43420745, 9.01544746,
+        6.61408515]])
+dps = &lt;telescope_baseline.tools.pipeline.position_on_detector.PositionOnDetector object at 0x7fbf00291670&gt;
+
+    def _generate_a_stellar_image(self, a, dps):
+&gt;       for k in range(int(dps.get_nphoton())):
+E       AttributeError: 'PositionOnDetector' object has no attribute 'get_nphoton'
+
+telescope_baseline/tools/pipeline/detector_image_builder.py:51: AttributeError</error></testcase><testcase classname="tests.pipeline.test_detector_image_builder" name="test_from_stellar_image2" time="0.002"><error message="failed on setup with &quot;AttributeError: 'PositionOnDetector' object has no attribute 'get_nphoton'&quot;">@pytest.fixture
+    def detector_image():
+        o = PositionOnDetector(1, Position2D(64., 64.), Time('2000-01-01 00:00:00'), 3000)
+        s = MapOnDetector([o])
+        dib = DetectorImageBuilder(128, 128, 1.0)
+&gt;       return dib.from_map_on_detector(s)
+
+../tests/pipeline/test_detector_image_builder.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+telescope_baseline/tools/pipeline/detector_image_builder.py:39: in from_map_on_detector
+    self._generate_a_stellar_image(data_array, dps)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;telescope_baseline.tools.pipeline.detector_image_builder.DetectorImageBuilder object at 0x7fbf0034c760&gt;
+a = array([[9.31375685, 0.11920147, 5.65705874, ..., 2.24940527, 2.17581932,
+        8.8407999 ],
+       [5.85575961, 1.06...01,
+        2.85661569],
+       [5.00770626, 6.37395548, 2.38912271, ..., 7.24058753, 5.91250636,
+        8.80581169]])
+dps = &lt;telescope_baseline.tools.pipeline.position_on_detector.PositionOnDetector object at 0x7fbf0034c9a0&gt;
+
+    def _generate_a_stellar_image(self, a, dps):
+&gt;       for k in range(int(dps.get_nphoton())):
+E       AttributeError: 'PositionOnDetector' object has no attribute 'get_nphoton'
+
+telescope_baseline/tools/pipeline/detector_image_builder.py:51: AttributeError</error></testcase><testcase classname="tests.pipeline.test_detector_image_builder" name="test_generate_stellar_image" time="0.001"><failure message="AttributeError: 'PositionOnDetector' object has no attribute 'get_nphoton'">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fbf002c0460&gt;
+
+    def test_generate_stellar_image(monkeypatch):
+        monkeypatch.setattr(np.random, 'randn', lambda: 0)
+        dib = DetectorImageBuilder(128, 128, 1.0)
+        a = np.zeros((128, 128))
+        si = PositionOnDetector(1, Position2D(50.0, 50.0), Time('2000-01-01 00:00:00'), 10)
+&gt;       dib._generate_a_stellar_image(a, si)
+
+../tests/pipeline/test_detector_image_builder.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;telescope_baseline.tools.pipeline.detector_image_builder.DetectorImageBuilder object at 0x7fbf0045a280&gt;
+a = array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.]])
+dps = &lt;telescope_baseline.tools.pipeline.position_on_detector.PositionOnDetector object at 0x7fbf0041cca0&gt;
+
+    def _generate_a_stellar_image(self, a, dps):
+&gt;       for k in range(int(dps.get_nphoton())):
+E       AttributeError: 'PositionOnDetector' object has no attribute 'get_nphoton'
+
+telescope_baseline/tools/pipeline/detector_image_builder.py:51: AttributeError</failure></testcase><testcase classname="tests.pipeline.test_detector_image_catalogue" name="test_load" time="0.012" /><testcase classname="tests.pipeline.test_detector_image_catalogue" name="test_save" time="0.096" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_save1" time="0.003" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_save2" time="0.002" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_load1" time="0.001" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_load2" time="0.002" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_get_sky_positions1" time="0.005" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_get_sky_positions2" time="0.004" /><testcase classname="tests.pipeline.test_map_on_detector" name="test_positions_on_detector" time="0.001" /><testcase classname="tests.pipeline.test_map_on_detector_builder" name="test_from_detector_image_catalogue" time="0.100" /><testcase classname="tests.pipeline.test_map_on_detector_builder" name="test_from_on_tye_sky_position" time="0.003" /><testcase classname="tests.pipeline.test_map_on_detector_builder" name="test_from_on_tye_sky_position_value_error" time="0.003" /><testcase classname="tests.pipeline.test_map_on_detector_builder" name="test_position" time="0.152" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_save1" time="0.011" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_save2" time="0.010" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_save3" time="0.012" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_save4" time="0.010" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_load1" time="0.002" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_load2" time="0.003" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_load3" time="0.003" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_position_on_the_sky" time="0.002" /><testcase classname="tests.pipeline.test_map_on_the_sky" name="test_orbit_id" time="0.002" /><testcase classname="tests.pipeline.test_map_on_the_sky_builder" name="test_position_at_certain_time" time="0.155" /><testcase classname="tests.pipeline.test_map_on_the_sky_builder" name="test_from_astrometric_catalogue_2_list" time="0.160" /><testcase classname="tests.pipeline.test_map_on_the_sky_builder" name="test_from_stellar_image" time="0.003" /><testcase classname="tests.pipeline.test_pipeline" name="test_simulation" time="1.909"><failure message="AttributeError: 'PositionOnDetector' object has no attribute 'get_nphoton'">def test_simulation():
+        a = AstrometricCatalogue([
+            CatalogueEntry(1,
+                           SkyCoord(l=0., b=0., unit=('rad', 'rad'), frame='galactic', obstime='2000-01-01 00:00:00.0',
+                                    distance=1.0 * u.pc, pm_l_cosb=10 * u.mas / u.yr, pm_b=10 * u.mas / u.yr),
+                           12.5),
+        ])
+        t = [Time('2000-01-01 00:00:00.0'), Time('2000-02-01 00:00:00.0'), Time('2000-03-01 00:00:00.0'),
+             Time('2000-04-01 00:00:00.0'), Time('2000-05-01 00:00:00.0'), Time('2000-06-01 00:00:00.0'),
+             Time('2000-07-01 00:00:00.0'), Time('2000-08-01 00:00:00.0'), Time('2000-09-01 00:00:00.0'),
+             Time('2000-10-01 00:00:00.0'), Time('2000-11-01 00:00:00.0'), Time('2000-12-01 00:00:00.0'),
+             Time('2001-01-01 00:00:00.0')]
+        w = WCS(naxis=2)
+        w.wcs.crpix = [256, 256]  # Reference point in pixel
+        w.wcs.cd = [[1.31e-4, 0], [0, 1.31e-4]]  # cd matrix
+        w.wcs.crval = [0, 0]  #
+        w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
+        wlist = []
+        for i in range(len(t)):
+            wlist.append(WCSwId(i, 1, copy.deepcopy(w)))
+        c = Simulation(t=t, w_list=wlist)
+&gt;       b = c.do(a, 1024, 1.0)
+
+../tests/pipeline/test_pipeline.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+telescope_baseline/tools/pipeline/simulation.py:45: in do
+    di = self._generate_one_hdu(dib, o, sib, wl)
+telescope_baseline/tools/pipeline/simulation.py:61: in _generate_one_hdu
+    di.append(dib.from_map_on_detector(si[j]))
+telescope_baseline/tools/pipeline/detector_image_builder.py:39: in from_map_on_detector
+    self._generate_a_stellar_image(data_array, dps)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;telescope_baseline.tools.pipeline.detector_image_builder.DetectorImageBuilder object at 0x7fbf004116a0&gt;
+a = array([[8.6233236 , 7.23543135, 9.16656315, ..., 6.94364673, 8.57178073,
+        3.04263656],
+       [1.4874871 , 7.98...67,
+        9.31022275],
+       [0.97076843, 2.2219133 , 7.16316054, ..., 6.92536872, 9.10548247,
+        6.43003251]])
+dps = &lt;telescope_baseline.tools.pipeline.position_on_detector.PositionOnDetector object at 0x7fbeff929970&gt;
+
+    def _generate_a_stellar_image(self, a, dps):
+&gt;       for k in range(int(dps.get_nphoton())):
+E       AttributeError: 'PositionOnDetector' object has no attribute 'get_nphoton'
+
+telescope_baseline/tools/pipeline/detector_image_builder.py:51: AttributeError</failure></testcase><testcase classname="tests.pipeline.test_pipeline" name="test_analysis" time="8.270" /><testcase classname="tests.pipeline.test_position2D" name="test_pos" time="0.001" /><testcase classname="tests.pipeline.test_position_on_detector" name="test_pos" time="0.002" /><testcase classname="tests.pipeline.test_position_on_detector" name="test_pos2" time="0.001" /><testcase classname="tests.pipeline.test_position_on_the_sky" name="test_pos1" time="0.002" /><testcase classname="tests.pipeline.test_position_on_the_sky" name="test_pos2" time="0.003" /></testsuite></testsuites>
