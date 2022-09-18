@@ -50,7 +50,7 @@ class DetectorImageBuilder:
         return self.mag
 
     def _generate_a_stellar_image(self, a, dps):
-        n = dps.n_photons + np.random.randn() * math.sqrt(dps.n_photons)
+        n = dps.n_photon + np.random.randn() * math.sqrt(dps.n_photon)
         if n < 0:
             n = 0
         for k in range(int(n)):
