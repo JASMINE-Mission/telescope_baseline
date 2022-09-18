@@ -58,7 +58,7 @@ class Simulation:
         # loop of exposure
         si = sib.from_on_tye_sky_position(o, wl)
         for j in range(len(wl)):
-            di.append(dib.from_stellar_image(si[j]))
+            di.append(dib.from_map_on_detector(si[j]))
             di[j].hdu.header.extend(wl[j].wcs.to_fits()[0].header)
             di[j].hdu.header['DATE-OBS'] = str(self.__t[o.orbit_id])
             fname = "tmp" + str(o.orbit_id) + "_" + str(j) + ".fits"

@@ -13,7 +13,7 @@ def detector_image():
     o = PositionOnDetector(1, Position2D(64., 64.), Time('2000-01-01 00:00:00'), 3000)
     s = MapOnDetector([o])
     dib = DetectorImageBuilder(128, 128, 1.0)
-    return dib.from_stellar_image(s)
+    return dib.from_map_on_detector(s)
 
 
 def test_from_stellar_image1(detector_image):
@@ -24,7 +24,7 @@ def test_from_stellar_image1(detector_image):
 
 def test_from_stellar_image2(detector_image):
     builder = MapOnDetectorBuilder(9, 256, 256)
-    aa = builder.get_on_detector_positions(detector_image, 9)
+    aa = builder.get_positions_on_detector(detector_image, 9)
     assert 63.5 < aa[0].x < 64.5
     assert 63.5 < aa[0].y < 64.5
 

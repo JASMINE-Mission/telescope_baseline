@@ -63,17 +63,17 @@ class MapOnTheSkyBuilder:
             osp.append(osp0)
         return osp
 
-    def from_stellar_image(self, stellar_image_list: list[MapOnDetector]) -> MapOnTheSky:
+    def from_map_on_detector(self, map_on_detector_list: list[MapOnDetector]) -> MapOnTheSky:
         """method for build from StellarImage(detector coordinate) class to OnTheSkyPosition
 
         Args:
-            stellar_image_list:
+            map_on_detector_list:
 
         Returns:
 
         """
         skypositions = []
-        for si in stellar_image_list:
+        for si in map_on_detector_list:
             skypositions.extend(self.get_sky_positions(si))
         # TODO Get the ID of the star and optimize the SIP for the same star at the same position in the sky.
         return MapOnTheSky(positions_on_the_sky=skypositions)

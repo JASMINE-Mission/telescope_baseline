@@ -23,29 +23,29 @@ class Analysis:
             AstrometricCatalogue which contains list of 5 parameters of whole stars.
         """
         # TODO: wcs is not constant whole the mission.
-        sib = MapOnDetectorBuilder(window_size, 1024, 1024)
+        builder = MapOnDetectorBuilder(window_size, 1024, 1024)
         sky_positions_builder = MapOnTheSkyBuilder(wcs)
         acb = AstrometricCatalogueBuilder()
 
         cat = c.get_detector_images()
         cat.sort(key=lambda x: x.time)
 
-        dic_list = []
+        detector_image_catalogue_list = []
         n = len(cat)
         t0 = 1 / 50
-        di = [cat[0]]
+        detector_image_list = [cat[0]]
         for i in range(1, n):
             if cat[i].time - cat[i-1].time < t0:
-                di.append(cat[i])
+                detector_image_list.append(cat[i])
             else:
-                dic_list.append(DetectorImageCatalogue(di))
-                di = [cat[i]]
-        dic_list.append(DetectorImageCatalogue(di))
+                detector_image_catalogue_list.append(DetectorImageCatalogue(detector_image_list))
+                detector_image_list = [cat[i]]
+        detector_image_catalogue_list.append(DetectorImageCatalogue(detector_image_list))
 
         # loop of orbit
         sky_positions = []
-        for dic in dic_list:
-            stellar_image_list = sib.from_detector_image_catalogue(wcs, dic)
-            sky_positions.append(sky_positions_builder.from_stellar_image(stellar_image_list))
+        for dic in detector_image_catalogue_list:
+            stellar_image_list = builder.from_detector_image_catalogue(wcs, dic)
+            sky_positions.append(sky_positions_builder.from_map_on_detector(stellar_image_list))
             # TODO. should be implement from list to object / outside of the loop of dic.
         return acb.from_on_the_sky_position(sky_positions)

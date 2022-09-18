@@ -15,14 +15,14 @@ from astropy.wcs import WCS
 
 
 class MapOnDetectorBuilder:
-    """Builder class for Stellarimage class
+    """Builder class for MapOnDetector class
 
     """
     def __init__(self, window_size: int, nx: int, ny: int):
         """constructor
 
         Args:
-            window_size: Size of extracte window
+            window_size: Size of extract window
             nx: array size in x direction
             ny: array size in y direction
         """
@@ -32,25 +32,25 @@ class MapOnDetectorBuilder:
         pass
 
     def from_detector_image_catalogue(self, wcs: WCS, c: DetectorImageCatalogue) -> list[MapOnDetector]:
-        """method for build from DetectorImageCatalogue to the list of StellarImage
+        """method for build from DetectorImageCatalogue to the list of MapOnDetector
 
         Args:
             wcs: world coordinate system
-            c: DtectorImageCatalogue
+            c: DetectorImageCatalogue
 
         Returns:StellarImage
 
-        DtectorImageCatalogue is the list of DetectorImage.  One DtectorImage instance corresponds to one StellarImage
+        DetectorImageCatalogue is the list of DetectorImage.  One DetectorImage instance corresponds to one StellarImage
          instance.
 
         """
         sil = []
         for di in c.get_detector_images():
-            sil.append(MapOnDetector(self.get_on_detector_positions(di, self.__window_size)))
+            sil.append(MapOnDetector(self.get_positions_on_detector(di, self.__window_size)))
         return sil
 
     def from_on_tye_sky_position(self, o: MapOnTheSky, wl: list[WCSwId]) -> list[MapOnDetector]:
-        """method for building from OnTheSkyPOsition to the list of StellarImage
+        """method for building from MapOnTheSky to the list of MapOnDetector
 
         Args:
             o: OnTheSkyPosition instance
@@ -59,16 +59,16 @@ class MapOnDetectorBuilder:
         Returns:
 
         """
-        sky_positions = o.positions_on_the_sky
+        positions_on_the_sky = o.positions_on_the_sky
         si = []
         for w in wl:
             if "GLON" not in w.wcs.wcs.ctype[0]:
                 raise ValueError("Coordinate system " + w.wcs.wcs.ctype[0] + " is not supported")
             tmp = []
-            for s in sky_positions:
+            for s in positions_on_the_sky:
                 tmp.append([s.coord.galactic.l.deg, s.coord.galactic.b.deg])
             tmp = w.wcs.wcs_world2pix(tmp, 0)
-            a = self._store_list_of_detector_position(sky_positions, tmp)
+            a = self._store_list_of_detector_position(positions_on_the_sky, tmp)
             si.append(MapOnDetector(positions_on_detector=a))
         return si
 
@@ -82,7 +82,8 @@ class MapOnDetectorBuilder:
         if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
             a.append(PositionOnDetector(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
 
-    def get_on_detector_positions(self, detector_image: DetectorImage, window_size: int) -> list[PositionOnDetector]:
+    def get_positions_on_detector(self, detector_image: DetectorImage, window_size: int, oversampling=4, maxiters=3,
+                                  progress_bar=True) -> list[PositionOnDetector]:
         """Calculate image center position from image array data.
 
         Args:
@@ -104,7 +105,7 @@ class MapOnDetectorBuilder:
         nddata = NDData(data=data)
         e_psf_stars = extract_stars(nddata, stars_tbl, size=window_size)
         # TODO need to convert A/D value to photon count
-        e_psf_builder = EPSFBuilder(oversampling=4, maxiters=3, progress_bar=True)
+        e_psf_builder = EPSFBuilder(oversampling=oversampling, maxiters=maxiters, progress_bar=progress_bar)
         es = e_psf_stars
         e_psf_model, e_psf_stars = e_psf_builder(es)
         # TODO need to implement cross-match

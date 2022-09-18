@@ -27,19 +27,19 @@ def lsf_fit_function_for_astrometric_parameters(parameter, t, lon, lat):
     pm_lon_coslat = parameter[2]
     pm_lat = parameter[3]
     para = parameter[4]
-    ls = []
-    ty = []
+    solar_longitude = []
+    time_julian_year = []
     for time in t:
-        ls.append(get_sun(time).geocentricmeanecliptic.lon.rad)
-        ty.append(time.jyear)
-    ls = np.array(ls)
-    ty = np.array(ty)
-    tc = (np.max(ty) + np.min(ty)) / 2
-    ty = ty - tc
-    residual = np.ndarray((len(ty)))
-    for i in range(len(ty)):
-        lont = lon0 + (para * math.sin(ls[i] - lon0) + pm_lon_coslat * ty[i]) / math.cos(lat0)
-        latt = lat0 + (pm_lat * ty[i] - para * math.sin(lat0) * math.cos(ls[i] - lon0))
+        solar_longitude.append(get_sun(time).geocentricmeanecliptic.lon.rad)
+        time_julian_year.append(time.jyear)
+    solar_longitude = np.array(solar_longitude)
+    time_julian_year = np.array(time_julian_year)
+    time_center = (np.max(time_julian_year) + np.min(time_julian_year)) / 2
+    time_julian_year = time_julian_year - time_center
+    residual = np.ndarray((len(time_julian_year)))
+    for i in range(len(time_julian_year)):
+        lont = lon0 + (para * math.sin(solar_longitude[i] - lon0) + pm_lon_coslat * time_julian_year[i]) / math.cos(lat0)
+        latt = lat0 + (pm_lat * time_julian_year[i] - para * math.sin(lat0) * math.cos(solar_longitude[i] - lon0))
         residual[i] = (lon[i] - lont) ** 2 + (lat[i] - latt) ** 2
     return residual
 

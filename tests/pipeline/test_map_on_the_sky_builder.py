@@ -45,7 +45,7 @@ def test_from_stellar_image():
     builder = MapOnTheSkyBuilder(w)
     o = PositionOnDetector(1, Position2D(64., 64.), Time('2000-01-01 00:00:00'), 3000)
     s = MapOnDetector([o])
-    o = builder.from_stellar_image([s])
+    o = builder.from_map_on_detector([s])
     oc = o.positions_on_the_sky[0].coord.galactic
     assert o.positions_on_the_sky[0].datetime == '2000-01-01 00:00:00'
     assert 0.001 < oc.l.deg < 0.0025

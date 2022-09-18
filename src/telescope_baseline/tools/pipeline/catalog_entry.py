@@ -11,7 +11,7 @@ class CatalogueEntry:
 
         Args:
             stellar_id: id of the entry.
-            coord: astropy.coordinates.SkyCoord object which also contains proper motion and distnace.
+            coord: astropy.coordinates.SkyCoord object which also contains proper motion and distance.
             mag: magnitude of the star
 
         TODO: Need to consistent implementation of what frame we should use.

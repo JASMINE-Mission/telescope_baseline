@@ -34,8 +34,9 @@ class AstrometricCatalogue:
             write = csv.writer(data_file)
             for e in self.__catalogue_entries:
                 write.writerow([e.stellar_id, e.coord.icrs.ra.deg, e.coord.icrs.dec.deg,
-                                e.coord.icrs.pm_ra_cosdec * u.yr / u.mas, e.coord.icrs.pm_dec * u.yr / u.mas,
-                                e.coord.distance / u.pc, e.coord.obstime, e.mag])
+                                e.coord.icrs.pm_ra_cosdec.to_value(u.mas / u.yr),
+                                e.coord.icrs.pm_dec.to_value(u.mas / u.yr),
+                                e.coord.distance.to_value(u.pc), e.coord.obstime, e.mag])
 
     @staticmethod
     def load(file_name: str):

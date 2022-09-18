@@ -21,30 +21,34 @@ class DetectorImageBuilder:
         self.__ny = ny
         self.__psf_w = psf_w
 
-    def from_stellar_image(self, si: MapOnDetector) -> DetectorImage:
-        """Build DetectorImage from StellarImage class
+    def from_map_on_detector(self, si: MapOnDetector) -> DetectorImage:
+        """Build DetectorImage from MapOnDetector class
 
         Args:
-            si: StellarImage
+            si: MapOnDetector
 
-        Returns:DetctorImage
+        Returns:DetectorImage
 
         """
-        dp = si.positions_on_detector
-        a = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
+        positions_on_detector = si.positions_on_detector
+        data_array = np.random.uniform(0.0, 10.0, (self.__nx, self.__ny))
         t_max = Time('1960-01-01 00:00:00')
-        for dps in dp:
+        for dps in positions_on_detector:
             if dps.datetime > t_max:
                 t_max = dps.datetime
-            self._generate_a_stellar_image(a, dps)
+            self._generate_a_stellar_image(data_array, dps)
         hdu = fits.PrimaryHDU()
-        hdu.data = a
+        hdu.data = data_array
         hdu.header['DATE-OBS'] = str(t_max)
-        di = DetectorImage(hdu)
-        return di
+        detector_image = DetectorImage(hdu)
+        return detector_image
+
+    def get_nphoton(self) -> float:
+        # TODO: Conversion factor is considered. 4.2e9 * 10 ** (-0.4 * self.mag)?
+        return self.mag
 
     def _generate_a_stellar_image(self, a, dps):
-        for k in range(int(dps.mag)):
+        for k in range(int(dps.get_nphoton())):
             xp = int(self.__psf_w * np.random.randn() + dps.y + 0.5)
             yp = int(self.__psf_w * np.random.randn() + dps.x + 0.5)
             if 0 <= xp < self.__nx and 0 <= yp < self.__ny:

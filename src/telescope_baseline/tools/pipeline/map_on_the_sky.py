@@ -12,7 +12,7 @@ class MapOnTheSky:
         """constructor
 
         Args:
-            positions_on_the_sky: list of SkyPosition class object.
+            positions_on_the_sky: list of PositionOnTheSky class object.
             orbit_id: orbit ID
         """
         self.__positions_on_the_sky = positions_on_the_sky
