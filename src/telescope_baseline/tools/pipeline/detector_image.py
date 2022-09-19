@@ -30,5 +30,5 @@ class DetectorImage:
         ft = fits.open(filename)
         return DetectorImage(ft[0])
 
-    def save(self, filename: str) -> None:
-        self.__hdu.writeto(filename, overwrite=True)
+    def save(self, filename: str, overwrite: bool) -> None:
+        self.__hdu.writeto(filename, overwrite=overwrite)

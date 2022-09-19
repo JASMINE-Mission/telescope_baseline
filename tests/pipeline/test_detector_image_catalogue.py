@@ -25,5 +25,5 @@ def test_save():
     with tempfile.TemporaryDirectory() as dname:
         print(dname)
         path = Path(dname, 'fits')
-        loaded.save(path)
+        loaded.save(path, True)
         assert len(list(path.iterdir())) == sut_len

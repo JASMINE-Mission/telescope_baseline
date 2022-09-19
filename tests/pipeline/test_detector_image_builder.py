@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import pytest
 from astropy.time import Time
@@ -24,13 +26,14 @@ def test_from_stellar_image1(detector_image):
 
 def test_from_stellar_image2(detector_image):
     builder = MapOnDetectorBuilder(9, 256, 256)
-    aa = builder.get_positions_on_detector(detector_image, 9)
+    aa = builder.estimate_positions_on_detector(detector_image, 9)
     assert 63.5 < aa[0].x < 64.5
     assert 63.5 < aa[0].y < 64.5
 
 
 def test_generate_stellar_image(monkeypatch):
-    monkeypatch.setattr(np.random, 'randn', lambda: 0)
+    monkeypatch.setattr(np.random, 'poisson', lambda x: x)
+    monkeypatch.setattr(np.random, 'randn', lambda : 0)
     dib = DetectorImageBuilder(128, 128, 1.0)
     a = np.zeros((128, 128))
     si = PositionOnDetector(1, Position2D(50.0, 50.0), Time('2000-01-01 00:00:00'), 10)

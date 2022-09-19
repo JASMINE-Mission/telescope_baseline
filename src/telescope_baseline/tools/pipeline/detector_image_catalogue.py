@@ -33,11 +33,11 @@ class DetectorImageCatalogue:
             d.append(DetectorImage.load(str(s)))
         return DetectorImageCatalogue(d)
 
-    def save(self, foldername: str):
+    def save(self, foldername: str, overwrite: bool):
         p = Path(foldername)
         if not p.exists():
             p.mkdir(parents=True)
         for i in range(len(self.__detector_images)):
             filename = 'tmp_{:0=4}'.format(i) + '.fits'
             fpath = Path(p, filename)
-            self.__detector_images[i].save(str(fpath))
+            self.__detector_images[i].save(str(fpath), overwrite)

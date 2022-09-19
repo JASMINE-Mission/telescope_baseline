@@ -43,15 +43,15 @@ class CatalogueEntry:
 
     @property
     def distance(self):
-        return self.__coord.distance / u.pc
+        return self.__coord.distance.to_value(u.pc)
 
     @property
     def pm_ra_cosdec(self):
-        return self.__coord.icrs.pm_ra_cosdec * u.yr / u.mas
+        return self.__coord.icrs.pm_ra_cosdec.to_value(u.mas / u.yr)
 
     @property
     def pm_dec(self):
-        return self.__coord.icrs.pm_dec * u.yr / u.mas
+        return self.__coord.icrs.pm_dec.to_value(u.mas / u.yr)
 
     @property
     def mag(self):

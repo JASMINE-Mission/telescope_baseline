@@ -46,7 +46,7 @@ class MapOnDetectorBuilder:
         """
         sil = []
         for di in c.get_detector_images():
-            sil.append(MapOnDetector(self.get_positions_on_detector(di, self.__window_size)))
+            sil.append(MapOnDetector(self.estimate_positions_on_detector(di, self.__window_size)))
         return sil
 
     def from_on_the_sky_position(self, o: MapOnTheSky, wl: list[WCSwId]) -> list[MapOnDetector]:
@@ -82,9 +82,9 @@ class MapOnDetectorBuilder:
         if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
             a.append(PositionOnDetector(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
 
-    def get_positions_on_detector(self, detector_image: DetectorImage, window_size: int, oversampling=4, maxiters=3)\
+    def estimate_positions_on_detector(self, detector_image: DetectorImage, window_size: int, oversampling=4, maxiters=3)\
             -> list[PositionOnDetector]:
-        """Calculate image center position from image array data.
+        """Extract stellar window from image array data and estimate image center position by ePSF method.
 
         Args:
             window_size: The size of window which is extracted from the image

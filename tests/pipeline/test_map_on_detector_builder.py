@@ -73,7 +73,7 @@ def test_from_on_tye_sky_position_value_error(map_on_the_sky):
 def test_position():
     builder = MapOnDetectorBuilder(9, 256, 256)
     detector_image = DetectorImage.load(get_tests_file_name('tmp0_0.fits'))
-    li = builder.get_positions_on_detector(detector_image, 9)
+    li = builder.estimate_positions_on_detector(detector_image, 9)
     assert len(li) == 1
     assert abs(li[0].x - 255) < 1.0
     assert abs(li[0].y - 255) < 1.0
