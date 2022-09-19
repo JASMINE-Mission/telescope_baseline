@@ -52,10 +52,10 @@ def read_jasmine_targets_jhk(hdffile):
     """Read JASMINE catalog
 
         Args:
-            hdffile: HDF (ra,dec, J, H, K)
+            hdffile: HDF (ra,dec, J, H, Ks)
 
         Returns:
-            targets coordinate list (in radian), l in deg, b in deg, J, H, K mag
+            targets coordinate list (in radian), l in deg, b in deg, J, H, Ks mag
 
         Notes:
             HDF file can be generated using jasmine_catalog, for instance, by the following example, using the Hw definition (as of 10/09/2022) Hw = 0.9J+0.1H-0.06(J-H)^2
