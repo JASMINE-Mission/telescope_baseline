@@ -39,7 +39,7 @@ class CatalogueEntry:
 
     @property
     def parallax(self):
-        return 1 * u.pc / self.__coord.distance * 1000 * u.mas
+        return 1 / self.__coord.distance.to_value(u.pc) * 1000 * u.mas
 
     @property
     def distance(self):
