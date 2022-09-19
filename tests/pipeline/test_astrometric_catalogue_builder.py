@@ -20,16 +20,27 @@ def test_from_on_the_sky_position1():
                -0.09662747861779832, -0.09662760274710183, -0.0966276096289789, -0.09662749965491312,
                -0.09662729760688273, -0.09662706177588641, -0.09662684008417984, -0.09662670773667688,
                -0.09662669894287566]
+    latdata2 = [-0.19662669750312813, -0.19662682006310001, -0.1966270232593704, -0.19662727212328368,
+               -0.19662747861779832, -0.19662760274710183, -0.1966276096289789, -0.19662749965491312,
+               -0.19662729760688273, -0.19662706177588641, -0.19662684008417984, -0.19662670773667688,
+               -0.19662669894287566]
     builder = AstrometricCatalogueBuilder()
     o = []
     for i in range(len(t)):
         s = PositionOnTheSky(1, SkyCoord(lon=londata[i], lat=latdata[i], unit=('rad', 'rad'),
                                          frame='barycentricmeanecliptic'), 3000, t[i])
         o.append(MapOnTheSky(positions_on_the_sky=[s]))
+    for i in range(len(t)):
+        s = PositionOnTheSky(2, SkyCoord(lon=londata[i], lat=latdata2[i], unit=('rad', 'rad'),
+                                         frame='barycentricmeanecliptic'), 3000, t[i])
+        o.append(MapOnTheSky(positions_on_the_sky=[s]))
     a2 = builder.from_on_the_sky_position(o)
 
-    coord = a2.get_catalogue()[0]
+    coord = a2.get_catalogue()
     # TODO: need to fix proper motion check. Windows and Linux give different answer.
-    assert 4.657 < coord[0][0] < 4.658
-    assert -0.1 < coord[0][1] < -0.09
-    assert 4.8e-6 < coord[0][4] < 4.9e-6
+    assert 4.657 < coord[0][0][0] < 4.658
+    assert -0.1 < coord[0][0][1] < -0.09
+    assert 4.8e-6 < coord[0][0][4] < 4.9e-6
+    assert 4.657 < coord[1][0][0] < 4.658
+    assert -0.2 < coord[1][0][1] < -0.19
+    assert 4.5e-6 < coord[1][0][4] < 4.6e-6
