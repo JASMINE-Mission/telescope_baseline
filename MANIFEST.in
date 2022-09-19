@@ -11,6 +11,7 @@ include src/telescope_baseline/data/speclist.txt
 include src/telescope_baseline/data/cat.hdf
 include src/telescope_baseline/data/cat_hw12.5.hdf
 include src/telescope_baseline/data/cat_hw14.5.hdf
+include src/telescope_baseline/data/cat_jhk_hw12.5.hdf
 
 graft tests
 graft examples
