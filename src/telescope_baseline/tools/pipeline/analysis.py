@@ -23,6 +23,7 @@ class Analysis:
             AstrometricCatalogue which contains list of 5 parameters of whole stars.
         """
         # TODO: wcs is not constant whole the mission.
+        # TODO: wcs should be read from input fits files.
         builder = MapOnDetectorBuilder(window_size, 1024, 1024)
         sky_positions_builder = MapOnTheSkyBuilder(wcs)
         acb = AstrometricCatalogueBuilder()

@@ -36,11 +36,11 @@ class MapOnTheSkyBuilder:
         for position in mod.positions_on_detector:
             sky = self.__wcs.pixel_to_world(position.x, position.y)
             # TODO: Consideration is needed how ids are set.
-            stellar_id = position.exposure_id
+            stellar_id = 1
             ret.append(PositionOnTheSky(stellar_id, sky, position.mag, position.datetime))
         return ret
 
-    def from_astrometric_catalogue_2_list(self, a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
+    def from_astrometric_catalogue_list(self, a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
         """method for build from AstrometricCatalogue to the list of MapOnTheSky
 
         Args:

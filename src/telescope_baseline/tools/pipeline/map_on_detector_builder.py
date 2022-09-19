@@ -26,6 +26,7 @@ class MapOnDetectorBuilder:
             nx: array size in x direction
             ny: array size in y direction
         """
+        assert window_size % 2 == 1
         self.__window_size = window_size
         self.__nx = nx
         self.__ny = ny

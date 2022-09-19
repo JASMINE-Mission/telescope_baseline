@@ -38,7 +38,7 @@ class Simulation:
         dib = DetectorImageBuilder(pix_max, pix_max, psf_w)
         Path(self.__folder).mkdir(parents=True, exist_ok=True)
 
-        sky_positions = sky_positions_builder.from_astrometric_catalogue_2_list(a, self.__t)
+        sky_positions = sky_positions_builder.from_astrometric_catalogue_list(a, self.__t)
         dic = []
         # loop of orbit
         for o in sky_positions:

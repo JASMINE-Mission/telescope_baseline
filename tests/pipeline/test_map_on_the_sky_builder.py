@@ -30,7 +30,7 @@ def test_from_astrometric_catalogue_2_list(sky_coordinate):
     builder = MapOnTheSkyBuilder(w)
     a = AstrometricCatalogue([CatalogueEntry(1, sky_coordinate, 3000)])
     t = [Time('2000-06-01 00:00:00')]
-    o = builder.from_astrometric_catalogue_2_list(a, t)
+    o = builder.from_astrometric_catalogue_list(a, t)
     c0 = o[0].positions_on_the_sky[0].coord
     assert -4e-5 < c0.galactic.b.deg < 0
     assert 0.0001 < c0.galactic.l.deg < 0.00016
