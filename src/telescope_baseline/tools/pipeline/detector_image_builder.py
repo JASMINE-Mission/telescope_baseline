@@ -51,9 +51,7 @@ class DetectorImageBuilder:
 
     def _generate_a_stellar_image(self, a, dps):
         n = np.random.poisson(dps.n_photon)
-        if n < 0:
-            n = 0
-        for k in range(int(n)):
+        for k in range(n):
             xp = int(self.__psf_w * np.random.randn() + dps.y + 0.5)
             yp = int(self.__psf_w * np.random.randn() + dps.x + 0.5)
             if 0 <= xp < self.__nx and 0 <= yp < self.__ny:

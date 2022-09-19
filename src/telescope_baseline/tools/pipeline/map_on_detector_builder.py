@@ -86,8 +86,13 @@ class MapOnDetectorBuilder:
                                        maxiters=3) -> list[PositionOnDetector]:
         """Extract stellar window from image array data and estimate image center position by ePSF method.
 
+        Though array size is 2K x 2K, nominally extracted small (~9x9 pixels) window data is down linked. Image is
+        spread due to optical, electronic, and attitude stability reason. These effect determine the effective point
+        spread function (ePSF). Shape of ePSF is estimated from the observed data, and estimate image center by fitting
+        observed data with the estimated ePSF shape.
+
         Args:
-            window_size: The size of window which is extracted from the image
+            window_size: The size of window which is extracted from the image.
 
         Returns: list of positions in detector coordinate.
 
