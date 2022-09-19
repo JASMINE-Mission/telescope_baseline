@@ -5,7 +5,13 @@ from test_pipeline import get_tests_file_name
 
 @pytest.fixture
 def detector_image():
-    return DetectorImage.load(get_tests_file_name('tmp0_0.fits'))
+    try:
+        d = DetectorImage.load(get_tests_file_name('tmp0_0.fits'))
+    except FileNotFoundError:
+        return None
+    except OSError:
+        return None
+    return d
 
 
 def test_load(detector_image):

@@ -13,22 +13,24 @@ class Simulation:
 
     """
 
-    def __init__(self, t: list[Time] = [], w_list: list[WCSwId] = [], folder: str = 'tmp'):
+    def __init__(self, t: list[Time], w_list: list[WCSwId], folder: str, overwrite: bool):
         self.__t = t
         self.__w_list = w_list
         self.__folder = folder
+        self.__overwrite = overwrite
 
     def do(self, a: AstrometricCatalogue, pix_max: int, psf_w: float) \
             -> list[DetectorImageCatalogue]:
         """pipeline of generate image from astrometric catalogue
 
         Args:
-            a: AstrometricCatalogue which contains list of 5 parameters of whole stars.
-            pix_max: Maximum pixel number.
+            a: AstrometricCatalogue which contains list of 5 astrometric parameters of whole stars plus magnitude.
+            pix_max: array size
             psf_w: PSF width in pixel unit.
 
         Returns:
-            A DetectorImageCatalogue object which contains DetectorImage objects of whole mission.
+            # TODO: it should be the DetectorImageCatalogue
+            List of A DetectorImage objects of whole mission.
 
         """
         sky_positions_builder = MapOnTheSkyBuilder(self.__w_list[0].wcs)
@@ -42,7 +44,7 @@ class Simulation:
         for o in sky_positions:
             wl = self._get_effective_wcs_list(o)
             if len(wl) > 0:
-                di = self._generate_one_hdu(dib, o, sib, wl)
+                di = self._generate_hdus(dib, o, sib, wl)
             dic.append(DetectorImageCatalogue(di))
         return dic
 
@@ -53,15 +55,15 @@ class Simulation:
                 wl.append(w)
         return wl
 
-    def _generate_one_hdu(self, dib, o, sib, wl):
+    def _generate_hdus(self, dib, o, sib, wl):
         di = []
         # loop of exposure
-        si = sib.from_on_tye_sky_position(o, wl)
+        si = sib.from_on_the_sky_position(o, wl)
         for j in range(len(wl)):
             di.append(dib.from_map_on_detector(si[j]))
             di[j].hdu.header.extend(wl[j].wcs.to_fits()[0].header)
             di[j].hdu.header['DATE-OBS'] = str(self.__t[o.orbit_id])
             fname = "tmp" + str(o.orbit_id) + "_" + str(j) + ".fits"
             fpathname = Path(self.__folder, fname)
-            di[j].hdu.writeto(str(fpathname), overwrite=True)
+            di[j].hdu.writeto(str(fpathname), overwrite=self.__overwrite)
         return di

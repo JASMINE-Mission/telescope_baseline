@@ -52,7 +52,7 @@ def test_from_on_tye_sky_position(map_on_the_sky):
     w.wcs.crval = [0, 0]  #
     w.wcs.ctype = ["GLON-TAN", "GLAT-TAN"]
     wl = [WCSwId(1, 1, w)]
-    si = builder.from_on_tye_sky_position(map_on_the_sky, wl)
+    si = builder.from_on_the_sky_position(map_on_the_sky, wl)
     a = si[0].positions_on_detector
     assert 126.5 < a[0].x < 127.5
     assert 126.5 < a[0].y < 127.5
@@ -64,7 +64,7 @@ def test_from_on_tye_sky_position_value_error(map_on_the_sky):
     w.wcs.ctype = ["ICRS-TAN", "ICRS-TAN"]
     wl = [WCSwId(1, 1, w)]
     with pytest.raises(Exception) as e:
-        si = builder.from_on_tye_sky_position(map_on_the_sky, wl)
+        si = builder.from_on_the_sky_position(map_on_the_sky, wl)
     assert str(e.value) == 'Coordinate system ICRS-TAN is not supported'
 
 

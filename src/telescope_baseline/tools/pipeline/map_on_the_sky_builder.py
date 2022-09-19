@@ -2,6 +2,7 @@ import math
 from astropy.coordinates import get_sun, SkyCoord
 from astropy.time import Time
 from astropy.wcs import WCS
+import astropy.units as u
 
 from telescope_baseline.tools.pipeline.astrometric_catalogue import AstrometricCatalogue
 from telescope_baseline.tools.pipeline.map_on_the_sky import MapOnTheSky
@@ -13,9 +14,9 @@ def position_at_certain_time(coord: SkyCoord, t: Time):
     lat0 = coord.barycentricmeanecliptic.lat.rad
     lon0 = coord.barycentricmeanecliptic.lon.rad
     # TODO: unit of distance and proper motion is assumed to be 'pc' and 'mas/yr' respectively.  It should be checked.
-    para = 1 / coord.distance.value * 4.848136e-6  # const is conversion ratio from as to rad.
-    pm_lon_coslat = coord.barycentricmeanecliptic.pm_lon_coslat.value * 4.848136e-9
-    pm_lat = coord.barycentricmeanecliptic.pm_lat.value * 4.848136e-9
+    para = ((1.0 * u.AU / coord.distance) * u.mas).to_value("mas")
+    pm_lon_coslat = coord.barycentricmeanecliptic.pm_lon_coslat.to("rad / yr").value
+    pm_lat = coord.barycentricmeanecliptic.pm_lat.to("rad / yr").value
     ls = get_sun(t).geocentricmeanecliptic.lon.rad
     ty = t.jyear - coord.obstime.jyear
     lont = lon0 + (para * math.sin(ls - lon0) + pm_lon_coslat * ty) / math.cos(lat0)
@@ -35,11 +36,12 @@ class MapOnTheSkyBuilder:
         for position in mod.positions_on_detector:
             sky = self.__wcs.pixel_to_world(position.x, position.y)
             # TODO: Consideration is needed how ids are set.
-            ret.append(PositionOnTheSky(position.exposure_id, sky, position.mag, position.datetime))
+            stellar_id = position.exposure_id
+            ret.append(PositionOnTheSky(stellar_id, sky, position.mag, position.datetime))
         return ret
 
     def from_astrometric_catalogue_2_list(self, a: AstrometricCatalogue, t: list[Time]) -> list[MapOnTheSky]:
-        """method for build from AstrometricCatalogue to the list of OnTheSkyPosition
+        """method for build from AstrometricCatalogue to the list of MapOnTheSky
 
         Args:
             a: AstrometricCatalogue

@@ -3,10 +3,10 @@ from telescope_baseline.tools.pipeline.position2d import Position2D
 
 
 class PositionOnDetector:
-    """Data class for detector position of individual image.
+    """Data class for position on detector with detector coordinate of individual stellar image.
 
     """
-    def __init__(self, exposure_id: int, p: Position2D, datetime: Time, mag: float = 12.5):
+    def __init__(self, exposure_id: int, p: Position2D, datetime: Time, mag: float):
         """ constructor
 
         Args:

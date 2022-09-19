@@ -49,7 +49,7 @@ class MapOnDetectorBuilder:
             sil.append(MapOnDetector(self.get_positions_on_detector(di, self.__window_size)))
         return sil
 
-    def from_on_tye_sky_position(self, o: MapOnTheSky, wl: list[WCSwId]) -> list[MapOnDetector]:
+    def from_on_the_sky_position(self, o: MapOnTheSky, wl: list[WCSwId]) -> list[MapOnDetector]:
         """method for building from MapOnTheSky to the list of MapOnDetector
 
         Args:
@@ -93,7 +93,9 @@ class MapOnDetectorBuilder:
 
         """
         data = detector_image.hdu.data
+        # TODO threshold should be argument.
         peaks_tbl = find_peaks(data, threshold=200.)
+        # TODO window_size will be possible even number.
         half_size = (window_size - 1) / 2
         x = peaks_tbl['x_peak']
         y = peaks_tbl['y_peak']
@@ -105,10 +107,11 @@ class MapOnDetectorBuilder:
         nddata = NDData(data=data)
         e_psf_stars = extract_stars(nddata, stars_tbl, size=window_size)
         # TODO need to convert A/D value to photon count
+        # TODO progress_bar should be argument.
         e_psf_builder = EPSFBuilder(oversampling=oversampling, maxiters=maxiters, progress_bar=True)
         es = e_psf_stars
         e_psf_model, e_psf_stars = e_psf_builder(es)
-        # TODO need to implement cross-match
+        # TODO need to implement cross-match (where we implement cross-match is TBD)
         position_list = []
         for s in e_psf_stars.all_stars:
             # TODO IDもこれじゃ駄目〜

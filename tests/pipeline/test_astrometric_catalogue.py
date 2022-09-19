@@ -38,7 +38,7 @@ def test_save2(csv_line):
 
 @pytest.fixture
 def loaded_value():
-    f_name = str(get_tests_file_name('a.csv'))
+    f_name = str(get_tests_file_name('astrometric_catalogue.csv'))
     a = AstrometricCatalogue.load(f_name)
     return a.get_catalogue()
 

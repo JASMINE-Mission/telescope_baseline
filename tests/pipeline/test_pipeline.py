@@ -34,7 +34,7 @@ def test_simulation():
     wlist = []
     for i in range(len(t)):
         wlist.append(WCSwId(i, 1, copy.deepcopy(w)))
-    c = Simulation(t=t, w_list=wlist)
+    c = Simulation(t=t, w_list=wlist, folder="tmp", overwrite=True)
     b = c.do(a, 1024, 1.0)
     assert(b is not None)
 

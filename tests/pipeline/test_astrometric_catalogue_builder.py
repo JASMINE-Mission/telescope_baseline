@@ -7,6 +7,7 @@ from telescope_baseline.tools.pipeline.position_on_the_sky import PositionOnTheS
 
 
 def test_from_on_the_sky_position1():
+    # TODO. multiple star is needed for the test.
     t = [Time('2000-01-01 00:00:00.0'), Time('2000-02-01 00:00:00.0'), Time('2000-03-01 00:00:00.0'),
          Time('2000-04-01 00:00:00.0'), Time('2000-05-01 00:00:00.0'), Time('2000-06-01 00:00:00.0'),
          Time('2000-07-01 00:00:00.0'), Time('2000-08-01 00:00:00.0'), Time('2000-09-01 00:00:00.0'),
