@@ -1,0 +1,128 @@
+from astropy.time import Time
+from photutils.detection import find_peaks
+from astropy.table import Table
+from astropy.nddata import NDData
+from photutils import extract_stars, EPSFBuilder
+
+from telescope_baseline.tools.pipeline.detector_image import DetectorImage
+from telescope_baseline.tools.pipeline.map_on_the_sky import MapOnTheSky
+from telescope_baseline.tools.pipeline.position2d import Position2D
+from telescope_baseline.tools.pipeline.wcswid import WCSwId
+from telescope_baseline.tools.pipeline.detector_image_catalogue import DetectorImageCatalogue
+from telescope_baseline.tools.pipeline.position_on_detector import PositionOnDetector
+from telescope_baseline.tools.pipeline.map_on_detector import MapOnDetector
+from astropy.wcs import WCS
+
+
+class MapOnDetectorBuilder:
+    """Builder class for MapOnDetector class
+
+    """
+    def __init__(self, window_size: int, nx: int, ny: int):
+        """constructor
+
+        Args:
+            window_size: Size of extract window
+            nx: array size in x direction
+            ny: array size in y direction
+        """
+        assert window_size % 2 == 1
+        self.__window_size = window_size
+        self.__nx = nx
+        self.__ny = ny
+        pass
+
+    def from_detector_image_catalogue(self, wcs: WCS, c: DetectorImageCatalogue) -> list[MapOnDetector]:
+        """method for build from DetectorImageCatalogue to the list of MapOnDetector
+
+        Args:
+            wcs: world coordinate system
+            c: DetectorImageCatalogue
+
+        Returns:StellarImage
+
+        DetectorImageCatalogue is the list of DetectorImage.  One DetectorImage instance corresponds to one StellarImage
+         instance.
+
+        """
+        sil = []
+        for di in c.get_detector_images():
+            sil.append(MapOnDetector(self.estimate_positions_on_detector(di, self.__window_size)))
+        return sil
+
+    def from_on_the_sky_position(self, o: MapOnTheSky, wl: list[WCSwId]) -> list[MapOnDetector]:
+        """method for building from MapOnTheSky to the list of MapOnDetector
+
+        Args:
+            o: OnTheSkyPosition instance
+            wl: list of WCSwID, which is wrapper class of wcs with orbit_id and exposuer_id
+
+        Returns:
+
+        """
+        positions_on_the_sky = o.positions_on_the_sky
+        si = []
+        for w in wl:
+            if "GLON" not in w.wcs.wcs.ctype[0]:
+                raise ValueError("Coordinate system " + w.wcs.wcs.ctype[0] + " is not supported")
+            tmp = []
+            for s in positions_on_the_sky:
+                tmp.append([s.coord.galactic.l.deg, s.coord.galactic.b.deg])
+            tmp = w.wcs.wcs_world2pix(tmp, 0)
+            a = self._store_list_of_detector_position(positions_on_the_sky, tmp)
+            si.append(MapOnDetector(positions_on_detector=a))
+        return si
+
+    def _store_list_of_detector_position(self, sky_positions, tmp):
+        a = []
+        for k in range(len(tmp)):
+            self._check_range_of_position(a, k, sky_positions, tmp)
+        return a
+
+    def _check_range_of_position(self, a, k, sky_positions, tmp):
+        if not (tmp[k][0] < 0 or tmp[k][1] < 0 or tmp[k][0] > self.__nx or tmp[k][1] > self.__ny):
+            a.append(PositionOnDetector(k, Position2D(tmp[k][0], tmp[k][1]), sky_positions[0].datetime, mag=3000))
+
+    def estimate_positions_on_detector(self, detector_image: DetectorImage, window_size: int, oversampling=4,
+                                       maxiters=3) -> list[PositionOnDetector]:
+        """Extract stellar window from image array data and estimate image center position by ePSF method.
+
+        Though array size is 2K x 2K, nominally extracted small (~9x9 pixels) window data is down linked. Image is
+        spread due to optical, electronic, and attitude stability reason. These effect determine the effective point
+        spread function (ePSF). Shape of ePSF is estimated from the observed data, and estimate image center by fitting
+        observed data with the estimated ePSF shape.
+
+        Args:
+            window_size: The size of window which is extracted from the image.
+
+        Returns: list of positions in detector coordinate.
+
+        """
+        data = detector_image.hdu.data
+        # TODO threshold should be argument.
+        peaks_tbl = find_peaks(data, threshold=200.)
+        # TODO window_size will be possible even number.
+        half_size = (window_size - 1) / 2
+        x = peaks_tbl['x_peak']
+        y = peaks_tbl['y_peak']
+        mask = ((x > half_size) & (x < (data.shape[1] - 1 - half_size)) & (y > half_size) &
+                (y < (data.shape[0] - 1 - half_size)))
+        stars_tbl = Table()
+        stars_tbl['x'] = x[mask]
+        stars_tbl['y'] = y[mask]
+        nddata = NDData(data=data)
+        e_psf_stars = extract_stars(nddata, stars_tbl, size=window_size)
+        # TODO need to convert A/D value to photon count
+        # TODO progress_bar should be argument.
+        e_psf_builder = EPSFBuilder(oversampling=oversampling, maxiters=maxiters, progress_bar=True)
+        es = e_psf_stars
+        e_psf_model, e_psf_stars = e_psf_builder(es)
+        # TODO need to implement cross-match (where we implement cross-match is TBD)
+        position_list = []
+        for s in e_psf_stars.all_stars:
+            # TODO IDもこれじゃ駄目〜
+            # TODO 明るさの計算はまだ（0にしてる）
+            # TODO 時刻をHBUから取ってる来る処理がまだ！！
+            position_list.append(
+                PositionOnDetector(1, Position2D(s.center[0], s.center[1]), Time('2000-01-01 00:00:00.0'), mag=3000))
+        return position_list
