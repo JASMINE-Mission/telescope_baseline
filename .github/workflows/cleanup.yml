@@ -1,6 +1,7 @@
 name: cleanup
 
 on:
+  push
   delete
 
 jobs:
@@ -12,23 +13,26 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: gh-pages
+        path: pages
 
     - name: Cleanup per branch information
       env:
         BRANCH: ${{ github.event.ref}}
       run: |
         echo $BRANCH
-        echo ${BRANCH#refs/heads/}
-        mkdir -p tmp/${BRANCH#refs/heads/}
-        ls -al tmp
-        rm -rf test_report/${BRANCH#refs/heads/}
+        rm -rf pages/test_report/${BRANCH#refs/heads/}
+        ls -altr pafes/test_report/
+        ls -altr pafes/test_report/bugfix
       shell: bash
 
-    - name: push pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ env.GITHUB_TOKEN }}
-        publish_dir: ./pages
-        keep_files: true
+    - name: Rebuild Test Report Index Page
+      uses: ./.github/actions/rebuild_testreport_index
+
+#    - name: push pages
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      uses: peaceiris/actions-gh-pages@v3
+#      with:
+#        github_token: ${{ env.GITHUB_TOKEN }}
+#        publish_dir: ./pages
+#        keep_files: true
