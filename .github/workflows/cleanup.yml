@@ -23,8 +23,6 @@ jobs:
       run: |
         echo $BRANCH
         rm -rf pages/test_report/${BRANCH#refs/heads/}
-        ls -altr pages/test_report/
-        ls -altr pages/test_report/bugfix
       shell: bash
 
     - name: Rebuild Test Report Index Page
