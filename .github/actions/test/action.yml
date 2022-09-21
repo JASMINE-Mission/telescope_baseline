@@ -29,6 +29,7 @@ runs:
         rm -rf pages/test_report/$BRANCH
         cp -r test_report/* pages/test_report
         mv htmlcov pages/test_report/$BRANCH/
+      shell: bash
 
 #      env:
 #        BRANCH: ${{ github.ref_name}}
