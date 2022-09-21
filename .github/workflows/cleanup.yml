@@ -1,7 +1,6 @@
 name: cleanup
 
 on:
-  push:
   delete:
 
 jobs:
@@ -31,11 +30,11 @@ jobs:
     - name: Rebuild Test Report Index Page
       uses: ./.github/actions/rebuild_testreport_index
 
-#    - name: push pages
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      uses: peaceiris/actions-gh-pages@v3
-#      with:
-#        github_token: ${{ env.GITHUB_TOKEN }}
-#        publish_dir: ./pages
-#        keep_files: true
+    - name: push pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ env.GITHUB_TOKEN }}
+        publish_dir: ./pages
+        keep_files: true
