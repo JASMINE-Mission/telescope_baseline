@@ -1,5 +1,6 @@
 import csv
 import pytest
+import tempfile
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 from telescope_baseline.tools.pipeline.astrometric_catalogue import AstrometricCatalogue
@@ -9,17 +10,18 @@ from test_pipeline import get_tests_file_name
 
 @pytest.fixture
 def csv_line():
-    f_name = str(get_tests_file_name('a.csv', folder='tmp'))
     a = AstrometricCatalogue([
         CatalogueEntry(1,
                        SkyCoord(l=0., b=0., unit=('rad', 'rad'), frame='galactic', obstime='2000-01-01 00:00:00.0',
                                 distance=1.0 * u.pc, pm_l_cosb=10 * u.mas / u.yr, pm_b=10 * u.mas / u.yr),
                        12.5),
     ])
-    a.save(f_name)
-    file = open(f_name, 'r', newline='')
-    f = csv.reader(file, delimiter=',')
-    return next(iter(f))
+    with tempfile.NamedTemporaryFile() as tmp_file:
+        f_name = tmp_file.name
+        a.save(f_name)
+        file = open(f_name, 'r', newline='')
+        f = csv.reader(file, delimiter=',')
+        return next(iter(f))
 
 
 def test_save1(csv_line):

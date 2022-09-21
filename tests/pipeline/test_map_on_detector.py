@@ -1,5 +1,6 @@
 import csv
 import pytest
+import tempfile
 from astropy.time import Time
 from astropy.wcs import WCS
 from telescope_baseline.tools.pipeline.map_on_detector import MapOnDetector
@@ -17,11 +18,11 @@ def mod():
 
 @pytest.fixture
 def csv_read(mod):
-    f_name = get_tests_file_name('a.csv', folder="tmp")
-    mod.save(f_name)
-    file = open(f_name, 'r', newline='')
-    f = csv.reader(file, delimiter=',')
-    return next(iter(f))
+    with tempfile.NamedTemporaryFile() as tmp_file:
+        mod.save(tmp_file.name)
+        file = open(tmp_file.name, 'r', newline='')
+        f = csv.reader(file, delimiter=',')
+        return next(iter(f))
 
 
 def test_save1(csv_read):
