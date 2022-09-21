@@ -43,4 +43,4 @@ def test_from_on_the_sky_position1():
     assert 4.8e-6 < coord[0][0][4] < 4.9e-6
     assert 4.657 < coord[1][0][0] < 4.658
     assert -0.2 < coord[1][0][1] < -0.19
-    assert 4.5e-6 < coord[1][0][4] < 4.6e-6
+    assert 4.5e-6 < coord[1][0][4] < 4.7e-6
