@@ -3,7 +3,6 @@ runs:
   steps:
     - name: Rebuilding Test Report Index Page
       env:
-        BRANCH: ${{ github.ref_name}}
         REPOSITORY: ${{ github.repository}}
       run: |
         pushd pages/test_report
