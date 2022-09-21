@@ -1,8 +1,8 @@
 name: cleanup
 
 on:
-  push
-  delete
+  push:
+  delete:
 
 jobs:
   cleanup:
