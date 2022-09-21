@@ -29,7 +29,12 @@ runs:
         rm -rf pages/test_report/$BRANCH
         cp -r test_report/* pages/test_report
         mv htmlcov pages/test_report/$BRANCH/
+        ls -al pages/test_report/$BRANCH/
       shell: bash
+
+    - name: Rebuild Test Report Index Page
+      if: ${{ env.TEST_ONLY != 'true'}}
+      uses: ../rebuild_testreport_index
 
 #      env:
 #        BRANCH: ${{ github.ref_name}}
