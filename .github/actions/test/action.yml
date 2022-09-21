@@ -34,7 +34,7 @@ runs:
 
     - name: Rebuild Test Report Index Page
       if: ${{ env.TEST_ONLY != 'true'}}
-      uses: ../rebuild_testreport_index
+      uses: ./.github/actions/rebuild_testreport_index
 
 #      env:
 #        BRANCH: ${{ github.ref_name}}
