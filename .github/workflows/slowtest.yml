@@ -1,10 +1,13 @@
-name: pytest
+name: slowtest
 
 on:
-  push
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 13 * * *'  # UTC 13:00 -> JST(22:00)
 
 jobs:
-  pytest:
+  slowtest:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,9 +22,7 @@ jobs:
 
     - name: test
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        TEST_DIR: tests
+        TEST_DIR: slowtests
+        TEST_ONLY: true
       uses: ./.github/actions/test
-

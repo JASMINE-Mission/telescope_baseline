@@ -4,21 +4,24 @@ runs:
     - name: Test with pytest
       env:
         BRANCH: ${{ github.ref_name}}
+        TEST_DIR: ${{ env.TEST_DIR}}
       id: pytest
       continue-on-error: true
       run: |
-        export PYTHONPATH=./src:./tests:$PYTHONPATH
+        export PYTHONPATH=./src:./tests:./$TEST_DIR:$PYTHONPATH
         python -m pip install pytest pytest-html pytest-cov
-        python -m pytest tests --junitxml=test_report/$BRANCH/pytest.xml --html=test_report/$BRANCH/pytest.html --cov=src --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
+        python -m pytest $TEST_DIR --junitxml=test_report/$BRANCH/pytest.xml --html=test_report/$BRANCH/pytest.html --cov=src --cov-branch --cov-report=term-missing --cov-report=html --cov-report xml
       shell: bash
 
     - name: checkout Pages branch
+      if: ${{ env.TEST_ONLY != 'true'}}
       uses: actions/checkout@v3
       with:
         ref: gh-pages
         path: pages
 
     - name: Generate Test Report Index
+      if: ${{ env.TEST_ONLY != 'true'}}
       env:
         BRANCH: ${{ github.ref_name}}
         REPOSITORY: ${{ github.repository}}
@@ -35,6 +38,7 @@ runs:
       shell: bash
 
     - name: Publish Test Report
+      if: ${{ env.TEST_ONLY != 'true'}}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ env.GITHUB_TOKEN }}
@@ -42,13 +46,24 @@ runs:
         keep_files: true
 
     - name: Send Coverage Report to CodeClimate
-      if: ${{ steps.pytest.outcome == 'success'}}
+      if: ${{ steps.pytest.outcome == 'success' && env.TEST_ONLY != 'true'}}
       uses: paambaati/codeclimate-action@v3.0.0
       env:
         CC_TEST_REPORTER_ID: ${{ env.CC_TEST_REPORTER_ID }}
       with:
         debug: false
         coverageLocations: coverage.xml:coverage.py
+
+    - name: Notice Slack
+      if: ${{ steps.pytest.outcome == 'failure' }}
+      uses: slackapi/slack-github-action@v1.21.0
+      with:
+        payload: |
+          {
+            "text": "${{ github.ref_name}}で${{ env.TEST_DIR}}配下のテストが全件パスしませんでした。\n詳細はGithub上のActionsページで直近のエラーとなっているActionを参照ください。"
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL}}
 
     - name: Notice Error
       if: ${{ steps.pytest.outcome == 'failure' }}
