@@ -25,7 +25,7 @@ def load_stellar_spectra(file_path):
        spectral data
     """
     ascii_data = pkgutil.get_data(
-        'telescope_baseline', 'data/spectra/'+file_path)
+        'telescope_baseline', 'data/spectra/' + file_path)
     return np.loadtxt(BytesIO(ascii_data), comments='#', dtype='f8').T
 
 
@@ -41,6 +41,7 @@ def read_map_multi(spectra_all):
     p = Pool(os.cpu_count())
     data_spec = p.map(load_stellar_spectra, spectra_all)
     p.close()
+    p.join()
     return data_spec
 
 
@@ -48,7 +49,7 @@ def cal_photon(input_arrays):
     """compute photons.
 
     Args:
-        input_array:
+        input_arrays:
 
     Returns:
         photon count?
@@ -56,7 +57,7 @@ def cal_photon(input_arrays):
     # 1.透過関数をsplineで関数化.
     # 2.透過関数とFluxを波長を乗じて積分し、光子数に換算.
     # 3.最終的に比の計算を行うため、各係数は無視.
-    spectra_array, filter_func, Av = input_arrays
+    spectra_array, filter_func, av = input_arrays
 
     ff = interpolate.interp1d(x=filter_func[1],
                               y=filter_func[2], kind='cubic')
@@ -64,10 +65,10 @@ def cal_photon(input_arrays):
     spec_narrow = spectra_array[:, ((filter_func[1, 0] < spectra_array[0]) &
                                     (spectra_array[0] < filter_func[1, -1]))]
 
-    transmit_f = ff(spec_narrow[0])*spec_narrow[1]  # transmitted flux
+    transmit_f = ff(spec_narrow[0]) * spec_narrow[1]  # transmitted flux
     dx = np.diff(spec_narrow[0])
 
-    extinction = 10 ** (-1*A_lambda(Av, spec_narrow[0, :-1])/2.5)
+    extinction = 10 ** (-1 * a_lambda(av, spec_narrow[0, :-1]) / 2.5)
     photon = np.sum(transmit_f[:-1] * dx * spec_narrow[0, :-1] * extinction)
 
     return photon
@@ -93,6 +94,7 @@ def calphoton_map_multi(data_spec, filter_func, Av):
 
     data_photon = p.map(cal_photon, data_array)
     p.close()
+    p.join()
     data_photon = np.array(data_photon, dtype='f8')
 
     return data_photon
@@ -106,17 +108,17 @@ def load_filter():
         Hbandfilter
     """
 
-    fl_J = pkgutil.get_data('telescope_baseline', 'data/filter/J_filter.dat')
-    fl_H = pkgutil.get_data('telescope_baseline', 'data/filter/H_filter.dat')
-    fltJ = np.loadtxt(BytesIO(fl_J), comments='#', dtype='f8').T
-    fltH = np.loadtxt(BytesIO(fl_H), comments='#', dtype='f8').T
-    fltJ[1] = fltJ[1]*1e4  # mic -> angstrom
-    fltH[1] = fltH[1]*1e4
+    fl_j = pkgutil.get_data('telescope_baseline', 'data/filter/J_filter.dat')
+    fl_h = pkgutil.get_data('telescope_baseline', 'data/filter/H_filter.dat')
+    fltj = np.loadtxt(BytesIO(fl_j), comments='#', dtype='f8').T
+    flth = np.loadtxt(BytesIO(fl_h), comments='#', dtype='f8').T
+    fltj[1] = fltj[1] * 1e4  # mic -> angstrom
+    flth[1] = flth[1] * 1e4
 
-    return fltJ, fltH
+    return fltj, flth
 
 
-def set_range_Hw_band(lower, upper):
+def set_range_hw_band(lower, upper):
     """set range of Hw band
 
     Args:
@@ -130,61 +132,62 @@ def set_range_Hw_band(lower, upper):
     lw = lower
     up = upper
     nd = 150  # number of data
-    x = np.linspace(lw-1000, up+1000, nd)
+    x = np.linspace(lw - 1000, up + 1000, nd)
     y = np.where((lw <= x) & (x <= up), 1., 0.)
     index = np.linspace(1, nd, nd)
-    Hw = np.array((index, x, y))
+    hw = np.array((index, x, y))
 
-    return Hw
+    return hw
 
 
-def A_lambda(Av, x):
+def a_lambda(av, x):
     """calculate A lambda.
 
     Args:
-        Av: Av
+        av: Av
         x: x
 
     Returns:
         A_lambda
 
     """
-    Ak_Av   = 0.112
-    Ak      = Ak_Av*Av
-    x_um    = x*1e-4
-    coeff   = 5.2106*(x_um**(-2.112))
+    ak_av = 0.112
+    ak = ak_av * av
+    x_um = x * 1e-4
+    coeff = 5.2106 * (x_um ** (-2.112))
 
-    return coeff*Ak
+    return coeff * ak
 
-def A_lambda_linear(Av, x):
+
+def a_lambda_linear(av, x):
     """calculate A lambda with linear law.
 
     Args:
-        Av: Av
+        av: Av
         x: x
 
     Returns:
         A_lambda
 
     """
-    Aj_Av = 0.282
-    Ak_Av = 0.112
+    aj_av = 0.282
+    ak_av = 0.112
 
-    Aj = Aj_Av*Av
-    Ak = Ak_Av*Av
+    aj = aj_av * av
+    ak = ak_av * av
 
-    return ((x-12000)*Ak + (20000-x)*Aj)/(20000 - 12000)
+    return ((x - 12000) * ak + (20000 - x) * aj) / (20000 - 12000)
 
 
 def quad_func(x, args):
     a = args[0]
     b = args[1]
-    return a*x**2 + b*x
+    return a * x ** 2 + b * x
 
 
 def least_sq(coeff, *args):
     x, y = args
-    chi2 = np.sum(np.square(quad_func(x, coeff)-y))**0.5
+    chi2 = np.sum(np.square(quad_func(x, coeff) - y)) ** 0.5
     return chi2
 
 
@@ -203,13 +206,13 @@ def read_spectra_all():
     return spectra_all
 
 
-def calc_zero_magnitude_spectra(fil_J, fil_H, fil_Hw):
+def calc_zero_magnitude_spectra(fil_j, fil_h, fil_hw):
     """zero magnitude spectra
 
     Args:
-        fil_J:
-        fil_H:
-        fil_Hw:
+        fil_j:
+        fil_h:
+        fil_hw:
 
     Returns:
         zero magnitude of J?
@@ -220,23 +223,23 @@ def calc_zero_magnitude_spectra(fil_J, fil_H, fil_Hw):
 
     uka0v = pkgutil.get_data('telescope_baseline', 'data//spectra/uka0v.dat')
     spec_a0v = np.loadtxt(BytesIO(uka0v), comments='#', dtype='f8').T
-    p_Jo = cal_photon([spec_a0v, fil_J, 0])
-    p_Ho = cal_photon([spec_a0v, fil_H, 0])
-    p_Hwo = cal_photon([spec_a0v, fil_Hw, 0])
-    return p_Jo, p_Ho, p_Hwo
+    p_jo = cal_photon([spec_a0v, fil_j, 0])
+    p_ho = cal_photon([spec_a0v, fil_h, 0])
+    p_hwo = cal_photon([spec_a0v, fil_hw, 0])
+    return p_jo, p_ho, p_hwo
 
 
-def calc_color_arrays(data_spec, fil_J, fil_H, fil_Hw, p_Jo, p_Ho, p_Hwo):
+def calc_color_arrays(data_spec, fil_j, fil_h, fil_hw, p_jo, p_ho, p_hwo):
     """compute colors
 
     Args:
         data_spec:
-        fil_J:
-        fil_H:
-        fil_Hw:
-        p_Jo: zero magnitude of J?
-        p_Ho:  zero magnitude of H?
-        p_Hwo:  zero magnitude of Hw?
+        fil_j:
+        fil_h:
+        fil_hw:
+        p_jo: zero magnitude of J?
+        p_ho:  zero magnitude of H?
+        p_hwo:  zero magnitude of Hw?
 
     Returns:
         ar_J_H: J-H array
@@ -244,47 +247,47 @@ def calc_color_arrays(data_spec, fil_J, fil_H, fil_Hw, p_Jo, p_Ho, p_Hwo):
         Av array used
 
     """
-    Av_ar = np.linspace(0, 60, 5)
-    ar_Hw_H = []
-    ar_J_H = []
-    A_arr = []
-    for Av in Av_ar:  # -- roop for Av
-        p_J = calphoton_map_multi(data_spec, fil_J, Av)
-        p_H = calphoton_map_multi(data_spec, fil_H, Av)
-        p_Hw = calphoton_map_multi(data_spec, fil_Hw, Av)
+    av_ar = np.linspace(0, 60, 5)
+    ar_hw_h = []
+    ar_j_h = []
+    a_arr = []
+    for av in av_ar:  # -- roop for Av
+        p_j = calphoton_map_multi(data_spec, fil_j, av)
+        p_h = calphoton_map_multi(data_spec, fil_h, av)
+        p_hw = calphoton_map_multi(data_spec, fil_hw, av)
 
-        rel_J = -2.5*(np.log10(p_J) - np.log10(p_Jo))
-        rel_H = -2.5*(np.log10(p_H) - np.log10(p_Ho))
-        rel_Hw = -2.5*(np.log10(p_Hw) - np.log10(p_Hwo))
+        rel_j = -2.5 * (np.log10(p_j) - np.log10(p_jo))
+        rel_h = -2.5 * (np.log10(p_h) - np.log10(p_ho))
+        rel_hw = -2.5 * (np.log10(p_hw) - np.log10(p_hwo))
 
-        J_H = rel_J - rel_H
-        Hw_H = rel_Hw - rel_H
+        j_h = rel_j - rel_h
+        hw_h = rel_hw - rel_h
 
-        ar_Hw_H.append(Hw_H)
-        ar_J_H.append(J_H)
-        A_arr.append(Av)
+        ar_hw_h.append(hw_h)
+        ar_j_h.append(j_h)
+        a_arr.append(av)
 
-    return ar_J_H, ar_Hw_H, A_arr
+    return ar_j_h, ar_hw_h, a_arr
 
 
-def calc_colors(ar_J_H, ar_Hw_H):
+def calc_colors(ar_j_h, ar_hw_h):
     """
     Args:
-       ar_J_H: J-H array
-       ar_Hw_H: Hw-H array
+       ar_j_h: J-H array
+       ar_hw_h: Hw-H array
 
     Returns:
        colors
     """
-    return (np.ravel(np.array(ar_J_H)), np.ravel(np.array(ar_Hw_H)))
+    return np.ravel(np.array(ar_j_h)), np.ravel(np.array(ar_hw_h))
 
 
-def compute_Hw_relation(Hw_l, Hw_u):
+def compute_hw_relation(hw_l, hw_u):
     """compute Hw - (H, J-H) relation
 
     Args:
-       Hw_l: lower limit of passband in angstrom
-       Hw_u: upper limit of passband in angstrom
+       hw_l: lower limit of passband in angstrom
+       hw_u: upper limit of passband in angstrom
 
     Returns:
        minimize instance
@@ -294,12 +297,16 @@ def compute_Hw_relation(Hw_l, Hw_u):
        Hw-H array
        fitting residuals
     """
-    data_spec = read_map_multi(read_spectra_all())
-    fil_Hw = set_range_Hw_band(Hw_l, Hw_u)
-    fil_J, fil_H = load_filter()
-    p_Jo, p_Ho, p_Hwo = calc_zero_magnitude_spectra(fil_J, fil_H, fil_Hw)
-    ar_J_H, ar_Hw_H, Av_arr = calc_color_arrays(data_spec, fil_J, fil_H, fil_Hw, p_Jo, p_Ho, p_Hwo)
-    colors = calc_colors(ar_J_H, ar_Hw_H)
+    return _compute_hw_relation(hw_l, hw_u, read_spectra_all())
+
+
+def _compute_hw_relation(hw_l, hw_u, spectra_all):
+    data_spec = read_map_multi(spectra_all)
+    fil_hw = set_range_hw_band(hw_l, hw_u)
+    fil_j, fil_h = load_filter()
+    p_jo, p_ho, p_hwo = calc_zero_magnitude_spectra(fil_j, fil_h, fil_hw)
+    ar_j_h, ar_hw_h, av_arr = calc_color_arrays(data_spec, fil_j, fil_h, fil_hw, p_jo, p_ho, p_hwo)
+    colors = calc_colors(ar_j_h, ar_hw_h)
     x0 = [1., 0.8]
     res = minimize(least_sq, x0, args=colors, method='Nelder-Mead', tol=1e-11)
     residuals = colors[1] - quad_func(colors[0], res.x)
@@ -309,29 +316,28 @@ def compute_Hw_relation(Hw_l, Hw_u):
               'std': sigma,
               'chi2': res.fun}
     print(result)
+    return res, sigma, colors, ar_j_h, ar_hw_h, residuals
 
-    return res, sigma, colors, ar_J_H, ar_Hw_H, residuals
 
-
-def plot_Hwfit(Hw_l, Hw_u, res, sigma, colors, ar_J_H, ar_Hw_H, residuals):
+def plot_hwfit(hw_l, hw_u, res, sigma, colors, ar_j_h, ar_hw_h, residuals):
     """plot Hw fitting results
 
     Args:
-       Hw_l: lower limit of passband in angstrom
-       Hw_u: upper limit of passband in angstrom
+       hw_l: lower limit of passband in angstrom
+       hw_u: upper limit of passband in angstrom
        res:minimize instance
        sigma:sigma
        colors:colors
-       ar_J_H:J-H array
-       ar_Hw_H:Hw-H array
+       ar_j_h:J-H array
+       ar_hw_h:Hw-H array
        residuals:fitting residuals
 
     """
     a_str = str('{:.5f}'.format(res.x[0]))
     b_str = str('{:.5f}'.format(res.x[1]))
-    pl_txt1 = '$y$ = '+a_str+' $x^2$ + '+b_str+' $x$'
-    pl_txt2 = str('{:.2f}'.format(Hw_l*1e-4)) + '\u03bcm < $Hw$ < ' \
-        + str('{:.2f}'.format(Hw_u*1e-4) + '\u03bcm')
+    pl_txt1 = '$y$ = ' + a_str + ' $x^2$ + ' + b_str + ' $x$'
+    pl_txt2 = (str('{:.2f}'.format(hw_l * 1e-4)) + '\u03bcm < $Hw$ < ' +
+               str('{:.2f}'.format(hw_u * 1e-4) + '\u03bcm'))
 
     x_pl = np.linspace(min(colors[0]), max(colors[0]), 1000)
     y_pl = quad_func(x_pl, res.x)
@@ -341,13 +347,13 @@ def plot_Hwfit(Hw_l, Hw_u, res, sigma, colors, ar_J_H, ar_Hw_H, residuals):
     ax1 = plt.subplot2grid((5, 1), (4, 0), rowspan=1, sharex=ax0)
     ax0.grid(color='gray', ls=':', lw=0.5)
     ax1.grid(color='gray', ls=':', lw=0.5)
-    for i in range(len(ar_J_H)):
-        ax0.scatter(ar_J_H[i], ar_Hw_H[i], s=5)  # , label='Av = '+str(Av_arr[i]))
+    for i in range(len(ar_j_h)):
+        ax0.scatter(ar_j_h[i], ar_hw_h[i], s=5)  # , label='Av = '+str(Av_arr[i]))
 
     ax0.plot(x_pl, y_pl, ls='--', c='black', lw=1)
-    ax0.text(x_pl[int((len(x_pl)*0.3))], y_pl[int((len(y_pl)*0.1))],
+    ax0.text(x_pl[int((len(x_pl) * 0.3))], y_pl[int((len(y_pl) * 0.1))],
              pl_txt1, fontsize=12)
-    ax0.text(x_pl[int((len(x_pl)*0.4))], y_pl[int((len(y_pl)*0.05))],
+    ax0.text(x_pl[int((len(x_pl) * 0.4))], y_pl[int((len(y_pl) * 0.05))],
              pl_txt2, fontsize=12)
 
     ax0.set_ylabel('$Hw - H$', fontsize=15)
@@ -357,20 +363,20 @@ def plot_Hwfit(Hw_l, Hw_u, res, sigma, colors, ar_J_H, ar_Hw_H, residuals):
     ax1.scatter(colors[0], residuals, s=5, c='gray')
     ax1.set_xlabel('$J - H$', fontsize=15)
     plt.subplots_adjust(hspace=.0)
-    plt.savefig('Hwcolor_'+str(int(Hw_l)) + '_' +
-                str(int(Hw_u))+'.png', dpi=200)
+    plt.savefig('Hwcolor_' + str(int(hw_l)) + '_' +
+                str(int(hw_u)) + '.png', dpi=200)
     plt.show()
 
 
 if __name__ == '__main__':
     if len(sys.argv) == 3:
-        Hw_l = float(sys.argv[1])
-        Hw_u = float(sys.argv[2])
+        hw_l = float(sys.argv[1])
+        hw_u = float(sys.argv[2])
     else:
         print(
             'usage) [Hw lower] [Hw upper]')
         print(
-            'ex) '+sys.argv[0]+' 9000 15000')
+            'ex) ' + sys.argv[0] + ' 9000 15000')
 
-    res, sigma, colors, ar_J_H, ar_Hw_H, residuals = compute_Hw_relation(Hw_l, Hw_u)
-    plot_Hwfit(Hw_l, Hw_u, res, sigma, colors, ar_J_H, ar_Hw_H, residuals)
+    res, sigma, colors, ar_j_h, ar_hw_h, residuals = compute_hw_relation(hw_l, hw_u)
+    plot_hwfit(hw_l, hw_u, res, sigma, colors, ar_j_h, ar_hw_h, residuals)
