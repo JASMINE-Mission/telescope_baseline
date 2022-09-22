@@ -1,12 +1,11 @@
 import csv
 import pytest
-import tempfile
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 from telescope_baseline.tools.pipeline.astrometric_catalogue import AstrometricCatalogue
 from telescope_baseline.tools.pipeline.catalog_entry import CatalogueEntry
 from test_pipeline import get_tests_file_name
-
+from test_tools.test_file_utils import get_temp_file
 
 @pytest.fixture
 def csv_line():
@@ -16,12 +15,12 @@ def csv_line():
                                 distance=1.0 * u.pc, pm_l_cosb=10 * u.mas / u.yr, pm_b=10 * u.mas / u.yr),
                        12.5),
     ])
-    with tempfile.NamedTemporaryFile() as tmp_file:
-        f_name = tmp_file.name
-        a.save(f_name)
-        file = open(f_name, 'r', newline='')
-        f = csv.reader(file, delimiter=',')
-        return next(iter(f))
+    tmp_file = get_temp_file()
+    f_name = str(tmp_file)
+    a.save(f_name)
+    file = open(f_name, 'r', newline='')
+    f = csv.reader(file, delimiter=',')
+    return next(iter(f))
 
 
 def test_save1(csv_line):
