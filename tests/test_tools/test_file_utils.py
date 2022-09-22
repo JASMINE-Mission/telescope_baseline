@@ -1,6 +1,10 @@
 from pathlib import Path
+import sys
 
 
-def get_test_file(file_path:str, test_root_dir:str = 'tests') -> Path:
-    project_root = Path.cwd()
-    return Path(project_root, test_root_dir, file_path)
+def get_test_file(file_path: str) -> Path:
+    for sys_path in sys.path:
+        target_file = Path(sys_path, file_path)
+        if target_file.exists():
+            return target_file
+    raise FileNotFoundError()
