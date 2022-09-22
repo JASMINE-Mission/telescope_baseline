@@ -1,28 +1,32 @@
 name: cleanup
 
 on:
-  delete
+  delete:
 
 jobs:
   cleanup:
     runs-on: ubuntu-latest
 
     steps:
+    - name: checkout this branch
+      uses: actions/checkout@v3
+
     - name: checkout Pages branch
       uses: actions/checkout@v3
       with:
         ref: gh-pages
+        path: pages
 
     - name: Cleanup per branch information
       env:
         BRANCH: ${{ github.event.ref}}
       run: |
         echo $BRANCH
-        echo ${BRANCH#refs/heads/}
-        mkdir -p tmp/${BRANCH#refs/heads/}
-        ls -al tmp
-        rm -rf test_report/${BRANCH#refs/heads/}
+        rm -rf pages/test_report/${BRANCH#refs/heads/}
       shell: bash
+
+    - name: Rebuild Test Report Index Page
+      uses: ./.github/actions/rebuild_testreport_index
 
     - name: push pages
       env:
@@ -31,3 +35,4 @@ jobs:
       with:
         github_token: ${{ env.GITHUB_TOKEN }}
         publish_dir: ./pages
+        keep_files: true

@@ -1,7 +1,6 @@
 name: slowtest
 
 on:
-  push:
   workflow_dispatch:
   schedule:
     - cron: '0 13 * * *'  # UTC 13:00 -> JST(22:00)
