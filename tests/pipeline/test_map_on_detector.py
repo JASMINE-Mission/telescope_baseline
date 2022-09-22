@@ -7,6 +7,7 @@ from telescope_baseline.tools.pipeline.map_on_the_sky_builder import MapOnTheSky
 from telescope_baseline.tools.pipeline.position2d import Position2D
 from telescope_baseline.tools.pipeline.position_on_detector import PositionOnDetector
 from test_pipeline import get_tests_file_name
+from test_tools.test_file_utils import get_temp_file
 
 
 @pytest.fixture
@@ -17,9 +18,10 @@ def mod():
 
 @pytest.fixture
 def csv_read(mod):
-    f_name = get_tests_file_name('a.csv', folder="tmp")
-    mod.save(f_name)
-    file = open(f_name, 'r', newline='')
+    tmp_file = get_temp_file()
+    file_name = str(tmp_file)
+    mod.save(file_name)
+    file = open(file_name, 'r', newline='')
     f = csv.reader(file, delimiter=',')
     return next(iter(f))
 

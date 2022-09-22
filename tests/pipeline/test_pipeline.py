@@ -11,7 +11,7 @@ from telescope_baseline.tools.pipeline.wcswid import WCSwId
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 from astropy.wcs import WCS
-from pathlib import Path
+from test_tools.test_file_utils import get_test_file
 
 
 def test_simulation():
@@ -39,18 +39,7 @@ def test_simulation():
 
 
 def get_tests_file_name(fname: str, folder='data'):
-    a = Path.cwd()
-    tests_dir = 'tests/pipeline'    # change it when test dir move
-    if 'telescope_baseline' not in str(a):
-        return Path(a, tests_dir, folder, fname)
-    while a.name != 'telescope_baseline':
-        a = a.parent
-    if folder != 'data':
-        tmp_path = Path(a, tests_dir, folder)
-        if not tmp_path.exists():
-            tmp_path.mkdir()
-    file = Path(a, tests_dir, folder, fname)
-    return file
+    return get_test_file(f'pipeline/{folder}/{fname}')
 
 
 def test_analysis():
