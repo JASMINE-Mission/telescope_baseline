@@ -7,6 +7,8 @@
 
 This respository provides documents and tools to define the baseline design of the JASMINE telescope. Type the following lines to install `telescope_baseline` package in your environment.
 
+Click here for the [Developer's Guide](README_dev.md)(JAPANESE)
+
 ``` console
 $ git clone git@github.com:JASMINE-Mission/telescope_baseline.git
 $ cd telscope_baseline
