@@ -50,10 +50,12 @@ Snippets to prepare data and to generate images are stored in `snippets`.
 
 ### Tests
 Test cases are provided in the `tests` directory. We use `pytest` to check the code itegrity. Install `pytest` via `pip` and type the following line to test the code. _Do not forget to test the code before making a pull request._
+(Slowtests added as needed)
 
 ``` console
-$ export PYTHONPATH=./src:./tests
-$ pytest
+$ export PYTHONPATH=./src:./tests:./slowtests
+$ pytest tests
+$ pytest slowtests
 ```
 
 ### API
