@@ -10,7 +10,6 @@ This respository provides documents and tools to define the baseline design of t
 ``` console
 $ git clone git@github.com:JASMINE-Mission/telescope_baseline.git
 $ cd telscope_baseline
-$ git checkout develop
 $ git pull
 $ python setup.py install
 ```
