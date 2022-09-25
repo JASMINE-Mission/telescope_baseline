@@ -21,6 +21,7 @@ The repository consists of the following components.
 - `examples`
 - `snippets`
 - `tests`
+- `slowtests`
 
 
 ### Package Definitions
