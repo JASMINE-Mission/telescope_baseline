@@ -7,11 +7,11 @@
 
 This respository provides documents and tools to define the baseline design of the JASMINE telescope. Type the following lines to install `telescope_baseline` package in your environment.
 
+Click here for the [Developer's Guide](README_dev.md)(JAPANESE)
+
 ``` console
 $ git clone git@github.com:JASMINE-Mission/telescope_baseline.git
 $ cd telscope_baseline
-$ git checkout develop
-$ git pull
 $ python setup.py install
 ```
 
@@ -23,6 +23,7 @@ The repository consists of the following components.
 - `examples`
 - `snippets`
 - `tests`
+- `slowtests`
 
 
 ### Package Definitions
@@ -49,10 +50,12 @@ Snippets to prepare data and to generate images are stored in `snippets`.
 
 ### Tests
 Test cases are provided in the `tests` directory. We use `pytest` to check the code itegrity. Install `pytest` via `pip` and type the following line to test the code. _Do not forget to test the code before making a pull request._
+(Slowtests added as needed)
 
 ``` console
-$ cd tests
-$ pytest
+$ export PYTHONPATH=./src:./tests:./slowtests
+$ pytest tests
+$ pytest slowtests
 ```
 
 ### API
