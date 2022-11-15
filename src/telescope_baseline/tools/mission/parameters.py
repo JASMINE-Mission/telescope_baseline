@@ -77,7 +77,7 @@ class Parameters:
         self.__orbital_eccentricity = 0
         self.__effective_pupil_diameter = 0.36  # meter
         self.__central_obscuration_ratio = 0.35
-        self.__f_number = 12.136
+        self.__f_number = 12.14
         self.__pixel_size = 1.0e-5  # meter
         self.__maneuver_time = 115  # second
         self.__large_maneuver_time = 220  # second
@@ -97,7 +97,7 @@ class Parameters:
         self.__num_detector_y = 2
         self.__detector_separation_x = 0.02196  # meter
         self.__detector_separation_y = 0.02196  # meter
-        self.__orbital_altitude = 5.5E5  # meter
+        self.__orbital_altitude = 6.0E5  # meter
         self.__spider_type = ''
         self.__spider_thickness = 5e-3  # meter
         self.__window_size_x = 9
